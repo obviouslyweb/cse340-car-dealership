@@ -56,8 +56,8 @@ Additionally, your GitHub repository must show:
 
 ### Technology Stack
 Required Technologies:
-• Node.js with Express.js as the backend framework
-• EJS or Liquid.js for rendering views
-• ESM (ECMAScript Modules), no CommonJS (require is not allowed)
-• PostgreSQL for the database
-• Deployed on Render with a connected PostgreSQL database
+* Node.js with Express.js as the backend framework
+* EJS or Liquid.js for rendering views
+* ESM (ECMAScript Modules), no CommonJS (require is not allowed)
+* PostgreSQL for the database
+* Deployed on Render with a connected PostgreSQL database
