@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import express from 'express';
 
 const app = express();
