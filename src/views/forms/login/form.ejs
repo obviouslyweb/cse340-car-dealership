@@ -1,9 +1,7 @@
 <%- include('../../partials/header') %>
 <main>
-    <h1><%= title %></h1>
-    <p>
-        Enter your email and password to access your account. Do not have an account? <a href="/register">Register here</a>.
-    </p>
+    <h1>Sign In</h1>
+    <p>Enter your email and password to access your account.</p>
 
     <form method="POST" action="/login" class="login-form form-style">
         <!-- Email field -->
@@ -20,10 +18,9 @@
         
         <!-- Submit button -->
         <button type="submit">Sign In</button>
-
-        <div class="form-footer">
-            <p>New user? <a href="/register">Create an account</a></p>
-        </div>
     </form>
+
+        <p>Don't have an account yet? You can <a href="/register">register here!</a></p>
+
 </main>
 <%- include('../../partials/footer') %>

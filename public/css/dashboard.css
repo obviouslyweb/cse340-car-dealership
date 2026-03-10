@@ -112,7 +112,6 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .login-form,
     .dashboard {
         margin: 1rem;
         padding: 1rem;
