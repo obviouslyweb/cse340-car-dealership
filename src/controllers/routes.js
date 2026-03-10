@@ -48,12 +48,14 @@ router.use('/contact', (req, res, next) => {
 // Add registration-specific styles to all registration routes
 router.use('/register', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/users.css">');
     next();
 });
 
 // Add login-specific styles to all login routes
 router.use('/login', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/dashboard.css">');
     next();
 });
 
