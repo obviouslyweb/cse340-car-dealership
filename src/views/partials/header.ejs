@@ -33,7 +33,6 @@
             <a href="/">Home</a>
             <a href="/catalog">Vehicles</a>
             <a href="/contact">Contact</a>
-            <a href="/about">About</a>
 
             <!-- Only visible when logged in -->
             <% if (isLoggedIn) { %>
@@ -72,7 +71,12 @@
     <script>
         document.querySelectorAll('.flash button').forEach(button => {
             button.addEventListener('click', () => {
-                button.closest('.flash').remove();
+                const flashEl = button.closest('.flash');
+                const container = flashEl.closest('.flash-messages');
+                flashEl.remove();
+                if (container && !container.querySelector('.flash')) {
+                    container.remove();
+                }
             });
         });
     </script>
