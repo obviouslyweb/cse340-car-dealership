@@ -1,13 +1,58 @@
--- THIS IS ALL LEFTOVER FROM THE PRACTICE PROJECT
--- JUST USING IT TO TEST IF MY NEW DATABASE CONNECTION IS SUCCESSFUL
--- LATER ON I'LL REPLACE IT WITH DEDICATED TABLES FOR THE USAGE OF VEHICLE STUFF
-
--- Database seed file for student course catalog
+-- Database seed file for car dealership
 -- This file creates tables and inserts all initial data
+
+-- Database Requirements:
+-- Users table (with role field)
+-- Vehicles table
+-- Categories table (linked to vehicles)
+-- Reviews table (linked to users and vehicles)
+-- Service requests table (linked to users, with status tracking)
+-- Contact messages table
+-- Vehicle images table (one-to-many with vehicles)
 
 BEGIN;
 
 -- Drop existing tables (in reverse dependency order)
+DROP TABLE IF EXISTS vehicles CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS service_requests CASCADE;
+DROP TABLE IF EXISTS contact_messages CASCADE;
+DROP TABLE IF EXISTS vehicle_images CASCADE;
+
+CREATE TABLE vehicles (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+CREATE TABLE categories (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+CREATE TABLE reviews (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+CREATE TABLE service_requests (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+CREATE TABLE contact_messages (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+CREATE TABLE vehicle_images (
+    id INTEGER PRIMARY KEY,
+    -- TO BE COMPLETED
+);
+
+-- Leftovers from original template (will be removed once new format is completed)
+-- Leftovers from original template (will be removed once new format is completed)
+-- Leftovers from original template (will be removed once new format is completed)
 DROP TABLE IF EXISTS catalog CASCADE;
 DROP TABLE IF EXISTS faculty CASCADE;
 DROP TABLE IF EXISTS courses CASCADE;
@@ -256,5 +301,8 @@ INSERT INTO catalog (course_slug, faculty_slug, time, room) VALUES
     ('intl-201', 'john-ivers', 'Mon Wed Fri 1:00-1:50', 'LA 301'),
     ('intl-301', 'john-ivers', 'Tue Thu 1:00-2:15', 'LA 302'),
     ('intl-401', 'john-ivers', 'Mon Wed 2:00-3:15', 'LA 303');
+-- Leftovers from original template (will be removed once new format is completed)
+-- Leftovers from original template (will be removed once new format is completed)
+-- Leftovers from original template (will be removed once new format is completed)
 
 COMMIT;
