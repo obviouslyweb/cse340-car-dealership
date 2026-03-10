@@ -8,10 +8,10 @@ const aboutPage = (req, res) => {
     res.render('about', { title: 'About' });
 };
 
-const testErrorPage = (req, res, next) => {
-    const err = new Error('This is a test error');
-    err.status = 500;
-    next(err);
-};
+// const testErrorPage = (req, res, next) => {
+//     const err = new Error('This is a test error');
+//     err.status = 500;
+//     next(err);
+// };
 
-export { homePage, aboutPage, testErrorPage };
+export { homePage, aboutPage };

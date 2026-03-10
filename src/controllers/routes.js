@@ -12,13 +12,13 @@ import { contactValidation, registrationValidation, loginValidation, updateAccou
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
 // import { catalogPage, courseDetailPage } from './catalog/catalog.js';
-import { homePage, aboutPage, testErrorPage } from './index.js';
+import { homePage, aboutPage } from './index.js';
 // import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-// import { processLogout, showDashboard } from './forms/login.js';
-// import { requireLogin } from '../middleware/auth.js';
+import { processLogout, showDashboard } from './forms/login.js';
+import { requireLogin } from '../middleware/auth.js';
 
 // Create a new router instance
 const router = Router();
@@ -80,14 +80,9 @@ router.use('/register', registrationValidation, updateAccountValidation, registr
 // Login routes (form and submission)
 router.use('/login', loginValidation, loginRoutes);
 
-// ---------------------- TODO ----------------------
-// // Authentication-related routes at root level
-// router.get('/logout', processLogout);
-// router.get('/dashboard', requireLogin, showDashboard);
-
-// ---------------------- TODO ----------------------
-// Route to trigger a test error
-router.get('/test-error', testErrorPage);
+// Authentication-related routes at root level
+router.get('/logout', processLogout);
+router.get('/dashboard', requireLogin, showDashboard);
 
 /*
 Export router for usage in server.js
