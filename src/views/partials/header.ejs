@@ -29,26 +29,24 @@
         <h1>Fuse Automobiles</h1>
         <!-- <p><%- greeting %></p> -->
         <nav>
-            <ul>
-                <!-- Always visible links -->
-                <li><a href="/">Home</a></li>
-                <li><a href="/catalog">Vehicles</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/about">About</a></li>
+            <!-- Always visible links -->
+            <a href="/">Home</a>
+            <a href="/catalog">Vehicles</a>
+            <a href="/contact">Contact</a>
+            <a href="/about">About</a>
 
-                <!-- Only visible when logged in -->
-                <% if (isLoggedIn) { %>
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="/contact/responses">Service Requests</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                <% } %>
+            <!-- Only visible when logged in -->
+            <% if (isLoggedIn) { %>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/contact/responses">Service Requests</a>
+                <a href="/logout">Logout</a>
+            <% } %>
 
-                <!-- Only visible when NOT logged in -->
-                <% if (!isLoggedIn) { %>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                <% } %>
-            </ul>
+            <!-- Only visible when NOT logged in -->
+            <% if (!isLoggedIn) { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
         </nav>
     </header>
 
