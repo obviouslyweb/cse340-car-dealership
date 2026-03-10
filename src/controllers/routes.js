@@ -39,11 +39,11 @@ Router Middleware
 //     next();
 // });
 
-// // Add contact-specific styles to all contact routes
-// router.use('/contact', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
-//     next();
-// });
+// Add contact-specific styles to all contact routes
+router.use('/contact', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    next();
+});
 
 // // Add registration-specific styles to all registration routes
 // router.use('/register', (req, res, next) => {
