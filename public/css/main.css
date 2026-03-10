@@ -37,6 +37,11 @@ body {
         justify-content: space-between;
         align-items: center;
 
+        h1 a {
+            text-decoration: none;
+            color: var(--color-background);
+        }
+
         nav {
             color: white;
             list-style-type: none;
@@ -87,6 +92,8 @@ body {
         border-radius: 15px;
         gap: calc(var(--spacing-sm));
         padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
         color: color-mix(in srgb, var(--color-secondary), 80%, black);
         text-decoration: none;
         transition: 0.2s all;
@@ -110,6 +117,26 @@ body {
     h1, h2, h3, h4, h5 {
         font-family: var(--font-heading);
         font-weight: var(--font-heading-weight);
+    }
+}
+
+.btn {
+    display: inline-block;
+    border: 2px solid var(--color-primary);
+    border-radius: 15px;
+    gap: calc(var(--spacing-sm));
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--color-primary);
+    font-weight: 400;
+    text-decoration: none;
+    transition: 0.2s all;
+
+    &:hover, &:focus {
+        transform: scale(1.1);
+        color: black;
+        border-color: black;
     }
 }
 
