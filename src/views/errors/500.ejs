@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<main>
+    <h1>Uh oh...</h1>
+    <p>We are experiencing technical difficulties. We've been notified and are working to fix the issue! In the meantime, please enjoy this spinning duck.</p>
+    <div class="img-center">
+        <img src="/images/duck-spin-no-background.gif">
+    </div>
+    <p><a href="/">Return to homepage</a></p>
+
+    <% if (NODE_ENV === 'development') { %>
+        <!-- Only show if in dev mode -->
+        <details open>
+            <summary>Error Details (Development Only)</summary>
+            <pre><%= error %></pre>
+            <pre><%= stack %></pre>
+        </details>
+    <% } %>
+</main>
+<%- include('../partials/footer') %>

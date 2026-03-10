@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/main.css">
+    <%- renderStyles() %> <!-- Will input needed CSS, middleware connection -->
+    <%- renderScripts() %> <!-- Will input needed JS, middleware connection -->
+    <% if (NODE_ENV.includes('dev')) { %>
+        <script> // Live reloading simulation script
+            // Get the current hostname and port from the browser
+            const host = window.location.hostname;
+            const currentPort = window.location.port;
+
+            // Calculate WebSocket port (current port + 1)
+            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
+
+            // Create WebSocket connection using dynamic hostname and port
+            const ws = new WebSocket(`ws://${host}:${wsPort}`);
+            ws.onclose = () => {
+                setTimeout(() => location.reload(), 2000);
+            };
+        </script>
+    <% } %>
+</head>
+<body class="<%= bodyClass %>">
+    <header>
+        <h1>Connor's Express Site</h1>
+        <p><%- greeting %></p>
+        <nav>
+            <ul>
+                <!-- Always visible links -->
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/catalog">Course Catalog</a></li>
+                <li><a href="/faculty">Faculty Directory</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/demo">Middleware Demo</a></li>
+
+                <!-- Only visible when logged in -->
+                <% if (isLoggedIn) { %>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/register/list">All Users</a></li>
+                    <li><a href="/contact/responses">Contact Responses</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+
+                <!-- Only visible when NOT logged in -->
+                <% if (!isLoggedIn) { %>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <%
+        const messages = flash();
+        const hasMessages = Object.values(messages).some(arr => arr.length > 0);
+    %>
+
+    <!-- Display flash messages, if any exist -->
+    <% if (hasMessages) { %>
+    <div class="flash-messages">
+        <!-- Iterate through all message types dynamically -->
+        <% Object.keys(messages).forEach(type => { %>
+            <% messages[type].forEach(message => { %>
+                <div class="flash <%= type %>">
+                    <%= message %>
+                    <button type="button" name="Close message">X</button>
+                </div>
+            <% }); %>
+        <% }); %>
+    </div>
+
+    <script>
+        document.querySelectorAll('.flash button').forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.flash').remove();
+            });
+        });
+    </script>
+<% } %>
