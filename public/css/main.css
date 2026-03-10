@@ -62,6 +62,12 @@ body {
                     color: white;
                 }
             }
+
+            .lowlight {
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
         }
     }
 
