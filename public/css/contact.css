@@ -1,11 +1,12 @@
 /* Contact Form Styles */
+
 .contact-form {
+    
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fff;
+    background: color-mix(in srgb, var(--color-primary) 50%, rgba(0, 0, 0, 0));
 
     h2 {
         color: #2c5aa0;
@@ -19,16 +20,20 @@
         margin-bottom: 1.5rem;
 
         label {
+            font-family: var(--font-heading);
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #333;
+            color: white;
         }
 
         input,
         textarea {
+            box-sizing: border-box;
+            font-family: var(--font-body);
+            font-weight: 300;
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.75em;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 1rem;
@@ -48,19 +53,28 @@
     }
 
     button[type="submit"] {
+        font-family: var(--font-heading);
         width: 100%;
         padding: 1rem;
-        background-color: #2c5aa0;
+        background-color: var(--color-primary);
         color: white;
         border: none;
         border-radius: 6px;
         font-size: 1rem;
         font-weight: 500;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.2s;
+        
+        &:hover, &:active {
+            box-shadow: rgba(0, 0, 0, 0.377) 0px 3px 2px;
+            transform: translateY(-5px);
+            background-color: color-mix(var(--color-primary) 90%, white);
+        }
 
-        &:hover {
-            background-color: #1e3a6f;
+        &:active {
+            box-shadow: none;
+            transform: none;
+            background-color: var(--color-primary);
         }
     }
 }
