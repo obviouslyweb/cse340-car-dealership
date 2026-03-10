@@ -7,12 +7,12 @@ import { Router } from 'express';
 // ---------------------- TODO ----------------------
 // Middleware import
 // import { addDemoHeaders } from '../middleware/demo/headers.js';
-import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
+// import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
 // import { catalogPage, courseDetailPage } from './catalog/catalog.js';
-import { homePage } from './index.js';
+import { homePage, aboutPage, testErrorPage } from './index.js';
 // import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 // import contactRoutes from './forms/contact.js';
 // import registrationRoutes from './forms/registration.js';
@@ -58,24 +58,20 @@ Router Middleware
 // });
 
 /*
-Add route definitions
+Route definitions
 */
 // Home and basic pages
 router.get('/', homePage);
-// router.get('/about', aboutPage);
+router.get('/about', aboutPage);
 
 // ---------------------- TODO ----------------------
-// // Course catalog routes
+// // Course catalog routes (NEEDS TO BE REPLACED WITH VEHICLE ROUTES)
 // router.get('/catalog', catalogPage);
 // router.get('/catalog/:slugId', courseDetailPage);
 
 // ---------------------- TODO ----------------------
-// // Faculty routes
-// router.get('/faculty', facultyListPage);
-// router.get('/faculty/:facultySlug', facultyDetailPage);
-
 // // Contact form routes
-router.use('/contact', contactValidation, contactRoutes);
+// router.use('/contact', contactValidation, contactRoutes);
 
 // ---------------------- TODO ----------------------
 // // Registration routes
