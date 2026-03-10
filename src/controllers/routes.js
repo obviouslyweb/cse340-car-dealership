@@ -7,14 +7,14 @@ import { Router } from 'express';
 // ---------------------- TODO ----------------------
 // Middleware import
 // import { addDemoHeaders } from '../middleware/demo/headers.js';
-// import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
+import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
 // import { catalogPage, courseDetailPage } from './catalog/catalog.js';
 import { homePage, aboutPage, testErrorPage } from './index.js';
 // import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
-// import contactRoutes from './forms/contact.js';
+import contactRoutes from './forms/contact.js';
 // import registrationRoutes from './forms/registration.js';
 // import loginRoutes from './forms/login.js';
 // import { processLogout, showDashboard } from './forms/login.js';
@@ -69,9 +69,8 @@ router.get('/about', aboutPage);
 // router.get('/catalog', catalogPage);
 // router.get('/catalog/:slugId', courseDetailPage);
 
-// ---------------------- TODO ----------------------
-// // Contact form routes
-// router.use('/contact', contactValidation, contactRoutes);
+// Contact form routes
+router.use('/contact', contactValidation, contactRoutes);
 
 // ---------------------- TODO ----------------------
 // // Registration routes
