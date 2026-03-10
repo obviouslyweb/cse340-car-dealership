@@ -1,12 +1,11 @@
 /* Contact Form Styles */
 
-.contact-form {
-    
+.form-style {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 8px;
-    background: color-mix(in srgb, var(--color-primary) 50%, rgba(0, 0, 0, 0));
+    background: color-mix(in srgb, var(--color-primary) 20%, rgba(0, 0, 0, 0));
 
     h2 {
         color: #2c5aa0;
@@ -24,7 +23,10 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: white;
+            color: var(--color-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
         input,

@@ -15,8 +15,8 @@ import { contactValidation, registrationValidation, loginValidation, updateAccou
 import { homePage, aboutPage, testErrorPage } from './index.js';
 // import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
-// import registrationRoutes from './forms/registration.js';
-// import loginRoutes from './forms/login.js';
+import registrationRoutes from './forms/registration.js';
+import loginRoutes from './forms/login.js';
 // import { processLogout, showDashboard } from './forms/login.js';
 // import { requireLogin } from '../middleware/auth.js';
 
@@ -41,21 +41,21 @@ Router Middleware
 
 // Add contact-specific styles to all contact routes
 router.use('/contact', (req, res, next) => {
-    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/form.css">');
     next();
 });
 
-// // Add registration-specific styles to all registration routes
-// router.use('/register', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
-//     next();
-// });
+// Add registration-specific styles to all registration routes
+router.use('/register', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    next();
+});
 
-// // Add login-specific styles to all login routes
-// router.use('/login', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/login.css">');
-//     next();
-// });
+// Add login-specific styles to all login routes
+router.use('/login', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    next();
+});
 
 /*
 Route definitions
@@ -72,13 +72,11 @@ router.get('/about', aboutPage);
 // Contact form routes
 router.use('/contact', contactValidation, contactRoutes);
 
-// ---------------------- TODO ----------------------
-// // Registration routes
-// router.use('/register', registrationValidation, updateAccountValidation, registrationRoutes);
+// Registration routes
+router.use('/register', registrationValidation, updateAccountValidation, registrationRoutes);
 
-// ---------------------- TODO ----------------------
-// // Login routes (form and submission)
-// router.use('/login', loginValidation, loginRoutes);
+// Login routes (form and submission)
+router.use('/login', loginValidation, loginRoutes);
 
 // ---------------------- TODO ----------------------
 // // Authentication-related routes at root level
