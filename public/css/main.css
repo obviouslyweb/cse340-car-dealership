@@ -30,7 +30,7 @@ body {
     header {
         display: flex;
         flex-direction: row;
-        max-height: 50px;
+        max-height: 35px;
         padding: var(--spacing-md);
         background-color: var(--color-primary);
         color: var(--color-background);
@@ -44,17 +44,46 @@ body {
             display: flex;
             flex-direction: row;
             gap: var(--spacing-sm);
+            align-items: center;
 
             a {
                 text-decoration: none;
                 color: #C0D6DF;
                 font-weight: bold;
                 transition: all 0.2s;
+                gap: calc(var(--spacing-sm) * 0.25);
 
                 &:hover {
-                    transform: scale(1.1);
                     color: white;
                 }
+
+                &.lowlight {
+                    border-radius: 15px;
+                    gap: calc(var(--spacing-sm));
+                    padding: 5px;
+                    color: var(--color-primary);
+                    background-color: var(--color-soft);
+                    opacity: 75%;
+
+                    &:hover, &:focus {
+                        transform: scale(1.1);
+                        opacity: 100%;
+                    }
+                }
+
+                &.highlight {
+                    border: 2px solid rgb(255, 255, 255);
+                    border-radius: 15px;
+                    gap: calc(var(--spacing-sm));
+                    padding: 5px;
+                    color: color-mix(in srgb, var(--color-secondary), 80%, black);
+
+                    &:hover, &:focus {
+                        transform: scale(1.1);
+                        color: white;
+                        border-color: white;
+                    }
+                }   
             }
         }
     }

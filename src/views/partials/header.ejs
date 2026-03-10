@@ -39,13 +39,13 @@
             <% if (isLoggedIn) { %>
                 <a href="/dashboard">Dashboard</a>
                 <a href="/contact/responses">Service Requests</a>
-                <a href="/logout">Logout</a>
+                <a class="lowlight" href="/logout">Logout</a>
             <% } %>
 
             <!-- Only visible when NOT logged in -->
             <% if (!isLoggedIn) { %>
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                <a class="highlight" href="/login">Login</a>
+                <a class="highlight" href="/register">Register</a>
             <% } %>
         </nav>
     </header>
