@@ -10,8 +10,7 @@ Import express components
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-// ------------------------------------ TODO ------------------------------------
-// import { setupDatabase, testConnection } from './src/models/setup.js';
+import { setupDatabase, testConnection } from './src/models/setup.js';
 
 /*
 Import MVC components
@@ -24,11 +23,10 @@ import { notFound, errorHandler } from './src/controllers/errors.js';
 /*
 Import session middleware
 */
-// ------------------------------------ TODO ------------------------------------
-// import session from 'express-session';
-// import connectPgSimple from 'connect-pg-simple';
-// import { caCert } from './src/models/db.js';
-// import { startSessionCleanup } from './src/utils/session-cleanup.js';
+import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple';
+import { caCert } from './src/models/db.js';
+import { startSessionCleanup } from './src/utils/session-cleanup.js';
 import flash from './src/middleware/flash.js';
 
 /**
@@ -44,39 +42,36 @@ const PORT = process.env.PORT || 3000;
  */
 const app = express();
 
-// ------------------------------------ TODO ------------------------------------
 // Initialize PostgreSQL session store
-// const pgSession = connectPgSimple(session);
+const pgSession = connectPgSimple(session);
 
-// ------------------------------------ TODO ------------------------------------
 // Configure session middleware
-// app.use(session({
-//     store: new pgSession({
-//         conObject: {
-//             connectionString: process.env.DB_URL,
-//             // Configure SSL for session store connection (required by BYU-I databases)
-//             ssl: {
-//                 ca: caCert,
-//                 rejectUnauthorized: true,
-//                 checkServerIdentity: () => { return undefined; }
-//             }
-//         },
-//         tableName: 'session',
-//         createTableIfMissing: true
-//     }),
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//         secure: NODE_ENV.includes('dev') !== true,
-//         httpOnly: true,
-//         maxAge: 24 * 60 * 60 * 1000
-//     }
-// }));
+app.use(session({
+    store: new pgSession({
+        conObject: {
+            connectionString: process.env.DB_URL,
+            // Configure SSL for session store connection (required by BYU-I databases)
+            ssl: {
+                ca: caCert,
+                rejectUnauthorized: true,
+                checkServerIdentity: () => { return undefined; }
+            }
+        },
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: NODE_ENV.includes('dev') !== true,
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
 
-// ------------------------------------ TODO ------------------------------------
-// // Start automatic session cleanup
-// startSessionCleanup();
+// Start automatic session cleanup
+startSessionCleanup();
 
 /**
  * Configure Express
@@ -95,8 +90,8 @@ app.use(addLocalVariables);
 app.use(flash);
 // ------------------------------------ TODO ------------------------------------
 // // Allow Express to receive and process POST data
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 /**
  * Use routes
@@ -136,7 +131,7 @@ if (NODE_ENV.includes('dev')) {
  */
 app.listen(PORT, async () => {
     // ------------------------------------ TODO ------------------------------------
-    // TODO: await setupDatabase();
-    // TODO: await testConnection();
+    await setupDatabase();
+    await testConnection();
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
 });

@@ -12,8 +12,12 @@
   "license": "ISC",
   "packageManager": "pnpm@10.30.3",
   "dependencies": {
+    "connect-pg-simple": "^10.0.0",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "fs": "0.0.1-security",
+    "pg": "^8.20.0",
     "ws": "^8.19.0"
   },
   "type": "module",

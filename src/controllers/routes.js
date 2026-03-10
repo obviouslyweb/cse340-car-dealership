@@ -7,7 +7,7 @@ import { Router } from 'express';
 // ---------------------- TODO ----------------------
 // Middleware import
 // import { addDemoHeaders } from '../middleware/demo/headers.js';
-// import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
+import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
@@ -69,28 +69,30 @@ router.get('/', homePage);
 // router.get('/catalog', catalogPage);
 // router.get('/catalog/:slugId', courseDetailPage);
 
+// ---------------------- TODO ----------------------
 // // Faculty routes
 // router.get('/faculty', facultyListPage);
 // router.get('/faculty/:facultySlug', facultyDetailPage);
 
 // // Contact form routes
-// router.use('/contact', contactValidation, contactRoutes);
+router.use('/contact', contactValidation, contactRoutes);
 
+// ---------------------- TODO ----------------------
 // // Registration routes
 // router.use('/register', registrationValidation, updateAccountValidation, registrationRoutes);
 
+// ---------------------- TODO ----------------------
 // // Login routes (form and submission)
 // router.use('/login', loginValidation, loginRoutes);
 
+// ---------------------- TODO ----------------------
 // // Authentication-related routes at root level
 // router.get('/logout', processLogout);
 // router.get('/dashboard', requireLogin, showDashboard);
 
-// // Demo page with special middleware
-// router.get('/demo', addDemoHeaders, demoPage);
-
-// // Route to trigger a test error
-// router.get('/test-error', testErrorPage);
+// ---------------------- TODO ----------------------
+// Route to trigger a test error
+router.get('/test-error', testErrorPage);
 
 /*
 Export router for usage in server.js
