@@ -6,7 +6,6 @@ import { Router } from 'express';
 
 // ---------------------- TODO ----------------------
 // Middleware import
-// import { addDemoHeaders } from '../middleware/demo/headers.js';
 import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
