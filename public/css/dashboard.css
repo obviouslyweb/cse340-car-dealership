@@ -15,12 +15,8 @@
 
     h1 {
         color: #2c5aa0;
-        margin-bottom: 1rem;
-    }
-
-    & > p {
-        margin-bottom: 2rem;
-        color: #666;
+        margin: 0;
+        padding: 0;
     }
 
     .user-info,
@@ -29,18 +25,15 @@
         border: 1px solid #ddd;
         border-radius: 8px;
         padding: 1.5rem;
-        margin-bottom: 2rem;
 
         h2,
         h3 {
             color: #2c5aa0;
             margin-top: 0;
-            margin-bottom: 1rem;
         }
     }
 
     .user-detail {
-        margin-bottom: 0.5rem;
         font-size: 1rem;
         display: flex;
         flex-direction: column;
@@ -75,6 +68,9 @@
 
     .dashboard-actions {
         text-align: center;
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-sm);
 
         .logout-button {
             border-color: #dc3545;
