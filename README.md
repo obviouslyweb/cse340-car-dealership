@@ -7,7 +7,7 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [ ] Home page with featured vehicles
 * [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
 * [ ] Individual vehicle detail pages with images, specs, and price
-* [ ] Contact form (saves to database)
+* [X] Contact form (saves to database)
 ### User Features (must be logged in)
 * [ ] Leave reviews on vehicles
 * [ ] Edit/delete own reviews

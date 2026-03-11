@@ -94,8 +94,13 @@ const addLocalVariables = (req, res, next) => {
 
     // Convenience variable for UI state based on session state
     res.locals.isLoggedIn = false;
+    res.locals.isEmployee = false;
+    res.locals.isAdmin = false;
     if (req.session && req.session.user) {
         res.locals.isLoggedIn = true;
+        const roleName = (req.session.user.roleName || '').toLowerCase();
+        res.locals.isEmployee = roleName === 'employee' || roleName === 'admin';
+        res.locals.isAdmin = roleName === 'admin';
     }
 
     // Continue to the next middleware or route handler

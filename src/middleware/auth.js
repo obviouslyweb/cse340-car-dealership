@@ -19,8 +19,8 @@ const requireLogin = (req, res, next) => {
 /**
  * Middleware factory to require specific role for route access
  * Returns middleware that checks if user has the required role
- * 
- * @param {string} roleName - The role name required (e.g., 'admin', 'user')
+ *
+ * @param {string} roleName - The role name required (e.g., 'admin', 'employee', 'user')
  * @returns {Function} Express middleware function
  */
 const requireRole = (roleName) => {
@@ -41,5 +41,8 @@ const requireRole = (roleName) => {
         next();
     };
 };
+
+// Require employee: use requireRole('employee')
+// Require admin: use requireRole('admin')
 
 export { requireLogin, requireRole };

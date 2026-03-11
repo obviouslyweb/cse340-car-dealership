@@ -124,6 +124,19 @@ body {
         font-family: var(--font-heading);
         font-weight: var(--font-heading-weight);
     }
+
+    .card {
+        padding: var(--spacing-sm);
+        background: color-mix(in srgb, var(--color-primary) 20%, rgba(0, 0, 0, 0));
+        
+        &.red {
+            background: rgba(255, 77, 77, 0.5);
+        }
+
+        &.yellow {
+            background: rgba(237, 255, 77, 0.5);
+        }
+    }
 }
 
 .btn {

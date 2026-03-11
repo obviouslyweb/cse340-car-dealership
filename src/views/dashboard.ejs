@@ -5,20 +5,31 @@
         
         <p>Welcome back, <strong><%= user.name %></strong>! This is your <strong><%= user.roleName %> dashboard</strong> where you can interact with our services.</strong></p>  
 
+        <% if (isAdmin) { %>
+        <div class="card red">
+            <h2>Admin Actions</h2>
+            <p>Coming soon!</p>
+        </div>
+        <% } %>
+
+        <% if (isEmployee) { %>
+        <div class="card yellow">
+            <h2>Employee Actions</h2>
+            <a href="/contact/responses" class="btn">Contact Form Submissions</a>
+        </div>
+        <% } %>
+
         <div class="dashboard-actions">
             <a href="/service-request" class="btn">Submit Service Request</a>
-            <% if (user.roleName == "employee" || user.roleName == "admin") { %>
-                <a href="/contact/responses" class="btn">Contact Form Submissions</a>
-            <% } %>
-            <a href="/logout" class="btn logout-button">Logout</a>
+            <a href="/logout" class="lowlight btn logout-button">Logout</a>
         </div>
 
-        <div class="dashboard-detail">
+        <div class="card dashboard-detail">
             <h2>My Service Requests</h2>
             <p>Coming soon!</p>
         </div>
 
-        <div class="user-info">
+        <div class="card">
             <h2>Your Account Information</h2>
             <div class="user-detail">
                 <span class="label">Name:</span>

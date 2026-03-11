@@ -54,6 +54,11 @@ router.use('/register', (req, res, next) => {
 // Add login-specific styles to all login routes
 router.use('/login', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    next();
+});
+
+// Add dashboard-specific styles to dashboard route
+router.use('/dashboard', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/dashboard.css">');
     next();
 });
