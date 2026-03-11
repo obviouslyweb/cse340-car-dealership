@@ -61,3 +61,34 @@ Required Technologies:
 * [ ] ESM (ECMAScript Modules), no CommonJS (require is not allowed)
 * [X] PostgreSQL for the database
 * [ ] Deployed on Render with a connected PostgreSQL database
+
+## Implementation Steps
+
+Here's a list of everything that I have left to do until completion in order.
+
+* [ ] Categories table (linked to vehicles)
+* [ ] Vehicles table
+* [ ] Vehicle images table (one-to-many with vehicles)
+* [ ] Reviews table (linked to users and vehicles)
+* [ ] Service requests table (linked to users, with status)
+* [ ] ERD image in README (pgAdmin export)
+* [ ] ESM only in codebase (no require)
+* [ ] Home page with featured vehicles
+* [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
+* [ ] Vehicle detail pages (images, specs, price)
+* [ ] Logged-in users can leave reviews on vehicles
+* [ ] Logged-in users can edit or delete own reviews
+* [ ] Logged-in users can submit service requests
+* [ ] Dashboard shows service request history and status
+* [ ] Employees can view contact form submissions
+* [ ] Employees can edit vehicle details (price, description, availability)
+* [ ] Employees can view and manage service requests, update status, add notes
+* [ ] Employees can moderate or delete reviews
+* [ ] Admin can add, edit, delete vehicle categories
+* [ ] Admin can add, edit, delete vehicles
+* [ ] Admin can manage employee accounts and view activity or user data (if required)
+* [ ] User Roles section filled in README
+* [ ] Test account credentials in README (email only, no password)
+* [ ] Known Limitations section filled in README
+* [ ] Deploy to Render with PostgreSQL
+* [ ] Review & polish README
