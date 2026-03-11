@@ -90,5 +90,4 @@ Here's a list of everything that I have left to do until completion in order.
 * [ ] User Roles section filled in README
 * [ ] Test account credentials in README (email only, no password)
 * [ ] Known Limitations section filled in README
-* [ ] Deploy to Render with PostgreSQL
 * [ ] Review & polish README
