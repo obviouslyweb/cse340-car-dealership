@@ -1,10 +1,22 @@
 <%- include('partials/header') %>
 <main>
     <div class="dashboard">
-        <h1>Welcome to Your Dashboard</h1>
-        <p>
-            This is a protected page that requires authentication. Only logged-in users can access this content.
-        </p>
+        <h1>Dashboard</h1>
+        
+        <p>Welcome back, <strong><%= user.name %></strong>! This is your <strong><%= user.roleName %> dashboard</strong> where you can interact with our services.</strong></p>  
+
+        <div class="dashboard-actions">
+            <a href="/service-request" class="btn">Submit Service Request</a>
+            <% if (user.roleName == "employee" || user.roleName == "admin") { %>
+                <a href="/contact/responses" class="btn">Contact Form Submissions</a>
+            <% } %>
+            <a href="/logout" class="btn logout-button">Logout</a>
+        </div>
+
+        <div class="dashboard-detail">
+            <h2>My Service Requests</h2>
+            <p>Coming soon!</p>
+        </div>
 
         <div class="user-info">
             <h2>Your Account Information</h2>
@@ -13,24 +25,9 @@
                 <span class="value"><%= user.name %></span>
                 <span class="label">Email:</span>
                 <span class="value"><%= user.email %></span>
-                <span class="label">Role:</span>
-                <span class="value"><%= user.roleName %></span>
                 <span class="label">Account created:</span>
                 <span class="value"><%= new Date(user.created_at).toLocaleDateString() %></span>
             </div>
-        </div>
-
-        <div class="session-debug">
-            <h3>Session Information (For Learning Purposes)</h3>
-            <p><em>This section shows your current session data for educational purposes.</em></p>
-            <pre><%= JSON.stringify(sessionData, null, 2) %></pre>
-            <p>
-                <strong>If you see a password property in the above object you have a security vulnerability, fix it!</strong>
-            </p>
-        </div>
-
-        <div class="dashboard-actions">
-            <a href="/logout" class="logout-button">Logout</a>
         </div>
     </div>
 </main>

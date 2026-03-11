@@ -28,12 +28,12 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [ ] View all system activity and user data
 ### Database Requirements:
 Database Requirements:
-* [ ] Users table (with role field)
+* [X] Users table (with role field)
 * [ ] Vehicles table
 * [ ] Categories table (linked to vehicles)
 * [ ] Reviews table (linked to users and vehicles)
 * [ ] Service requests table (linked to users, with status tracking)
-* [ ] Contact messages table
+* [X] Contact messages table
 * [ ] Vehicle images table (one-to-many with vehicles)
 
 ## Database Schema:
@@ -51,8 +51,8 @@ Database Requirements:
 ## Final Details (delete once verified)
 Additionally, your GitHub repository must show:
 - [ ] Minimum 15 substantial commits (not simple one-line fixes)
-- [ ] Organized folder structure
-- [ ] Clean, readable code with consistent formatting
+- [X] Organized folder structure
+- [X] Clean, readable code with consistent formatting
 
 ### Technology Stack
 Required Technologies:

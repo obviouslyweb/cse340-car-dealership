@@ -40,12 +40,12 @@ const setupDatabase = async () => {
     const seedPath = join(__dirname, 'sql', 'seed.sql');
     const seedSQL = fs.readFileSync(seedPath, 'utf8');
     await db.query(seedSQL);
-    // Run practice.sql if it exists (for student assignments)
-    const practicePath = join(__dirname, 'sql', 'practice.sql');
-    if (fs.existsSync(practicePath)) {
-        const practiceSQL = fs.readFileSync(practicePath, 'utf8');
-        await db.query(practiceSQL);
-        console.log('Practice database tables initialized');
+    // Run seed_users.sql if it exists (for student assignments)
+    const usersPath = join(__dirname, 'sql', 'seed_users.sql');
+    if (fs.existsSync(usersPath)) {
+        const usersSQL = fs.readFileSync(usersPath, 'utf8');
+        await db.query(usersSQL);
+        console.log('Users database tables initialized');
     }
     console.log('Database seeded successfully');
     

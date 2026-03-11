@@ -20,35 +20,30 @@ DROP TABLE IF EXISTS service_requests CASCADE;
 DROP TABLE IF EXISTS contact_messages CASCADE;
 DROP TABLE IF EXISTS vehicle_images CASCADE;
 
-CREATE TABLE vehicles (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
+-- CREATE TABLE vehicles (
+--     id INTEGER PRIMARY KEY,
+--     -- TO BE COMPLETED
+-- );
 
-CREATE TABLE categories (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
+-- CREATE TABLE categories (
+--     id INTEGER PRIMARY KEY,
+--     -- TO BE COMPLETED
+-- );
 
-CREATE TABLE reviews (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
+-- CREATE TABLE reviews (
+--     id INTEGER PRIMARY KEY,
+--     -- TO BE COMPLETED
+-- );
 
-CREATE TABLE service_requests (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
+-- CREATE TABLE service_requests (
+--     id INTEGER PRIMARY KEY,
+--     -- TO BE COMPLETED
+-- );
 
-CREATE TABLE contact_messages (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
-
-CREATE TABLE vehicle_images (
-    id INTEGER PRIMARY KEY,
-    -- TO BE COMPLETED
-);
+-- CREATE TABLE contact_messages (
+--     id INTEGER PRIMARY KEY,
+--     -- TO BE COMPLETED
+-- );
 
 -- Leftovers from original template (will be removed once new format is completed)
 -- Leftovers from original template (will be removed once new format is completed)
@@ -209,98 +204,6 @@ INSERT INTO faculty (first_name, last_name, office, phone, email, department_id,
     ('Jeremy', 'Lamoreaux', 'LA 201D', '208-496-4234', 'lamoreauxj@byui.edu', 3, 'Professor', 'm', 'jeremy-lamoreaux'),
     ('Trever', 'McKay', 'LA 201E', '208-496-4312', 'mckaytr@byui.edu', 3, 'Department Chair', 'm', 'trever-mckay'),
     ('Michael', 'Paul', 'LA 201F', '208-496-4315', 'paulm@byui.edu', 3, 'Professor', 'm', 'michael-paul');
-
--- Insert catalog entries
-INSERT INTO catalog (course_slug, faculty_slug, time, room) VALUES
-    ('cse-110', 'nathan-jack', 'Mon Wed Fri 8:00-8:50', 'STC 101'),
-    ('cse-111', 'nathan-jack', 'Mon Wed Fri 9:00-9:50', 'STC 102'),
-    ('cse-210', 'nathan-jack', 'Tue Thu 10:00-11:15', 'STC 103'),
-    ('cse-212', 'nathan-jack', 'Tue Thu 1:00-2:15', 'STC 104'),
-    ('cse-340', 'nathan-jack', 'Mon Wed 2:00-3:15', 'STC 105'),
-    ('cit-160', 'jason-allred', 'Mon Wed Fri 10:00-10:50', 'STC 106'),
-    ('cit-241', 'jason-allred', 'Tue Thu 8:00-9:15', 'STC 107'),
-    ('cit-260', 'jason-allred', 'Mon Wed 11:00-12:15', 'STC 108'),
-    ('cit-336', 'jason-allred', 'Fri 1:00-3:50', 'STC 109'),
-    ('wdd-130', 'adam-hayes', 'Mon Wed Fri 11:00-11:50', 'STC 201'),
-    ('wdd-230', 'adam-hayes', 'Tue Thu 11:00-12:15', 'STC 202'),
-    ('wdd-330', 'adam-hayes', 'Mon Wed 1:00-2:15', 'STC 203'),
-    ('wdd-430', 'adam-hayes', 'Tue Thu 2:30-3:45', 'STC 204'),
-    ('cse-310', 'adam-hayes', 'Fri 9:00-11:50', 'STC 205'),
-    ('cse-398', 'nate-phillips', 'Mon Wed 9:00-10:15', 'STC 206'),
-    ('cse-110', 'nate-phillips', 'Tue Thu 9:00-10:15', 'STC 207'),
-    ('cse-111', 'nate-phillips', 'Mon Wed Fri 1:00-1:50', 'STC 208'),
-    ('cse-212', 'nate-phillips', 'Tue Thu 3:00-4:15', 'STC 209'),
-    ('cse-210', 'william-clements', 'Mon Wed Fri 2:00-2:50', 'STC 301'),
-    ('cit-160', 'william-clements', 'Tue Thu 10:00-11:15', 'STC 302'),
-    ('cit-260', 'william-clements', 'Mon Wed 3:00-4:15', 'STC 303'),
-    ('cse-340', 'zachariah-alvey', 'Tue Thu 8:00-9:15', 'STC 304'),
-    ('cse-310', 'zachariah-alvey', 'Mon Wed Fri 8:00-8:50', 'STC 305'),
-    ('cse-212', 'zachariah-alvey', 'Tue Thu 1:00-2:15', 'STC 306'),
-    ('wdd-130', 'zachariah-alvey', 'Mon Wed 4:00-5:15', 'STC 307'),
-    ('cse-111', 'zachariah-alvey', 'Fri 10:00-12:50', 'STC 308'),
-    ('cse-110', 'bradley-armstrong', 'Mon Wed Fri 12:00-12:50', 'STC 309'),
-    ('cit-241', 'bradley-armstrong', 'Tue Thu 12:00-1:15', 'STC 310'),
-    ('wdd-230', 'bradley-armstrong', 'Mon Wed 5:00-6:15', 'STC 401'),
-    ('cse-210', 'bradley-armstrong', 'Fri 2:00-4:50', 'STC 402'),
-    ('wdd-330', 'lee-barney', 'Mon Wed Fri 3:00-3:50', 'STC 403'),
-    ('cse-340', 'lee-barney', 'Tue Thu 4:00-5:15', 'STC 404'),
-    ('cit-336', 'lee-barney', 'Mon Wed 6:00-7:15', 'STC 405'),
-    ('cse-398', 'lee-barney', 'Thu 6:00-8:50', 'STC 406'),
-    ('cit-260', 'rex-barzee', 'Mon Wed Fri 4:00-4:50', 'STC 407'),
-    ('wdd-430', 'rex-barzee', 'Tue Thu 5:00-6:15', 'STC 408'),
-    ('cse-212', 'rex-barzee', 'Mon Wed 7:00-8:15', 'STC 409'),
-    ('cse-310', 'rex-barzee', 'Fri 5:00-7:50', 'STC 410'),
-    ('cse-111', 'scott-burton', 'Mon Wed Fri 5:00-5:50', 'STC 411'),
-    ('wdd-130', 'scott-burton', 'Tue Thu 6:00-7:15', 'STC 412'),
-    ('cit-160', 'scott-burton', 'Mon Wed 8:00-9:15', 'STC 413'),
-    ('wdd-230', 'scott-burton', 'Thu 7:00-9:50', 'STC 414'),
-    ('cse-210', 'christopher-keers', 'Mon Wed Fri 6:00-6:50', 'STC 415'),
-    ('cit-241', 'christopher-keers', 'Tue Thu 7:00-8:15', 'STC 416'),
-    ('cse-340', 'christopher-keers', 'Mon Wed 9:00-10:15', 'STC 417'),
-    ('wdd-330', 'christopher-keers', 'Fri 6:00-8:50', 'STC 418'),
-    ('cse-110', 'julie-ann-anderson', 'Tue Thu 8:00-9:15', 'STC 419'),
-    ('wdd-130', 'julie-ann-anderson', 'Mon Wed Fri 7:00-7:50', 'STC 420'),
-    ('cit-160', 'julie-ann-anderson', 'Tue Thu 9:00-10:15', 'STC 421'),
-    ('wdd-230', 'julie-ann-anderson', 'Mon Wed 10:00-11:15', 'STC 422'),
-    ('cse-111', 'julie-ann-anderson', 'Fri 7:00-9:50', 'STC 423'),
-    ('eng-150', 'joelle-moen', 'Mon Wed Fri 8:00-8:50', 'GEB 101'),
-    ('eng-250', 'joelle-moen', 'Tue Thu 8:00-9:15', 'GEB 102'),
-    ('eng-216', 'joelle-moen', 'Mon Wed 9:00-10:15', 'GEB 103'),
-    ('eng-324', 'joelle-moen', 'Fri 9:00-11:50', 'GEB 104'),
-    ('eng-106', 'josh-allen', 'Mon Wed Fri 9:00-9:50', 'GEB 105'),
-    ('eng-150', 'josh-allen', 'Tue Thu 9:00-10:15', 'GEB 106'),
-    ('eng-295', 'josh-allen', 'Mon Wed 10:00-11:15', 'GEB 107'),
-    ('eng-381', 'josh-allen', 'Fri 10:00-12:50', 'GEB 108'),
-    ('eng-150', 'matt-babcock', 'Mon Wed Fri 10:00-10:50', 'GEB 201'),
-    ('eng-216', 'matt-babcock', 'Tue Thu 10:00-11:15', 'GEB 202'),
-    ('eng-250', 'matt-babcock', 'Mon Wed 11:00-12:15', 'GEB 203'),
-    ('eng-295', 'matt-babcock', 'Thu 1:00-3:50', 'GEB 204'),
-    ('eng-106', 'jeremy-bailey', 'Mon Wed Fri 11:00-11:50', 'GEB 301'),
-    ('eng-150', 'jeremy-bailey', 'Tue Thu 11:00-12:15', 'GEB 302'),
-    ('eng-324', 'jeremy-bailey', 'Mon Wed 12:00-1:15', 'GEB 303'),
-    ('eng-381', 'jeremy-bailey', 'Fri 11:00-1:50', 'GEB 304'),
-    ('eng-150', 'tom-ballard', 'Mon Wed Fri 12:00-12:50', 'GEB 305'),
-    ('eng-216', 'tom-ballard', 'Tue Thu 12:00-1:15', 'GEB 306'),
-    ('eng-250', 'tom-ballard', 'Mon Wed 1:00-2:15', 'GEB 307'),
-    ('eng-295', 'tom-ballard', 'Fri 12:00-2:50', 'GEB 308'),
-    ('math-112', 'elaine-wagner', 'Mon Wed Fri 8:00-8:50', 'MC 101'),
-    ('math-113', 'elaine-wagner', 'Tue Thu 8:00-9:15', 'MC 102'),
-    ('math-215', 'elaine-wagner', 'Mon Wed 9:00-10:15', 'MC 103'),
-    ('math-221', 'elaine-wagner', 'Fri 8:00-10:50', 'MC 104'),
-    ('math-108x', 'brett-amidan', 'Mon Wed Fri 9:00-9:50', 'MC 105'),
-    ('math-112', 'brett-amidan', 'Tue Thu 9:00-10:15', 'MC 106'),
-    ('math-280', 'brett-amidan', 'Mon Wed 10:00-11:15', 'MC 107'),
-    ('math-341', 'brett-amidan', 'Fri 9:00-11:50', 'MC 108'),
-    ('intl-201', 'robert-colvin', 'Mon Wed Fri 10:00-10:50', 'LA 101'),
-    ('intl-301', 'robert-colvin', 'Tue Thu 10:00-11:15', 'LA 102'),
-    ('intl-350', 'robert-colvin', 'Mon Wed 11:00-12:15', 'LA 103'),
-    ('intl-401', 'scott-galer', 'Mon Wed Fri 11:00-11:50', 'LA 201'),
-    ('intl-201', 'scott-galer', 'Tue Thu 11:00-12:15', 'LA 202'),
-    ('intl-350', 'scott-galer', 'Mon Wed 12:00-1:15', 'LA 203'),
-    ('intl-301', 'scott-galer', 'Fri 11:00-1:50', 'LA 204'),
-    ('intl-201', 'john-ivers', 'Mon Wed Fri 1:00-1:50', 'LA 301'),
-    ('intl-301', 'john-ivers', 'Tue Thu 1:00-2:15', 'LA 302'),
-    ('intl-401', 'john-ivers', 'Mon Wed 2:00-3:15', 'LA 303');
 -- Leftovers from original template (will be removed once new format is completed)
 -- Leftovers from original template (will be removed once new format is completed)
 -- Leftovers from original template (will be removed once new format is completed)
