@@ -66,11 +66,6 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Categories table (linked to vehicles)
-* [ ] Vehicles table
-* [ ] Vehicle images table (one-to-many with vehicles)
-* [ ] Reviews table (linked to users and vehicles)
-* [ ] Service requests table (linked to users, with status)
 * [ ] ERD image in README (pgAdmin export)
 * [ ] ESM only in codebase (no require)
 * [ ] Home page with featured vehicles
