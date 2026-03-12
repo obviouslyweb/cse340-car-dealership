@@ -29,12 +29,12 @@ As per the requirements for option 2 of the final project, this site will be a u
 ### Database Requirements:
 Database Requirements:
 * [X] Users table (with role field)
-* [ ] Vehicles table
-* [ ] Categories table (linked to vehicles)
-* [ ] Reviews table (linked to users and vehicles)
-* [ ] Service requests table (linked to users, with status tracking)
+* [X] Vehicles table
+* [X] Categories table (linked to vehicles)
+* [X] Reviews table (linked to users and vehicles)
+* [X] Service requests table (linked to users, with status tracking)
 * [X] Contact messages table
-* [ ] Vehicle images table (one-to-many with vehicles)
+* [X] Vehicle images table (one-to-many with vehicles)
 
 ## Database Schema:
 - [ ] An image of your entity relation diagram (ERD) exported from pgAdmin showing your tables and relationships
@@ -60,7 +60,7 @@ Required Technologies:
 * [X] EJS or Liquid.js for rendering views
 * [ ] ESM (ECMAScript Modules), no CommonJS (require is not allowed)
 * [X] PostgreSQL for the database
-* [ ] Deployed on Render with a connected PostgreSQL database
+* [X] Deployed on Render with a connected PostgreSQL database
 
 ## Implementation Steps
 
