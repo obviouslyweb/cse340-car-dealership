@@ -4,9 +4,9 @@ Project repository for the CSE 340 final project, a car dealership site made wit
 ## Project Description
 As per the requirements for option 2 of the final project, this site will be a used car dealership website with these features:
 ### Public Pages
-* [ ] Home page with featured vehicles
+* [X] Home page with featured vehicles
 * [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
-* [ ] Individual vehicle detail pages with images, specs, and price
+* [X] Individual vehicle detail pages with images, specs, and price
 * [X] Contact form (saves to database)
 ### User Features (must be logged in)
 * [ ] Leave reviews on vehicles
@@ -58,7 +58,7 @@ Additionally, your GitHub repository must show:
 Required Technologies:
 * [X] Node.js with Express.js as the backend framework
 * [X] EJS or Liquid.js for rendering views
-* [ ] ESM (ECMAScript Modules), no CommonJS (require is not allowed)
+* [X] ESM (ECMAScript Modules), no CommonJS (require is not allowed)
 * [X] PostgreSQL for the database
 * [X] Deployed on Render with a connected PostgreSQL database
 
@@ -66,11 +66,8 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] ERD image in README (pgAdmin export)
-* [ ] ESM only in codebase (no require)
-* [ ] Home page with featured vehicles
 * [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
-* [ ] Vehicle detail pages (images, specs, price)
+* [ ] Polish vehicle detail pages (images, specs, price)
 * [ ] Logged-in users can leave reviews on vehicles
 * [ ] Logged-in users can edit or delete own reviews
 * [ ] Logged-in users can submit service requests
@@ -84,5 +81,6 @@ Here's a list of everything that I have left to do until completion in order.
 * [ ] Admin can manage employee accounts and view activity or user data (if required)
 * [ ] User Roles section filled in README
 * [ ] Test account credentials in README (email only, no password)
+* [ ] ERD image in README (pgAdmin export)
 * [ ] Known Limitations section filled in README
 * [ ] Review & polish README
