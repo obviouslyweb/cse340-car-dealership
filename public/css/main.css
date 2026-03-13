@@ -162,6 +162,8 @@ body {
     font-weight: 400;
     text-decoration: none;
     transition: 0.2s all;
+    background: none;
+    font-style: var(--font-body);
 
     &:hover, &:focus {
         transform: scale(1.1);
@@ -174,6 +176,24 @@ main {
     padding-left: var(--spacing-lg);
     padding-right: var(--spacing-lg);
     flex: 1;
+
+    .side-view {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .side-view-left, .side-view-right {
+            display: flex;
+            flex-direction: row;
+            gap: var(--spacing-sm);
+            align-items: center;
+
+            .btn {
+                align-self: center;
+            }
+        }
+    }
 }
 
 footer {

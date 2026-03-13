@@ -8,21 +8,27 @@
         </div>
     </section>
 
-    <h2>Featured Vehicles</h2>
-    <p>Browse our featured vehicles and click on any to see full details.</p>
+    <div class="side-view">
+        <div class="side-view-left">
+            <h2>Featured Vehicles</h2>
+        </div>
+        <div class="side-view-right">
+            <p>Browse our featured vehicles and click on any to see full details.</p>
+            <a href="/vehicles" class="btn">See All Vehicles</a>
+        </div>
+    </div>
     <div class="vehicle-list">
         <% if (featuredVehicles && featuredVehicles.length > 0) { %>
             <% featuredVehicles.forEach(vehicle => { %>
 
                 <div class="vehicle-card">
-                    <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
-                    <div class="vehicle-card-details">
-                        <h3><a href="/vehicles/<%= vehicle.id %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
-                        <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
-                        <% if (vehicle.description) { %>
-                            <p class="vehicle-description"><%= vehicle.description %></p>
-                        <% } %>
-                    </div>
+                    <a href="/vehicles/<%= vehicle.id %>">
+                        <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
+                        <div class="vehicle-card-details">
+                            <h3><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
+                            <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                        </div>
+                    </a>
                 </div>
 
             <% }); %>
