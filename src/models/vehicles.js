@@ -1,17 +1,16 @@
 import db from './db.js';
 
 /**
- * Fetches all featured vehicles with their primary (featured) image URL.
- *
- * @returns {Promise<Array>} Array of vehicles with id, make, model, year, price, description, image_url
+ * Fetches all featured vehicles with their primary image URL
  */
 const getFeaturedVehicles = async () => {
     const query = `
         SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description,
+               v.stock,
                vi.image_url
         FROM vehicles v
         LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
-        WHERE v.is_featured = TRUE AND v.is_available = TRUE
+        WHERE v.is_featured = TRUE AND v.stock > 0
         ORDER BY v.id
     `;
     const result = await db.query(query);
@@ -19,33 +18,59 @@ const getFeaturedVehicles = async () => {
 };
 
 /**
- * Fetches all available vehicles with their primary image URL.
- *
- * @returns {Promise<Array>} Array of vehicles with id, make, model, year, price, description, image_url
+ * Fetches all vehicle categories
  */
-const getVehicles = async () => {
+const getCategories = async () => {
     const query = `
-        SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description,
-               vi.image_url
-        FROM vehicles v
-        LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
-        WHERE v.is_available = TRUE
-        ORDER BY v.id
+        SELECT id, name, description
+        FROM categories
+        ORDER BY id
     `;
     const result = await db.query(query);
     return result.rows;
 };
 
 /**
- * Fetches a single vehicle by ID with its primary image URL.
- *
- * @param {number} id - Vehicle ID
- * @returns {Promise<Object|null>} Vehicle record or null if not found
+ * Fetches vehicles with their primary image URL
+ * Filters:
+ * - categoryId: Optional category ID to filter by
+ * - includeUnavailable: If true, include vehicles with no remaining stock
+ */
+const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
+    const conditions = [];
+    const params = [];
+
+    if (!includeUnavailable) {
+        conditions.push('v.stock > 0');
+    }
+    if (categoryId) {
+        params.push(categoryId);
+        conditions.push(`v.category_id = $${params.length}`);
+    }
+
+    const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    const query = `
+        SELECT v.id, v.category_id, v.make, v.model, v.year, v.price, v.mileage,
+               v.description, v.stock,
+               vi.image_url
+        FROM vehicles v
+        LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
+        ${whereClause}
+        ORDER BY v.id
+    `;
+
+    const result = await db.query(query, params);
+    return result.rows;
+};
+
+/**
+ * Fetches a single vehicle by ID with its primary image URL
  */
 const getVehicleById = async (id) => {
     const query = `
         SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description,
-               v.category_id, v.is_available,
+               v.category_id, v.stock,
                vi.image_url
         FROM vehicles v
         LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
@@ -55,4 +80,4 @@ const getVehicleById = async (id) => {
     return result.rows[0] || null;
 };
 
-export { getFeaturedVehicles, getVehicles, getVehicleById };
+export { getFeaturedVehicles, getVehicles, getVehicleById, getCategories };
