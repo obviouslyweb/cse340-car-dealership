@@ -5,7 +5,7 @@ Project repository for the CSE 340 final project, a car dealership site made wit
 As per the requirements for option 2 of the final project, this site will be a used car dealership website with these features:
 ### Public Pages
 * [X] Home page with featured vehicles
-* [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
+* [X] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
 * [X] Individual vehicle detail pages with images, specs, and price
 * [X] Contact form (saves to database)
 ### User Features (must be logged in)
@@ -66,7 +66,6 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
 * [ ] Polish vehicle detail pages (images, specs, price)
 * [ ] Logged-in users can leave reviews on vehicles
 * [ ] Logged-in users can edit or delete own reviews
@@ -79,6 +78,7 @@ Here's a list of everything that I have left to do until completion in order.
 * [ ] Admin can add, edit, delete vehicle categories
 * [ ] Admin can add, edit, delete vehicles
 * [ ] Admin can manage employee accounts and view activity or user data (if required)
+* [ ] Mobile view handling for all pages
 * [ ] User Roles section filled in README
 * [ ] Test account credentials in README (email only, no password)
 * [ ] ERD image in README (pgAdmin export)
