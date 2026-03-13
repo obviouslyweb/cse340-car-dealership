@@ -1,17 +1,29 @@
 <%- include('../partials/header') %>
 <main>
+    <% 
+        const currentCategorySafe = typeof currentCategory !== 'undefined' && currentCategory ? currentCategory : null;
+        const showUnavailableSafe = typeof showUnavailable !== 'undefined' ? showUnavailable : false;
+    %>
     <div class="side-view">
         <div class="side-view-left">
             <h2>All Vehicles</h2>
         </div>
         <div class="side-view-right">
-            <p>Sort by</p>
-            <button class="btn sort-btn">Cars</button>
-            <button class="btn sort-btn">Trucks</button>
-            <button class="btn sort-btn">Vans</button>
-            <button class="btn sort-btn">SUVs</button>
-            <button class="btn sort-btn">Motorcycles</button>
-            <button class="btn unavailable-button">Show Unavailable</button>
+            <p>Filter by type</p>
+            <a href="/vehicles<%= showUnavailableSafe ? '?showUnavailable=1' : '' %>" class="btn sort-btn <%= !currentCategorySafe ? 'active' : '' %>">All</a>
+            <a href="/vehicles?category=cars<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'cars' ? 'active' : '' %>">Cars</a>
+            <a href="/vehicles?category=trucks<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'trucks' ? 'active' : '' %>">Trucks</a>
+            <a href="/vehicles?category=vans<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'vans' ? 'active' : '' %>">Vans</a>
+            <a href="/vehicles?category=suvs<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'suvs' ? 'active' : '' %>">SUVs</a>
+            <a href="/vehicles?category=motorcycles<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'motorcycles' ? 'active' : '' %>">Motorcycles</a>
+
+            <% 
+                const baseCategoryQuery = currentCategorySafe ? `category=${currentCategorySafe}&` : '';
+                const toggleShowUnavailable = showUnavailableSafe ? '0' : '1';
+            %>
+            <a href="/vehicles?<%= baseCategoryQuery %>showUnavailable=<%= toggleShowUnavailable %>" class="btn unavailable-button <%= showUnavailableSafe ? 'active' : '' %>">
+                <%= showUnavailableSafe ? 'Hide Unavailable' : 'Show Unavailable' %>
+            </a>
         </div>
     </div>
     <div class="vehicle-list-buffer">
@@ -22,16 +34,25 @@
                     <div class="vehicle-card">
                         <a href="/vehicles/<%= vehicle.id %>">
                             <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
-                            <div class="vehicle-card-details">
-                                <h3><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
-                                <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
-                                <% if (!vehicle.is_available) { %>
-                                    <p class="vehicle-meta">In stock</p>
-                                <% } else { %>
-                                    <p class="vehicle-meta">Unavailable</p>
-                                <% } %>
-                            </div>
                         </a>
+                        <div class="vehicle-card-details">
+                            <h3 class="vehicle-title">
+                                <a href="/vehicles/<%= vehicle.id %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a>
+                            </h3>
+                            <div class="vehicle-meta side-view">
+                                <div class="side-view-left">
+                                <p><span class="vehicle-meta-focus">$<%= Number(vehicle.price).toLocaleString() %></span></p>
+                                <% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                                </div>
+                                <div class="side-view-right">
+                                    <% if (vehicle.stock > 0) { %>
+                                        <p class="instock"><%= vehicle.stock %> remaining</p>
+                                    <% } else { %>
+                                        <p class="nostock">Out of stock</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 <% }); %>

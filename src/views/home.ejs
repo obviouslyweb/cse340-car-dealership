@@ -24,16 +24,25 @@
                 <div class="vehicle-card">
                     <a href="/vehicles/<%= vehicle.id %>">
                         <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
-                        <div class="vehicle-card-details">
-                            <h3><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
-                            <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
-                            <% if (!vehicle.is_available) { %>
-                                <p class="vehicle-meta">In stock</p>
-                            <% } else { %>
-                                <p class="vehicle-meta">Unavailable</p>
-                            <% } %>
-                        </div>
                     </a>
+                    <div class="vehicle-card-details">
+                        <h3 class="vehicle-title">
+                            <a href="/vehicles/<%= vehicle.id %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a>
+                        </h3>
+                        <div class="vehicle-meta side-view">
+                            <div class="side-view-left">
+                            <p><span class="vehicle-meta-focus">$<%= Number(vehicle.price).toLocaleString() %></span></p>
+                            <% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                            </div>
+                            <div class="side-view-right">
+                                <% if (vehicle.stock > 0) { %>
+                                    <p class="instock"><%= vehicle.stock %> remaining</p>
+                                <% } else { %>
+                                    <p class="nostock">Out of stock</p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             <% }); %>

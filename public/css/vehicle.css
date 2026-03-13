@@ -13,11 +13,62 @@
 
     display: flex;
     flex-direction: column;
-    background: color-mix(in srgb, var(--color-primary) 20%, rgba(0, 0, 0, 0));
+    background: var(--vehicle-card-bg);
     border-radius: var(--vehicle-card-border-radius);
 
     .vehicle-card-details {
         padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+
+        .vehicle-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+            padding-bottom: 5px;
+            margin-bottom: 0;
+
+            a {
+                display: inline-block;
+                transform-origin: left center;
+                text-decoration: none;
+                color: var(--color-primary);
+                transition: 0.2s all;
+
+                &:hover, &:focus {
+                    transform: scale(1.05);
+                    color: black;
+                }
+
+                &:active {
+                    transform: scale(1);
+                    color: var(--color-primary);
+                }
+            }
+        }
+
+        .vehicle-meta {
+            height: 30px;
+
+            .vehicle-meta-focus {
+                color: rgb(1, 82, 1);
+            }
+
+            .side-view-right {
+                .instock {
+                    padding-left: 7px;
+                    padding-right: 7px;
+                    padding-top: 3px;
+                    padding-bottom: 3px;
+                    border-radius: 10px;
+                    background: color-mix(in srgb, var(--color-primary) 50%, rgba(255, 255, 255, 0));
+                    color: var(--vehicle-card-bg);
+                }
+
+                .nostock {
+                    color: var(--color-focus);
+                }
+            }
+        }
     }
 
     a {
@@ -27,6 +78,7 @@
             object-fit: cover;
             border-top-left-radius: var(--vehicle-card-border-radius);
             border-top-right-radius: var(--vehicle-card-border-radius);
+            display: block;
         }
     }
 }
