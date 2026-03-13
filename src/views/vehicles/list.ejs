@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    <p>Browse our available vehicles and click on any to see full details.</p>
+
+    <div class="vehicle-list">
+        <% if (vehicles && vehicles.length > 0) { %>
+            <% vehicles.forEach(vehicle => { %>
+
+                <div class="vehicle-card">
+                    <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
+                    <div class="vehicle-card-details">
+                        <h3><a href="/vehicles/<%= vehicle.id %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
+                        <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                        <% if (vehicle.description) { %>
+                            <p class="vehicle-description"><%= vehicle.description %></p>
+                        <% } %>
+                    </div>
+                </div>
+
+            <% }); %>
+        <% } else { %>
+            <p>No vehicles available at this time.</p>
+        <% } %>
+
+    </div>
+</main>
+<%- include('../partials/footer') %>

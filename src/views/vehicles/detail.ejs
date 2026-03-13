@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="vehicle-header">
+        <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
+        <p class="vehicle-meta">$<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> miles<% } %></p>
+        <img src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
+        <% if (vehicle.description) { %>
+            <p class="vehicle-description"><%= vehicle.description %></p>
+        <% } %>
+    </div>
+    <div class="navigation">
+        <p><a href="/">&larr; Back to Home</a></p>
+    </div>
+</main>
+<%- include('../partials/footer') %>

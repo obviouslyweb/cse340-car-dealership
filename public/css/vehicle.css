@@ -1,0 +1,25 @@
+.vehicle-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.vehicle-card {
+    --vehicle-card-border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    background: color-mix(in srgb, var(--color-primary) 20%, rgba(0, 0, 0, 0));
+    border-radius: var(--vehicle-card-border-radius);
+
+    .vehicle-card-details {
+        padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+    }
+
+    .card-img {
+        height: 150px;
+        object-fit: cover;
+        border-top-left-radius: var(--vehicle-card-border-radius);
+        border-top-right-radius: var(--vehicle-card-border-radius);
+    }
+}
