@@ -11,7 +11,7 @@ import { contactValidation, registrationValidation, loginValidation, updateAccou
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
 // import { catalogPage, courseDetailPage } from './catalog/catalog.js';
-import { homePage, aboutPage } from './index.js';
+import { homePage, aboutPage, vehicleListPage, vehicleDetailPage } from './index.js';
 // import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
@@ -26,17 +26,22 @@ const router = Router();
 /*
 Router Middleware
 */
-// // Add catalog-specific CSS styles to all catalog routes
-// router.use('/catalog', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
-//     next();
-// });
 
-// // Add catalog-specific CSS styles to all faculty routes
-// router.use('/faculty', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
-//     next();
-// });
+// Add hero styles to home page
+router.use((req, res, next) => {
+    if (req.path === "/") {
+        res.addStyle('<link rel="stylesheet" href="/css/home.css">');
+    }
+    next();
+});
+
+// Add vehicle-specific styles to home and vehicle pages (list + detail)
+router.use((req, res, next) => {
+    if (req.path === '/' || req.path.startsWith('/vehicles')) {
+        res.addStyle('<link rel="stylesheet" href="/css/vehicle.css">');
+    }
+    next();
+});
 
 // Add contact-specific styles to all contact routes
 router.use('/contact', (req, res, next) => {
@@ -70,10 +75,9 @@ Route definitions
 router.get('/', homePage);
 router.get('/about', aboutPage);
 
-// ---------------------- TODO ----------------------
-// // Course catalog routes (NEEDS TO BE REPLACED WITH VEHICLE ROUTES)
-// router.get('/catalog', catalogPage);
-// router.get('/catalog/:slugId', courseDetailPage);
+// Vehicle list and detail (exact /vehicles before :id)
+router.get('/vehicles', vehicleListPage);
+router.get('/vehicles/:id', vehicleDetailPage);
 
 // Contact form routes
 router.use('/contact', contactValidation, contactRoutes);
