@@ -175,30 +175,30 @@ INSERT INTO vehicles (id, category_id, make, model, year, price, mileage, is_ava
     (5, 3, 'Toyota', 'Camry', 2020, 21900.00, 38000, TRUE, TRUE, 'A mid-size sedan with a 2.5L four-cylinder engine (203 hp) and 8-speed automatic transmission. Includes Toyota Safety Sense 2.0, dual-zone climate control, and a 8-inch touchscreen infotainment system.'),
     (6, 3, 'Honda', 'Civic', 2018, 16500.00, 55000, TRUE, FALSE, 'A compact sedan featuring a 1.5L turbocharged engine (174 hp). Known for its fuel efficiency, responsive handling, and a well-appointed interior with Honda Sensing standard across all trims.'),
     (7, 4, 'Ford', 'Explorer', 2016, 20100.00, 94000, TRUE, FALSE, 'A three-row SUV with a 2.3L EcoBoost four-cylinder engine (280 hp) and available 4WD. Seats up to 7 passengers with a hands-free liftgate, SYNC 3 infotainment, and a towing capacity of up to 5,000 lbs.'),
-    (8, 4, 'Jeep', 'Grand Cherokee', 2021, 34900.00, 29000, TRUE, TRUE, 'A premium midsize SUV powered by a 3.6L Pentastar V6 (293 hp). Features Jeep''s Quadra-Trac II 4WD system, Uconnect 5 infotainment, and available Quadra-Lift air suspension for serious off-road capability.'),
+    (8, 4, 'Jeep', 'Grand Cherokee', 2021, 34900.00, 29000, TRUE, FALSE, 'A premium midsize SUV powered by a 3.6L Pentastar V6 (293 hp). Features Jeep''s Quadra-Trac II 4WD system, Uconnect 5 infotainment, and available Quadra-Lift air suspension for serious off-road capability.'),
     (9, 5, 'Harley-Davidson', 'Iron 883', 2019, 8900.00, 11000, TRUE, FALSE, 'A Sportster-series cruiser motorcycle with an 883cc air-cooled Evolution V-Twin engine. Features a blacked-out minimalist style, drag-style handlebar, and low seat height of 25.7 inches — ideal for new and experienced riders alike.'),
     (10, 5, 'Honda', 'CB500F', 2020, 6200.00, 8400, TRUE, FALSE, 'A lightweight naked bike with a 471cc parallel-twin engine (47 hp). Smooth, approachable power delivery and an upright riding position make this an excellent choice for newer riders or daily commuters.');
 
 INSERT INTO vehicle_images (vehicle_id, image_url, is_primary) VALUES
     -- Mazda B4000
-    (1, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/%2798-%2701_Mazda_B4000_V6_Extended_Cab.JPG/1280px-%2798-%2701_Mazda_B4000_V6_Extended_Cab.JPG', TRUE),
+    (1, 'https://cdn-fastly.thetruthaboutcars.com/media/2022/07/20/9499414/mazda-b4000-review.jpg?size=720x845&nocrop=1', TRUE),
     -- Ford F-150
-    (2, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/2015_Ford_F-150_XLT.jpg/1280px-2015_Ford_F-150_XLT.jpg', TRUE),
+    (2, 'https://images.hgmsites.net/hug/2015-ford-f-150_100486838_h.jpg', TRUE),
     -- Honda Odyssey
-    (3, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/2018_Honda_Odyssey_%28facelift%2C_white%29%2C_front_8.15.19.jpg/1280px-2018_Honda_Odyssey_%28facelift%2C_white%29%2C_front_8.15.19.jpg', TRUE),
+    (3, 'https://images.coches.com/_vn_/honda/Odyssey-2017/honda_odyssey-2017_r26.jpg', TRUE),
     -- Chrysler Pacifica
-    (4, 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2017_Chrysler_Pacifica%2C_front_10.2.17.jpg/1280px-2017_Chrysler_Pacifica%2C_front_10.2.17.jpg', TRUE),
+    (4, 'https://images.hgmsites.net/hug/2019-chrysler-pacifica_100656421_h.jpg', TRUE),
     -- Toyota Camry
-    (5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2020_Toyota_Camry_%28ASV70R%29_Ascent_sedan_%282020-10-16%29_01.jpg/1280px-2020_Toyota_Camry_%28ASV70R%29_Ascent_sedan_%282020-10-16%29_01.jpg', TRUE),
+    (5, 'https://www.conceptcarz.com/images/Toyota/toyota-camry-2020_013.jpg', TRUE),
     -- Honda Civic
-    (6, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/2018_Honda_Civic_Sport_%28facelift%2C_blue%29%2C_front_8.6.19.jpg/1280px-2018_Honda_Civic_Sport_%28facelift%2C_blue%29%2C_front_8.6.19.jpg', TRUE),
+    (6, 'https://static0.carbuzzimages.com/wordpress/wp-content/uploads/gallery-images/original/478000/400/478468.jpg', TRUE),
     -- Ford Explorer
-    (7, 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2016_Ford_Explorer_Sport%2C_front_11.3.19.jpg/1280px-2016_Ford_Explorer_Sport%2C_front_11.3.19.jpg', TRUE),
+    (7, 'https://st.automobilemag.com/uploads/sites/10/2015/09/2016-Ford-Explorer-front-three-quarter-view-2.jpg', TRUE),
     -- Jeep Grand Cherokee
-    (8, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/2021_Jeep_Grand_Cherokee_Laredo_4x4_%28WL%29%2C_front_10.28.21.jpg/1280px-2021_Jeep_Grand_Cherokee_Laredo_4x4_%28WL%29%2C_front_10.28.21.jpg', TRUE),
+    (8, 'https://motorillustrated.com/wp-content/uploads/2020/10/2021-Jeep-Grand-Cherokee-80th-Anniversary-01.jpg', TRUE),
     -- Harley-Davidson Iron 883
-    (9, 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Harley-Davidson_Sportster_Iron_883_%282019%29.jpg/1280px-Harley-Davidson_Sportster_Iron_883_%282019%29.jpg', TRUE),
+    (9, 'https://psmfirestorm.blob.core.windows.net/crs-images/244128/16573/original.jpg', TRUE),
     -- Honda CB500F
-    (10, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Honda_CB500F_2019.jpg/1280px-Honda_CB500F_2019.jpg', TRUE);
+    (10, 'https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg', TRUE);
 
 COMMIT;
