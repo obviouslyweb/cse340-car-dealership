@@ -15,6 +15,8 @@
     --font-body: "Lexend Deca", Arial, sans-serif;
     --font-heading-weight: 500;
     --font-body-weight: 350;
+    
+    --hero-overlay-rgb: 74, 111, 165;
 }
 
 body {
@@ -28,9 +30,12 @@ body {
     font-weight: var(--font-body-weight);
 
     header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
         display: flex;
         flex-direction: row;
-        max-height: 35px;
+        height: 25px;
         padding: var(--spacing-md);
         background-color: var(--color-primary);
         color: var(--color-background);
@@ -58,13 +63,13 @@ body {
                 transition: all 0.2s;
                 gap: calc(var(--spacing-sm) * 0.25);
 
-                &:hover {
+                &:hover, &:focus {
                     color: white;
                 }
             }
 
             .lowlight {
-                &:hover {
+                &:hover, &:focus {
                     color: var(--color-primary);
                 }
             }
@@ -166,8 +171,8 @@ body {
 }
 
 main {
-    padding-left: var(--spacing-md);
-    padding-right: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
     flex: 1;
 }
 
