@@ -186,7 +186,7 @@ main {
         .side-view-left, .side-view-right {
             display: flex;
             flex-direction: row;
-            gap: var(--spacing-sm);
+            gap: calc(var(--spacing-sm) * 0.5);
             align-items: center;
 
             .btn {

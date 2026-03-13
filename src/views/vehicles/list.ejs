@@ -5,8 +5,13 @@
             <h2>All Vehicles</h2>
         </div>
         <div class="side-view-right">
-            <p>Sort: </p>
-            <button class="btn">Coming Soon!</button>
+            <p>Sort by</p>
+            <button class="btn sort-btn">Cars</button>
+            <button class="btn sort-btn">Trucks</button>
+            <button class="btn sort-btn">Vans</button>
+            <button class="btn sort-btn">SUVs</button>
+            <button class="btn sort-btn">Motorcycles</button>
+            <button class="btn unavailable-button">Show Unavailable</button>
         </div>
     </div>
     <div class="vehicle-list-buffer">
@@ -20,6 +25,11 @@
                             <div class="vehicle-card-details">
                                 <h3><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
                                 <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                                <% if (!vehicle.is_available) { %>
+                                    <p class="vehicle-meta">In stock</p>
+                                <% } else { %>
+                                    <p class="vehicle-meta">Unavailable</p>
+                                <% } %>
                             </div>
                         </a>
                     </div>
