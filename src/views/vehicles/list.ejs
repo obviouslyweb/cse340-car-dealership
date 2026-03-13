@@ -1,28 +1,27 @@
 <%- include('../partials/header') %>
 <main>
-    <% 
-        const currentCategorySafe = typeof currentCategory !== 'undefined' && currentCategory ? currentCategory : null;
-        const showUnavailableSafe = typeof showUnavailable !== 'undefined' ? showUnavailable : false;
-    %>
     <div class="side-view">
         <div class="side-view-left">
             <h2>All Vehicles</h2>
         </div>
         <div class="side-view-right">
             <p>Filter by type</p>
-            <a href="/vehicles<%= showUnavailableSafe ? '?showUnavailable=1' : '' %>" class="btn sort-btn <%= !currentCategorySafe ? 'active' : '' %>">All</a>
-            <a href="/vehicles?category=cars<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'cars' ? 'active' : '' %>">Cars</a>
-            <a href="/vehicles?category=trucks<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'trucks' ? 'active' : '' %>">Trucks</a>
-            <a href="/vehicles?category=vans<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'vans' ? 'active' : '' %>">Vans</a>
-            <a href="/vehicles?category=suvs<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'suvs' ? 'active' : '' %>">SUVs</a>
-            <a href="/vehicles?category=motorcycles<%= showUnavailableSafe ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategorySafe === 'motorcycles' ? 'active' : '' %>">Motorcycles</a>
+            <a href="/vehicles<%= showUnavailable ? '?showUnavailable=1' : '' %>" class="btn sort-btn <%= !currentCategoryId ? 'active' : '' %>">All</a>
+
+            <% if (categories && categories.length) { %>
+                <% categories.forEach(category => { %>
+                    <a href="/vehicles?categoryId=<%= category.id %><%= showUnavailable ? '&showUnavailable=1' : '' %>" class="btn sort-btn <%= currentCategoryId === category.id ? 'active' : '' %>">
+                        <%= category.name %>
+                    </a>
+                <% }); %>
+            <% } %>
 
             <% 
-                const baseCategoryQuery = currentCategorySafe ? `category=${currentCategorySafe}&` : '';
-                const toggleShowUnavailable = showUnavailableSafe ? '0' : '1';
+                const baseCategoryQuery = currentCategoryId ? `categoryId=${currentCategoryId}&` : '';
+                const toggleShowUnavailable = showUnavailable ? '0' : '1';
             %>
-            <a href="/vehicles?<%= baseCategoryQuery %>showUnavailable=<%= toggleShowUnavailable %>" class="btn unavailable-button <%= showUnavailableSafe ? 'active' : '' %>">
-                <%= showUnavailableSafe ? 'Hide Unavailable' : 'Show Unavailable' %>
+            <a href="/vehicles?<%= baseCategoryQuery %>showUnavailable=<%= toggleShowUnavailable %>" class="btn unavailable-button <%= showUnavailable ? 'active' : '' %>">
+                <%= showUnavailable ? 'Hide Unavailable' : 'Show Unavailable' %>
             </a>
         </div>
     </div>
