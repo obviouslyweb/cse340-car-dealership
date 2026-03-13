@@ -1,7 +1,35 @@
 <%- include('partials/header') %>
 <main>
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">Get There with Fuse</h2>
+            <p class="hero-text">Whatever you're looking for, we can help you find it.</p>
+            <a href="/vehicles" class="hero-cta btn">All Vehicles</a>
+        </div>
+    </section>
+
     <h2>Featured Vehicles</h2>
-    <p>Content coming soon!</p>
+    <p>Browse our featured vehicles and click on any to see full details.</p>
+    <div class="vehicle-list">
+        <% if (featuredVehicles && featuredVehicles.length > 0) { %>
+            <% featuredVehicles.forEach(vehicle => { %>
+
+                <div class="vehicle-card">
+                    <img class="card-img" src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
+                    <div class="vehicle-card-details">
+                        <h3><a href="/vehicles/<%= vehicle.id %>"><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></a></h3>
+                        <p class="vehicle-meta"><%= vehicle.year %> - $<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                        <% if (vehicle.description) { %>
+                            <p class="vehicle-description"><%= vehicle.description %></p>
+                        <% } %>
+                    </div>
+                </div>
+
+            <% }); %>
+        <% } else { %>
+            <p>No featured vehicles at this time.</p>
+        <% } %>
+    </div>
     <h2>Why Choose Fuse?</h2>
     <p>Fuse Automobiles is the premiere digital car dealership, providing you with the wheels you need for a fraction of the cost.</p>
     <p>Founded in 2018, we pride ourselves on the quality and speed of our website, which you're on right now.</p>
