@@ -80,4 +80,45 @@ const getVehicleById = async (id) => {
     return result.rows[0] || null;
 };
 
-export { getFeaturedVehicles, getVehicles, getVehicleById, getCategories };
+/**
+ * Gets all reviews for a vehicle from vehicle ID
+ */
+const getReviewsByVehicleId = async (id) => {
+    const query = `
+        SELECT r.id, r.vehicle_id, r.user_id, r.rating, r.body, r.is_visible, r.created_at, r.updated_at
+        FROM reviews r
+        WHERE r.vehicle_id = $1 AND r.is_visible = TRUE
+        ORDER BY r.created_at DESC
+    `;
+    const result = await db.query(query, [id]);
+    return result.rows;
+};
+
+/**
+ * Gets reviews that need to be moderated
+ */
+const getReviewsAwaitingApproval = async (id) => {
+    const query = `
+        SELECT r.id, r.vehicle_id, r.user_id, r.rating, r.body, r.is_visible, r.created_at, r.updated_at
+        FROM reviews r
+        WHERE r.is_visible = FALSE
+        ORDER BY r.created_at DESC
+    `;
+    const result = await db.query(query, [id]);
+    return result.rows;
+};
+
+/**
+ * Gets number of stars for aggregate review data
+ */
+const getAggregateReviewScoreByVehicleId = async (id) => {
+    const query = `
+        SELECT AVG(r.rating) AS average_rating, COUNT(*) AS review_count
+        FROM reviews r
+        WHERE r.vehicle_id = $1 AND r.is_visible = TRUE
+    `;
+    const result = await db.query(query, [id]);
+    return result.rows[0] || null;
+};
+
+export { getFeaturedVehicles, getVehicles, getVehicleById, getCategories, getReviewsByVehicleId, getReviewsAwaitingApproval, getAggregateReviewScoreByVehicleId };
