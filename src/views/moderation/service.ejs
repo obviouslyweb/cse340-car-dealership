@@ -1,8 +1,14 @@
 <%- include('../partials/header') %>
 <main>
     <div class="dashboard">
-        <h1>Service Requests</h1>
-        <p><a href="/dashboard" class="btn lowlight">← Back to Dashboard</a></p>
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Service Requests</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
 
         <% if (serviceRequests && serviceRequests.length > 0) { %>
             <ul class="moderation-service-list">

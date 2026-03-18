@@ -1,8 +1,14 @@
 <%- include('../partials/header') %>
 <main>
     <div class="dashboard">
-        <h1>Contact Form Submissions</h1>
-        <p><a href="/dashboard" class="btn lowlight">← Back to Dashboard</a></p>
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Contact Form Submissions</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
 
         <% if (contactForms && contactForms.length > 0) { %>
             <ul class="moderation-contact-list">
