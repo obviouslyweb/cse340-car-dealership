@@ -51,7 +51,7 @@ Database Requirements:
 
 ## Final Details (delete once verified)
 Additionally, your GitHub repository must show:
-- [ ] Minimum 15 substantial commits (not simple one-line fixes)
+- [X] Minimum 15 substantial commits (not simple one-line fixes)
 - [X] Organized folder structure
 - [X] Clean, readable code with consistent formatting
 
