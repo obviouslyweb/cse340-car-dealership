@@ -36,11 +36,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 const PORT = process.env.PORT || 3000;
+const isProduction = NODE_ENV === 'production';
 
 /**
  * Setup Express Server
  */
 const app = express();
+
+// Render terminates HTTPS at the proxy, so Express must trust it for secure cookies.
+if (isProduction) {
+    app.set('trust proxy', 1);
+}
 
 // Initialize PostgreSQL session store
 const pgSession = connectPgSimple(session);
@@ -63,9 +69,11 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: isProduction,
     cookie: {
-        secure: NODE_ENV.includes('dev') !== true,
+        secure: isProduction,
         httpOnly: true,
+        sameSite: 'lax',
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
