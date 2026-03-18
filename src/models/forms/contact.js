@@ -34,4 +34,16 @@ const getAllContactForms = async () => {
     return result.rows;
 };
 
-export { createContactForm, getAllContactForms };
+/**
+ * Deletes a contact form submission by id.
+ *
+ * @param {number} id - The contact form submission id
+ * @returns {Promise<Object|null>} The deleted row or null if not found
+ */
+const deleteContactForm = async (id) => {
+    const query = `DELETE FROM contact_form WHERE id = $1 RETURNING id`;
+    const result = await db.query(query, [id]);
+    return result.rows[0] || null;
+};
+
+export { createContactForm, getAllContactForms, deleteContactForm };

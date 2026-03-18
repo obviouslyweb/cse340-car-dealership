@@ -82,6 +82,22 @@ const registrationValidation = [
 ];
 
 /**
+ * Validation rules for vehicle review form
+ */
+const reviewValidation = [
+    body('rating')
+        .toInt()
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Rating must be between 1 and 5'),
+    body('body')
+        .trim()
+        .notEmpty()
+        .withMessage('Review text is required')
+        .isLength({ min: 10, max: 2000 })
+        .withMessage('Review must be between 10 and 2000 characters')
+];
+
+/**
  * Validation rules for login form
  */
 const loginValidation = [
@@ -103,5 +119,6 @@ export {
     contactValidation, 
     registrationValidation, 
     loginValidation,
-    updateAccountValidation
+    updateAccountValidation,
+    reviewValidation
 };

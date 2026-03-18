@@ -1,15 +1,114 @@
 <%- include('../partials/header') %>
 <main>
-    <div class="vehicle-header">
-        <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
-        <p class="vehicle-meta">$<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> miles<% } %></p>
-        <img src="<%= vehicle.image_url || 'https://placehold.co/400x300/eee/999?text=No+Image' %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
-        <% if (vehicle.description) { %>
-            <p class="vehicle-description"><%= vehicle.description %></p>
+    <div class="vehicle-detail">
+        <div class="vehicle-detail-left">
+            <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
+            <p class="vehicle-meta">$<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> miles<% } %></p>
+            <% if (vehicle.description) { %>
+                <p class="vehicle-description"><%= vehicle.description %></p>
+            <% } %>
+        </div>
+        <div class="vehicle-detail-right vehicle-gallery" data-images="<%= vehicleImages && vehicleImages.length > 0 ? encodeURIComponent(JSON.stringify(vehicleImages.map(i => i.image_url))) : '' %>">
+            <% const placeholder = 'https://placehold.co/400x300/eee/999?text=No+Image'; %>
+            <% const firstImage = (vehicleImages && vehicleImages.length > 0) ? vehicleImages[0].image_url : (vehicle.image_url || placeholder); %>
+            <img id="vehicle-gallery-img" src="<%= firstImage %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
+            <% if (vehicleImages && vehicleImages.length > 1) { %>
+                <div class="vehicle-gallery-controls">
+                    <button type="button" class="vehicle-gallery-prev" aria-label="Previous image">Previous</button>
+                    <span class="vehicle-gallery-counter"><span id="vehicle-gallery-current">1</span> / <%= vehicleImages.length %></span>
+                    <button type="button" class="vehicle-gallery-next" aria-label="Next image">Next</button>
+                </div>
+                <script>
+                    (function () {
+                        var el = document.querySelector('.vehicle-gallery');
+                        if (!el) return;
+                        var encoded = el.getAttribute('data-images');
+                        if (!encoded) return;
+                        var list;
+                        try { list = JSON.parse(decodeURIComponent(encoded)); } catch (e) { return; }
+                        if (!Array.isArray(list) || list.length < 2) return;
+                        var img = document.getElementById('vehicle-gallery-img');
+                        var current = document.getElementById('vehicle-gallery-current');
+                        var idx = 0;
+                        function show(i) {
+                            idx = (i + list.length) % list.length;
+                            img.src = list[idx];
+                            if (current) current.textContent = idx + 1;
+                        }
+                        el.querySelector('.vehicle-gallery-prev').addEventListener('click', function () { show(idx - 1); });
+                        el.querySelector('.vehicle-gallery-next').addEventListener('click', function () { show(idx + 1); });
+                    })();
+                </script>
+            <% } %>
+        </div>
+    </div>
+
+    <section class="reviews-section">
+        <div class="side-view">
+            <div class="side-view-left">
+                <h2>Reviews</h2>
+            </div>
+            <div class="side-view-right">
+                 <% if (aggregateReview && Number(aggregateReview.review_count) > 0) { %>
+                    <p class="reviews-summary">
+                        <span class="reviews-stars" aria-label="Average rating: <%= Number(aggregateReview.average_rating).toFixed(1) %> out of 5">
+                            <% const avg = Number(aggregateReview.average_rating); const full = Math.floor(avg); const empty = 5 - full; %>
+                            <% for (let i = 0; i < full; i++) { %>★<% } %><% for (let i = 0; i < empty; i++) { %>☆<% } %>
+                        </span>
+                        <%= Number(aggregateReview.average_rating).toFixed(1) %> out of 5 · <%= aggregateReview.review_count %> <%= aggregateReview.review_count === 1 ? 'review' : 'reviews' %>
+                    </p>
+                <% } else { %>
+                    <p class="reviews-empty">No reviews yet.</p>
+                <% } %>
+            </div>
+        </div>
+       
+        <% if (reviews && reviews.length > 0) { %>
+            <ul class="reviews-list">
+                <% reviews.forEach(review => { %>
+
+                    <li class="review-card">
+                        <div class="review-header">
+                            <p class="review-rating" aria-label="Rating: <%= review.rating %> out of 5">
+                                <% for (let i = 0; i < 5; i++) { %><%= i < review.rating ? '★' : '☆' %><% } %>
+                            </p>
+                            <p class="review-author"><%= review.user_name || 'Username hidden.' %></p>
+                            <p class="review-date"><%= new Date(review.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></p>
+                        </div>
+                        <p class="review-body"><%= review.body %></p>
+                    </li>
+
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p class="reviews-empty">Be the first to leave a review!</p>
         <% } %>
-    </div>
-    <div class="navigation">
-        <p><a href="/">&larr; Back to Home</a></p>
-    </div>
+    </section>
+
+    <section class="leave-review-section">
+        <h2>Leave a Review</h2>
+        <% if (!isLoggedIn) { %>
+            <p>To leave a review, log in to your account or register for one!</p>
+        <% } else { %>
+            <form method="POST" action="/vehicles/<%= vehicle.id %>/review" class="form-style">
+                <p class="form-signed-in">Signed in as <%= currentUserName %>.</p>
+                <div class="form-group">
+                    <label for="review-rating">Rating</label>
+                    <select id="review-rating" name="rating" required>
+                        <option value="">Choose a rating</option>
+                        <% for (let i = 1; i <= 5; i++) { %>
+                            <option value="<%= i %>"><%= i %> star<%= i !== 1 ? 's' : '' %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review-body">Your review</label>
+                    <textarea id="review-body" name="body" rows="6" placeholder="Share your experience with this vehicle (at least 10 characters)..." minlength="10" maxlength="2000" required></textarea>
+                </div>
+                <button type="submit">Submit Review</button>
+            </form>
+        <% } %>
+    </section>
+
 </main>
 <%- include('../partials/footer') %>

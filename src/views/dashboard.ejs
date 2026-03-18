@@ -8,25 +8,92 @@
         <% if (isAdmin) { %>
         <div class="card red">
             <h2>Admin Actions</h2>
-            <p>Coming soon!</p>
+            <a href="/moderation/users/list" class="btn">Review Accounts</a>
         </div>
         <% } %>
 
         <% if (isEmployee) { %>
         <div class="card yellow">
             <h2>Employee Actions</h2>
-            <a href="/contact/responses" class="btn">Contact Form Submissions</a>
+            <a href="/moderation/contact" class="btn">Contact Form Submissions</a>
+            <a href="/moderation/reviews" class="btn">Moderate Submitted Reviews</a>
         </div>
         <% } %>
 
-        <div class="dashboard-actions">
-            <a href="/service-request" class="btn">Submit Service Request</a>
-            <a href="/logout" class="lowlight btn logout-button">Logout</a>
-        </div>
-
         <div class="card dashboard-detail">
             <h2>My Service Requests</h2>
-            <p>Coming soon!</p>
+            <a href="/service-request" class="btn">Submit Service Request</a>
+        </div>
+
+        <div class="card">
+            <h2>My Reviews</h2>
+            <% if (myReviews && myReviews.length > 0) { %>
+                <ul class="my-reviews-list">
+                    <% myReviews.forEach(review => { %>
+                        <li class="dashboard-review-item" id="review-<%= review.id %>">
+                            <div class="review-display">
+                                <div class="review-display-header">
+                                    <a href="/vehicles/<%= review.vehicle_id %>"><%= review.vehicle_year %> <%= review.vehicle_make %> <%= review.vehicle_model %></a>
+                                    <span aria-label="Rating: <%= review.rating %> out of 5">
+                                        <% for (let i = 0; i < 5; i++) { %><%= i < review.rating ? '★' : '☆' %><% } %>
+                                    </span>
+                                    <span class="review-meta-date"><%= new Date(review.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                                    <% if (!review.is_visible) { %>
+                                        <span class="review-pending">Pending review</span>
+                                    <% } %>
+                                </div>
+                                <p class="review-body"><%= review.body %></p>
+                                <div class="review-actions-display">
+                                    <button type="button" class="btn" data-review-edit="<%= review.id %>">Edit</button>
+                                    <form method="POST" action="/dashboard/reviews/<%= review.id %>/delete" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                        <button type="submit" class="btn lowlight">Delete review</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <form class="review-edit-form" method="POST" action="/dashboard/reviews/<%= review.id %>/edit" data-review-id="<%= review.id %>">
+                                <div class="review-edit-header">
+                                    <a href="/vehicles/<%= review.vehicle_id %>"><%= review.vehicle_year %> <%= review.vehicle_make %> <%= review.vehicle_model %></a>
+                                    <select id="edit-rating-<%= review.id %>" name="rating" class="review-edit-rating" required>
+                                        <% for (let i = 1; i <= 5; i++) { %>
+                                            <option value="<%= i %>" <%= review.rating === i ? 'selected' : '' %>><%= i %> star<%= i !== 1 ? 's' : '' %></option>
+                                        <% } %>
+                                    </select>
+                                    <span class="review-meta-date"><%= new Date(review.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                                </div>
+                                <textarea id="edit-body-<%= review.id %>" name="body" class="review-edit-body" rows="6" minlength="10" maxlength="2000" required placeholder="Your review..."><%= review.body %></textarea>
+                                <div class="review-edit-actions">
+                                    <button type="submit" class="btn">Edit Review</button>
+                                    <button type="button" class="btn lowlight review-edit-cancel" data-review-id="<%= review.id %>">Cancel Edits</button>
+                                </div>
+                            </form>
+                        </li>
+                    <% }); %>
+                </ul>
+                <script>
+                    (function() {
+                        document.querySelectorAll('[data-review-edit]').forEach(function(btn) {
+                            btn.addEventListener('click', function() {
+                                var id = this.getAttribute('data-review-edit');
+                                var li = document.getElementById('review-' + id);
+                                if (!li) return;
+                                li.querySelector('.review-display').style.display = 'none';
+                                li.querySelector('.review-edit-form').style.display = 'block';
+                            });
+                        });
+                        document.querySelectorAll('.review-edit-cancel').forEach(function(btn) {
+                            btn.addEventListener('click', function() {
+                                var id = this.getAttribute('data-review-id');
+                                var li = document.getElementById('review-' + id);
+                                if (!li) return;
+                                li.querySelector('.review-display').style.display = '';
+                                li.querySelector('.review-edit-form').style.display = 'none';
+                            });
+                        });
+                    })();
+                </script>
+            <% } else { %>
+                <p class="my-reviews-empty">You haven't submitted any reviews yet.</p>
+            <% } %>
         </div>
 
         <div class="card">
@@ -46,6 +113,11 @@
                 </div>
             </div>
         </div>
+
+        <div class="dashboard-actions">
+            <a href="/logout" class="lowlight btn logout-button">Logout</a>
+        </div>
+        
     </div>
 </main>
 <%- include('partials/footer') %>

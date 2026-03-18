@@ -32,7 +32,8 @@
                         <div class="vehicle-meta side-view">
                             <div class="side-view-left">
                             <p><span class="vehicle-meta-focus">$<%= Number(vehicle.price).toLocaleString() %></span></p>
-                            <% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                            <p><% if (vehicle.mileage) { %><%= vehicle.mileage.toLocaleString() %> mi<% } %></p>
+                            <p><span class="vehicle-meta-rating">★ <%= vehicle.average_rating != null ? Number(vehicle.average_rating).toFixed(1) : 'N/A' %></span></p>
                             </div>
                             <div class="side-view-right">
                                 <% if (vehicle.stock > 0) { %>

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { validationResult } from 'express-validator';
-import { createContactForm, getAllContactForms } from '../../models/forms/contact.js';
+import { createContactForm } from '../../models/forms/contact.js';
 
 const router = Router();
 
@@ -48,24 +48,6 @@ const handleContactSubmission = async (req, res) => {
 };
 
 /**
- * Display all contact form submissions.
- */
-const showContactResponses = async (req, res) => {
-    let contactForms = [];
-
-    try {
-        contactForms = await getAllContactForms();
-    } catch (error) {
-        console.error('Error retrieving contact forms:', error);
-    }
-
-    res.render('forms/contact/responses', {
-        title: 'Contact Form Submissions',
-        contactForms
-    });
-};
-
-/**
  * GET /contact - Display the contact form
  */
 router.get('/', showContactForm);
@@ -74,11 +56,5 @@ router.get('/', showContactForm);
  * POST /contact - Handle contact form submission with validation
  */
 router.post('/', handleContactSubmission);
-// router.post('/', contactValidation, handleContactSubmission);
-
-/**
- * GET /contact/responses - Display all contact form submissions
- */
-router.get('/responses', showContactResponses);
 
 export default router;

@@ -53,6 +53,10 @@
                 color: rgb(1, 82, 1);
             }
 
+            .vehicle-meta-rating {
+                vertical-align: 2px;
+            }
+
             .side-view-right {
                 .instock {
                     padding-left: 7px;
@@ -81,4 +85,132 @@
             display: block;
         }
     }
+}
+
+/* Detail page */
+.vehicle-detail {
+    padding-top: var(--spacing-md);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+
+    .vehicle-detail-left,
+    .vehicle-detail-right {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .vehicle-detail-left {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+
+        h1, h2, h3, h4, h5, p {
+            margin: 0;
+        } 
+    }
+
+    .vehicle-detail-right {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+
+        img {
+            width: 100%;
+            height: 400px;
+            display: block;
+            object-fit: cover;
+        }
+    }
+}
+
+.vehicle-gallery-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.vehicle-gallery-prev,
+.vehicle-gallery-next {
+    padding: 0.35em 0.75em;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.vehicle-gallery-counter {
+    font-size: 0.95rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Review styling */
+.reviews-section, .leave-review-section {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h2 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+.reviews-summary {
+    margin-bottom: 1em;
+    font-size: 1.05em;
+}
+
+.reviews-stars {
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-sm, 1rem);
+    margin-bottom: var(--spacing-sm, 1rem);
+    background: var(--vehicle-card-bg, #f8f8f8);
+    border-radius: 8px;
+    border-left: 3px solid var(--color-primary, #1a5f1a);
+
+    .review-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: var(--spacing-sm);
+        gap: calc(var(--spacing-sm) * 0.5);
+
+        .review-rating {
+            margin: 0;
+            color: var(--color-primary);
+            letter-spacing: 0.05em;
+        }
+
+        .review-date {
+            margin: 0;
+            font-size: 0.9em;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .review-author {
+            margin: 0;
+        }
+    }
+
+    .review-body {
+        margin: 0 0 0.5em 0;
+        line-height: 1.4;
+    }
+}
+
+.reviews-empty {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
 }

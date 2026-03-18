@@ -17,13 +17,14 @@ const requireLogin = (req, res, next) => {
 };
 
 /**
- * Middleware factory to require specific role for route access
- * Returns middleware that checks if user has the required role
+ * Middleware factory to require specific role(s) for route access.
+ * Returns middleware that checks if user has one of the required roles.
  *
- * @param {string} roleName - The role name required (e.g., 'admin', 'employee', 'user')
+ * @param {string|string[]} roleOrRoles - Single role name or array of role names (e.g. 'admin', 'employee', or ['employee', 'admin'])
  * @returns {Function} Express middleware function
  */
-const requireRole = (roleName) => {
+const requireRole = (roleOrRoles) => {
+    const allowed = Array.isArray(roleOrRoles) ? roleOrRoles : [roleOrRoles];
     return (req, res, next) => {
         // Check if user is logged in first
         if (!req.session || !req.session.user) {
@@ -31,18 +32,20 @@ const requireRole = (roleName) => {
             return res.redirect('/login');
         }
 
-        // Check if user's role matches the required role
-        if (req.session.user.roleName !== roleName) {
+        const userRole = (req.session.user.roleName || '').toLowerCase();
+        const hasRole = allowed.some((r) => r.toLowerCase() === userRole);
+
+        if (!hasRole) {
             req.flash('error', 'You do not have permission to access this page.');
             return res.redirect('/');
         }
 
-        // User has required role, continue
         next();
     };
 };
 
-// Require employee: use requireRole('employee')
-// Require admin: use requireRole('admin')
+// Require employee: requireRole('employee')
+// Require admin: requireRole('admin')
+// Require employee or admin: requireRole(['employee', 'admin'])
 
 export { requireLogin, requireRole };

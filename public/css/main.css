@@ -164,7 +164,7 @@ body {
     text-decoration: none;
     transition: 0.2s all;
     background: none;
-    font-style: var(--font-body);
+    font-family: var(--font-body);
 
     &:hover, &:focus {
         transform: scale(1.05);
