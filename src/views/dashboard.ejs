@@ -6,29 +6,103 @@
         <p>Welcome back, <strong><%= user.name %></strong>! This is your <strong><%= user.roleName %> dashboard</strong> where you can interact with our services.</strong></p>  
 
         <% if (isAdmin) { %>
-        <div class="card red">
+        <div class="card button-card red">
             <h2>Admin Actions</h2>
             <a href="/moderation/users/list" class="btn">Review Accounts</a>
         </div>
         <% } %>
 
         <% if (isEmployee) { %>
-        <div class="card yellow">
+        <div class="card button-card yellow">
             <h2>Employee Actions</h2>
-            <a href="/moderation/contact" class="btn">Contact Form Submissions</a>
+            <a href="/moderation/service" class="btn">View Service Requests</a>
+            <a href="/moderation/contact" class="btn">View Contact Submissions</a>
             <a href="/moderation/reviews" class="btn">Moderate Submitted Reviews</a>
         </div>
         <% } %>
 
         <div class="card dashboard-detail">
-            <h2>My Service Requests</h2>
-            <a href="/service-request" class="btn">Submit Service Request</a>
+            <div class="side-view">
+                <div class="side-view-left">
+                    <h2>My Service Requests</h2>
+                </div>
+                <div class="side-view-right">
+                    <a href="/service-request" class="btn">Submit Service Request</a>
+                </div>
+            </div>
+
+            <% if (myServiceRequests && myServiceRequests.length > 0) { %>
+                <ul class="my-requests-list">
+                    <% myServiceRequests.forEach(function(sr) { %>
+                        <li class="dashboard-request-item" id="request-<%= sr.id %>">
+                            <div class="request-display">
+                                <div class="request-display-header">
+                                    <span class="request-service-type"><%= sr.service_type %></span>
+                                    <span class="request-vehicle-name"><%= sr.vehicle_name %></span>
+                                    <span class="request-meta-date"><%= new Date(sr.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                                    <span class="request-status request-status-<%= sr.status.replace(/\\s+/g, '-').toLowerCase() %>"><%= sr.status %></span>
+                                </div>
+                                <% if (sr.description) { %>
+                                    <p class="request-body"><strong>Your Notes: </strong><%= sr.description %></p>
+                                <% } %>
+                                <% if (sr.status_facing_user) { %>
+                                    <p class="request-body"><strong>Status Update: </strong><%= sr.status_facing_user %></p>
+                                <% } %>
+                                <div class="request-actions-display">
+                                    <button type="button" class="btn" data-request-edit="<%= sr.id %>">Edit</button>
+                                </div>
+                            </div>
+                            <form class="request-edit-form" method="POST" action="/dashboard/service-requests/<%= sr.id %>/edit" data-request-id="<%= sr.id %>">
+                                <div class="request-edit-header">
+                                    <select name="service_type" class="request-edit-service-type" required>
+                                        <% ['Oil Change','Tire Rotation','Brake Service','Battery Replacement','Filter Replacement','Multi-Point Inspection','Fluid Flush','Alignment','Other'].forEach(function(type) { %>
+                                            <option value="<%= type %>" <%= sr.service_type === type ? 'selected' : '' %>><%= type %></option>
+                                        <% }); %>
+                                    </select>
+                                    <input type="text" name="vehicle_name" class="request-edit-vehicle-name" maxlength="50" required value="<%= sr.vehicle_name %>">
+                                    <span class="request-meta-date"><%= new Date(sr.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                                </div>
+                                <textarea name="description" class="request-edit-body" rows="4" maxlength="2000" placeholder="Additional details (optional)"><%= sr.description || '' %></textarea>
+                                <div class="request-edit-actions">
+                                    <button type="submit" class="btn">Save Changes</button>
+                                    <button type="button" class="btn lowlight request-edit-cancel" data-request-id="<%= sr.id %>">Cancel Edits</button>
+                                </div>
+                            </form>
+                        </li>
+                    <% }); %>
+                </ul>
+                <script>
+                    (function () {
+                        document.querySelectorAll('[data-request-edit]').forEach(function (btn) {
+                            btn.addEventListener('click', function () {
+                                var id = this.getAttribute('data-request-edit');
+                                var li = document.getElementById('request-' + id);
+                                if (!li) return;
+                                li.querySelector('.request-display').style.display = 'none';
+                                li.querySelector('.request-edit-form').style.display = 'block';
+                            });
+                        });
+                        document.querySelectorAll('.request-edit-cancel').forEach(function (btn) {
+                            btn.addEventListener('click', function () {
+                                var id = this.getAttribute('data-request-id');
+                                var li = document.getElementById('request-' + id);
+                                if (!li) return;
+                                li.querySelector('.request-display').style.display = '';
+                                li.querySelector('.request-edit-form').style.display = 'none';
+                            });
+                        });
+                    })();
+                </script>
+            <% } else { %>
+                <p class="my-requests-empty">You don't have any service requests yet.</p>
+            <% } %>
         </div>
 
-        <div class="card">
+        <div class="card my-reviews-detail">
             <h2>My Reviews</h2>
             <% if (myReviews && myReviews.length > 0) { %>
                 <ul class="my-reviews-list">
+
                     <% myReviews.forEach(review => { %>
                         <li class="dashboard-review-item" id="review-<%= review.id %>">
                             <div class="review-display">
@@ -68,6 +142,7 @@
                             </form>
                         </li>
                     <% }); %>
+
                 </ul>
                 <script>
                     (function() {

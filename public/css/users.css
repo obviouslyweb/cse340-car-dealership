@@ -67,8 +67,13 @@
         .user-actions {
             margin-top: -5px;
             margin-bottom: 5px;
+        }
 
-            :is(a, button) {
+        .user-actions form.form-inline {
+            display: inline;
+        }
+
+        .user-actions :is(a, button) {
                 display: inline-flex;
                 align-items: center;
                 text-decoration: none;
@@ -93,9 +98,8 @@
                 &.warning {
                     border-color: #dc3545;
                     color: #dc3545;
-                }   
+                }
             }
-        }
     }
 
     .no-users {

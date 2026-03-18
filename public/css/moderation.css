@@ -1,0 +1,140 @@
+/* Moderation page styles – nested under .dashboard */
+
+.dashboard {
+
+    .btn-danger {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+
+    .moderation-reviews-list,
+    .moderation-contact-list,
+    .moderation-service-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .moderation-reviews-list {
+        .review-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .review-body {
+            margin: 0.75rem 0;
+            white-space: pre-wrap;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+
+            & form {
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .moderation-contact-list {
+        .submission-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .response-subject {
+            margin: 0.5rem 0;
+            color: #2c5aa0;
+        }
+
+        .response-message {
+            margin: 0.75rem 0;
+            white-space: pre-wrap;
+        }
+
+        .submission-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+
+            & form {
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .moderation-service-list {
+        .service-request-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .service-request-status {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 999px;
+
+            &.service-request-status-submitted {
+                background-color: #fff3cd;
+                color: #856404;
+            }
+
+            &.service-request-status-in-progress {
+                background-color: #cce5ff;
+                color: #004085;
+            }
+
+            &.service-request-status-completed {
+                background-color: #d4edda;
+                color: #155724;
+            }
+        }
+
+        .moderation-service-display {
+            .moderation-service-actions {
+                display: flex;
+                gap: var(--spacing-sm);
+                flex-wrap: wrap;
+                align-items: center;
+
+                & form {
+                    display: inline-flex;
+                    align-items: center;
+                }
+
+                & .btn,
+                & button {
+                    margin: 0;
+                }
+            }
+        }
+
+        .moderation-service-edit-form {
+            display: none;
+        }
+
+        .service-form-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            align-items: center;
+
+            & .btn,
+            & button {
+                margin: 0;
+            }
+        }
+
+        .service-delete-form {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+}

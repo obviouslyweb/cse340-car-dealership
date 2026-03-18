@@ -12,17 +12,17 @@ As per the requirements for option 2 of the final project, this site will be a u
 ### User Features (must be logged in)
 * [X] Leave reviews on vehicles
 * [X] Edit/delete own reviews
-* [ ] Submit service requests for their vehicle (oil change, inspection, etc.)
-* [ ] View history of service requests and their status
+* [X] Submit service requests for their vehicle (oil change, inspection, etc.)
+* [X] View history of service requests and their status
 ### Employee Dashboard:
 * [ ] Edit vehicle details (price, description, availability)
 * [X] Moderate/delete inappropriate reviews
-* [ ] View and manage service requests
-* [ ] Update service request status (Submitted, In Progress, Completed)
-* [ ] Add notes to service requests
+* [X] View and manage service requests
+* [X] Update service request status (Submitted, In Progress, Completed)
+* [X] Add notes to service requests
 * [X] View contact form submissions
 ### Owner Dashboard (Full Admin):
-* [ ] Everything employees can do, plus:
+* [X] Everything employees can do, plus:
 * [ ] Add, edit, and delete vehicle categories
 * [ ] Add, edit, and delete vehicles from inventory
 * [ ] Manage employee accounts (optional, can be hardcoded)
@@ -67,10 +67,7 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Logged-in users can submit service requests
-* [ ] Dashboard shows service request history and status
 * [ ] Employees can edit vehicle details (price, description, availability)
-* [ ] Employees can view and manage service requests, update status, add notes
 * [ ] Admin can add, edit, delete vehicle categories
 * [ ] Admin can add, edit, delete vehicles
 * [ ] Admin can manage employee accounts and view activity or user data (if required)

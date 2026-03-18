@@ -115,10 +115,67 @@ const loginValidation = [
         .withMessage('Password must be between 8 and 128 characters')
 ];
 
+/**
+ * Validation rules for service request form
+ */
+const serviceRequestValidation = [
+    body('service_type')
+        .trim()
+        .notEmpty()
+        .withMessage('Please select a service type')
+        .isIn([
+            'Oil Change',
+            'Tire Rotation',
+            'Brake Service',
+            'Battery Replacement',
+            'Filter Replacement',
+            'Multi-Point Inspection',
+            'Fluid Flush',
+            'Alignment',
+            'Other'
+        ])
+        .withMessage('Invalid service type'),
+    body('vehicle_name')
+        .trim()
+        .notEmpty()
+        .withMessage('Vehicle name is required')
+        .isLength({ max: 50 })
+        .withMessage('Vehicle name must be 50 characters or less'),
+    body('description')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('Description must be 2000 characters or less')
+];
+
+/**
+ * Validation for staff editing service request (status, employee_notes, status_facing_user)
+ */
+const serviceRequestModerationValidation = [
+    body('status')
+        .trim()
+        .notEmpty()
+        .withMessage('Status is required')
+        .isIn(['Submitted', 'In Progress', 'Completed'])
+        .withMessage('Invalid status'),
+    body('employee_notes')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('Employee notes must be 2000 characters or less'),
+    body('status_facing_user')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('User-facing status must be 2000 characters or less')
+];
+
 export { 
     contactValidation, 
     registrationValidation, 
     loginValidation,
     updateAccountValidation,
-    reviewValidation
+    reviewValidation,
+    serviceRequestValidation,
+    serviceRequestModerationValidation
 };

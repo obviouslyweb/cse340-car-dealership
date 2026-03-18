@@ -19,6 +19,24 @@
         padding: 0;
     }
 
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+
+        h1, h2, h3, h4, h5 {
+            margin-bottom: 0;
+        }
+    }
+
+    .button-card {
+        display: inline-block;
+
+        h2 {
+            margin-bottom: var(--spacing-sm);
+        }
+    }
+
     .user-info,
     .session-debug {
         background-color: #fff;
@@ -169,6 +187,112 @@
 
     .my-reviews-empty {
         margin: 0;
+    }
+
+    /* My Service Requests section */
+    .my-requests-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dashboard-request-item {
+        background-color: var(--color-soft);
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .request-display {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .request-display-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        align-items: center;
+
+        .request-service-type {
+            font-weight: 600;
+        }
+
+        .request-vehicle-name {
+            font-style: italic;
+        }
+
+        .request-meta-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .request-status {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.1rem 0.5rem;
+            border-radius: 999px;
+        }
+
+        .request-status-submitted {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .request-status-in-progress {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .request-status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    }
+
+    .request-body {
+        white-space: pre-wrap;
+    }
+
+    .request-actions-display {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .request-edit-form {
+        display: none;
+        margin-top: 0.5rem;
+    }
+
+    .request-edit-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .request-edit-service-type,
+    .request-edit-vehicle-name {
+        font-size: 0.9rem;
+    }
+
+    .request-edit-body {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .request-edit-actions {
+        display: flex;
+        gap: 0.5rem;
     }
 }
 

@@ -182,7 +182,8 @@ const deleteReview = async (id) => {
 };
 
 /**
- * Updates a review's rating and body, and sets is_visible to FALSE (requires re-moderation).
+ * Updates a review's rating and body
+ * sets is_visible to False so it can be moderated again
  */
 const updateReview = async (id, rating, body) => {
     const query = `

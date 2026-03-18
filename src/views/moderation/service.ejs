@@ -1,0 +1,86 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <h1>Service Requests</h1>
+        <p><a href="/dashboard" class="btn lowlight">← Back to Dashboard</a></p>
+
+        <% if (serviceRequests && serviceRequests.length > 0) { %>
+            <ul class="moderation-service-list">
+                <% serviceRequests.forEach(function(sr) { %>
+                    <li class="card" id="moderation-service-<%= sr.id %>">
+                        <div class="service-request-meta">
+                            <strong>By:</strong> <%= sr.user_name %>
+                            <strong>Vehicle:</strong> <%= sr.vehicle_name %>
+                            <strong>Service:</strong> <%= sr.service_type %>
+                            <strong>Status:</strong>
+                            <span class="service-request-status service-request-status-<%= sr.status === 'In Progress' ? 'in-progress' : sr.status.toLowerCase() %>"><%= sr.status %></span>
+                            <span><%= new Date(sr.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                        </div>
+                        <% if (sr.description) { %>
+                            <p class="service-request-description"><strong>Customer notes:</strong> <%= sr.description %></p>
+                        <% } %>
+                        <% if (sr.employee_notes) { %>
+                            <p class="service-request-description"><strong>Employee Notes:</strong> <%= sr.employee_notes %></p>
+                        <% } %>
+                        <% if (sr.status_facing_user) { %>
+                            <p class="service-request-description"><strong>User-Facing Notes:</strong> <%= sr.status_facing_user %></p>
+                        <% } %>
+                        <div class="moderation-service-actions">
+                            <button type="button" class="btn" data-moderation-service-edit="<%= sr.id %>">Edit</button>
+                            <form method="POST" action="/moderation/service/<%= sr.id %>/delete" class="service-delete-form" onsubmit="return confirm('Are you sure you want to delete this service request? This cannot be undone.');">
+                                <button type="submit" class="btn lowlight btn-danger">Delete request</button>
+                            </form>
+                        </div>
+                        <form method="POST" action="/moderation/service/<%= sr.id %>" class="form-style service-request-form moderation-service-edit-form" data-moderation-service-id="<%= sr.id %>">
+                            <div class="form-group">
+                                <label for="status-<%= sr.id %>">Status</label>
+                                <select id="status-<%= sr.id %>" name="status" required>
+                                    <option value="Submitted" <%= sr.status === 'Submitted' ? 'selected' : '' %>>Submitted</option>
+                                    <option value="In Progress" <%= sr.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+                                    <option value="Completed" <%= sr.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="employee_notes-<%= sr.id %>">Employee notes (internal only)</label>
+                                <textarea id="employee_notes-<%= sr.id %>" name="employee_notes" rows="3" maxlength="2000" placeholder="Internal notes..."><%= sr.employee_notes || '' %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="status_facing_user-<%= sr.id %>">User-facing status</label>
+                                <textarea id="status_facing_user-<%= sr.id %>" name="status_facing_user" rows="3" maxlength="2000" placeholder="Message visible to the customer..."><%= sr.status_facing_user || '' %></textarea>
+                            </div>
+                            <div class="service-form-actions">
+                                <button type="submit" class="btn">Save changes</button>
+                                <button type="button" class="btn lowlight moderation-service-edit-cancel" data-moderation-service-id="<%= sr.id %>">Cancel</button>
+                            </div>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+            <script>
+                (function () {
+                    document.querySelectorAll('[data-moderation-service-edit]').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var id = this.getAttribute('data-moderation-service-edit');
+                            var li = document.getElementById('moderation-service-' + id);
+                            if (!li) return;
+                            li.querySelector('.moderation-service-actions').style.display = 'none';
+                            li.querySelector('.moderation-service-edit-form').style.display = 'block';
+                        });
+                    });
+                    document.querySelectorAll('.moderation-service-edit-cancel').forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var id = this.getAttribute('data-moderation-service-id');
+                            var li = document.getElementById('moderation-service-' + id);
+                            if (!li) return;
+                            li.querySelector('.moderation-service-actions').style.display = '';
+                            li.querySelector('.moderation-service-edit-form').style.display = 'none';
+                        });
+                    });
+                })();
+            </script>
+        <% } else { %>
+            <p>No service requests yet.</p>
+        <% } %>
+    </div>
+</main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+<main>
+    <h1>Submit Service Request</h1>
+    <p>
+        Request service for your vehicle. Choose the type of service and provide your vehicle name and any details.
+    </p>
+
+    <form method="POST" action="/service-request" class="form-style">
+        <div class="form-group">
+            <label for="service_type">Service Type</label>
+            <select id="service_type" name="service_type" required>
+                <option value="">Select a service type</option>
+                <% (serviceTypes || []).forEach(function(type) { %>
+                    <option value="<%= type %>"><%= type %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="vehicle_name">Vehicle Name</label>
+            <input type="text" id="vehicle_name" name="vehicle_name" placeholder="e.g. 2020 Toyota Camry" maxlength="50" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description (optional)</label>
+            <textarea id="description" name="description" rows="6" placeholder="Any additional details about your request..." maxlength="2000"></textarea>
+        </div>
+
+        <button type="submit">Submit Request</button>
+    </form>
+</main>
+<%- include('../../partials/footer') %>

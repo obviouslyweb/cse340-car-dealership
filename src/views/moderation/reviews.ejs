@@ -5,28 +5,28 @@
         <p><a href="/dashboard" class="btn lowlight">← Back to Dashboard</a></p>
 
         <% if (reviews && reviews.length > 0) { %>
-            <ul class="moderation-reviews-list" style="list-style: none; padding: 0;">
+            <ul class="moderation-reviews-list">
                 <% reviews.forEach(review => { %>
-                    <li class="card" style="margin-bottom: 1rem;">
-                        <div class="review-meta" style="display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-bottom: 0.5rem;">
+                    <li class="card">
+                        <div class="review-meta">
                             <strong>Vehicle:</strong>
                             <a href="/vehicles/<%= review.vehicle_id %>"><%= review.vehicle_year %> <%= review.vehicle_make %> <%= review.vehicle_model %></a>
-                            <span style="color: #666;">|</span>
+                            <span class="moderation-meta-sep">|</span>
                             <strong>By:</strong> <%= review.user_name %>
-                            <span style="color: #666;">|</span>
+                            <span class="moderation-meta-sep">|</span>
                             <span aria-label="Rating: <%= review.rating %> out of 5">
                                 <% for (let i = 0; i < 5; i++) { %><%= i < review.rating ? '★' : '☆' %><% } %>
                             </span>
-                            <span style="color: #666;">|</span>
+                            <span class="moderation-meta-sep">|</span>
                             <span><%= new Date(review.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
                         </div>
-                        <p class="review-body" style="margin: 0.75rem 0; white-space: pre-wrap;"><%= review.body %></p>
-                        <div class="review-actions" style="display: flex; gap: 0.5rem;">
-                            <form method="POST" action="/moderation/reviews/<%= review.id %>/approve" style="display: inline;">
+                        <p class="review-body"><%= review.body %></p>
+                        <div class="review-actions">
+                            <form method="POST" action="/moderation/reviews/<%= review.id %>/approve">
                                 <button type="submit" class="btn">Approve</button>
                             </form>
-                            <form method="POST" action="/moderation/reviews/<%= review.id %>/reject" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this review? This cannot be undone.');">
-                                <button type="submit" class="btn lowlight" style="border-color: #dc3545; color: #dc3545;">Reject &amp; Delete</button>
+                            <form method="POST" action="/moderation/reviews/<%= review.id %>/reject" onsubmit="return confirm('Are you sure you want to delete this review? This cannot be undone.');">
+                                <button type="submit" class="btn lowlight btn-danger">Reject &amp; Delete</button>
                             </form>
                         </div>
                     </li>

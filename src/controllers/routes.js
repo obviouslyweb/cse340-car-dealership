@@ -6,7 +6,7 @@ import { Router } from 'express';
 
 // ---------------------- TODO ----------------------
 // Middleware import
-import { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation } from '../middleware/validation/forms.js';
+import { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
@@ -16,10 +16,12 @@ import { homePage, aboutPage, vehicleListPage, vehicleDetailPage, handleReviewSu
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-import { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview } from './forms/login.js';
+import { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview, handleEditMyServiceRequest } from './forms/login.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 import moderationReviewsRoutes from './moderation/reviews.js';
 import moderationContactRoutes from './moderation/contact.js';
+import moderationServiceRoutes from './moderation/service.js';
+import serviceRoutes from './forms/service.js';
 
 // Create a new router instance
 const router = Router();
@@ -69,6 +71,12 @@ router.use('/login', (req, res, next) => {
     next();
 });
 
+// Form styles for service request
+router.use('/service-request', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    next();
+});
+
 // Add dashboard-specific styles to dashboard and moderation routes
 router.use('/dashboard', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/dashboard.css">');
@@ -77,6 +85,8 @@ router.use('/dashboard', (req, res, next) => {
 });
 router.use('/moderation', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/dashboard.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/form.css">');
+    res.addStyle('<link rel="stylesheet" href="/css/moderation.css">');
     next();
 });
 
@@ -104,12 +114,17 @@ router.use('/login', loginValidation, loginRoutes);
 // Authentication-related routes at root level
 router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
+
+// Service request (requires login)
+router.use('/service-request', requireLogin, serviceRoutes);
 router.post('/dashboard/reviews/:id/delete', requireLogin, handleDeleteMyReview);
 router.post('/dashboard/reviews/:id/edit', requireLogin, reviewValidation, handleEditMyReview);
+router.post('/dashboard/service-requests/:id/edit', requireLogin, serviceRequestValidation, handleEditMyServiceRequest);
 
 // Moderation (employees and admins only)
 router.use('/moderation/contact', requireLogin, requireRole(['employee', 'admin']), moderationContactRoutes);
 router.use('/moderation/reviews', requireLogin, requireRole(['employee', 'admin']), moderationReviewsRoutes);
+router.use('/moderation/service', requireLogin, requireRole(['employee', 'admin']), moderationServiceRoutes);
 
 /*
 Export router for usage in server.js

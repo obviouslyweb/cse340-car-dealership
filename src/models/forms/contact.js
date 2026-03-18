@@ -35,10 +35,7 @@ const getAllContactForms = async () => {
 };
 
 /**
- * Deletes a contact form submission by id.
- *
- * @param {number} id - The contact form submission id
- * @returns {Promise<Object|null>} The deleted row or null if not found
+ * Deletes a contact form submission by id
  */
 const deleteContactForm = async (id) => {
     const query = `DELETE FROM contact_form WHERE id = $1 RETURNING id`;

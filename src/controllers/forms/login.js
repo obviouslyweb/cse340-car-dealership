@@ -1,6 +1,8 @@
 import { validationResult } from 'express-validator';
 import { findUserByEmail, verifyPassword } from '../../models/forms/login.js';
 import { getReviewsByUserId, getReviewById, deleteReview, updateReview } from '../../models/vehicles.js';
+import { getServiceRequestsByUserId, getServiceRequestById, updateServiceRequest } from '../../models/forms/service.js';
+import { serviceRequestValidation } from '../../middleware/validation/forms.js';
 import { Router } from 'express';
 
 const router = Router();
@@ -126,11 +128,17 @@ const showDashboard = async (req, res) => {
     }
 
     let myReviews = [];
+    let myServiceRequests = [];
     if (user && user.id) {
         try {
             myReviews = await getReviewsByUserId(user.id) || [];
         } catch (err) {
             console.error('Error loading user reviews for dashboard:', err);
+        }
+        try {
+            myServiceRequests = await getServiceRequestsByUserId(user.id) || [];
+        } catch (err) {
+            console.error('Error loading service requests for dashboard:', err);
         }
     }
 
@@ -138,7 +146,8 @@ const showDashboard = async (req, res) => {
         title: 'Dashboard',
         user,
         sessionData,
-        myReviews
+        myReviews,
+        myServiceRequests
     });
 };
 
@@ -175,8 +184,9 @@ const handleDeleteMyReview = async (req, res, next) => {
 };
 
 /**
- * Edit the current user's own review (POST /dashboard/reviews/:id/edit).
- * Updates rating and body, sets is_visible to FALSE for re-moderation.
+ * Edit the current user's own review
+ * POST /dashboard/reviews/:id/edit
+ * Updates rating and body & sets is_visible to FALSE for re-moderation
  */
 const handleEditMyReview = async (req, res, next) => {
     const reviewId = parseInt(req.params.id, 10);
@@ -213,6 +223,48 @@ const handleEditMyReview = async (req, res, next) => {
     return res.redirect('/dashboard');
 };
 
+/**
+ * Edit the current user's own service request
+ * POST /dashboard/service-requests/:id/edit
+ */
+const handleEditMyServiceRequest = async (req, res, next) => {
+    const requestId = parseInt(req.params.id, 10);
+    if (Number.isNaN(requestId)) {
+        return next();
+    }
+    const userId = req.session?.user?.id;
+    if (!userId) {
+        req.flash('error', 'You must be logged in to edit a service request.');
+        return res.redirect('/login');
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach((err) => req.flash('error', err.msg));
+        return res.redirect('/dashboard');
+    }
+
+    try {
+        const reqRow = await getServiceRequestById(requestId);
+        if (!reqRow) {
+            req.flash('error', 'Service request not found or already updated.');
+            return res.redirect('/dashboard');
+        }
+        if (reqRow.user_id !== userId) {
+            req.flash('error', 'You can only edit your own service requests.');
+            return res.redirect('/dashboard');
+        }
+
+        const { service_type, vehicle_name, description } = req.body;
+        await updateServiceRequest(requestId, service_type, vehicle_name, description || null);
+        req.flash('success', 'Your service request has been updated.');
+    } catch (err) {
+        console.error('Error updating service request:', err);
+        req.flash('error', 'Unable to update your service request. Please try again later.');
+    }
+    return res.redirect('/dashboard');
+};
+
 // Routes
 router.get('/', showLoginForm);
 router.post('/', processLogin);
@@ -220,4 +272,4 @@ router.post('/', processLogin);
 
 // Export router as default, and specific functions for root-level routes
 export default router;
-export { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview };
+export { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview, handleEditMyServiceRequest };

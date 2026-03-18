@@ -4,7 +4,8 @@ import { getAllContactForms, deleteContactForm } from '../../models/forms/contac
 const router = Router();
 
 /**
- * GET /moderation/contact - List all contact form submissions (employees/admins).
+ * GET /moderation/contact
+ * List all contact form submissions (employees/admins)
  */
 const showContactSubmissionsPage = async (req, res) => {
     try {
@@ -21,7 +22,8 @@ const showContactSubmissionsPage = async (req, res) => {
 };
 
 /**
- * POST /moderation/contact/:id/delete - Delete a contact form submission (confirmation is client-side).
+ * POST /moderation/contact/:id/delete
+ * Delete a contact form submission
  */
 const handleDelete = async (req, res, next) => {
     const id = parseInt(req.params.id, 10);

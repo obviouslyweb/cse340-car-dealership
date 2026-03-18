@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS reseed CASCADE;
 DROP TABLE IF EXISTS vehicle_images CASCADE;
 DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS service_requests CASCADE;
+DROP TYPE IF EXISTS service_types CASCADE;
 DROP TABLE IF EXISTS vehicles CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 
@@ -132,15 +133,30 @@ CREATE TABLE IF NOT EXISTS reviews (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- Service types 
+CREATE TYPE service_types AS ENUM (
+    'Oil Change',
+    'Tire Rotation',
+    'Brake Service',
+    'Battery Replacement',
+    'Filter Replacement',
+    'Multi-Point Inspection',
+    'Fluid Flush',
+    'Alignment',
+    'Other'
+);
+
 -- Service requests table
 CREATE TABLE IF NOT EXISTS service_requests (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    service_type VARCHAR(100) NOT NULL,
+    service_type service_types NOT NULL,
+    vehicle_name VARCHAR(50) NOT NULL,
     description TEXT,
     status VARCHAR(50) DEFAULT 'Submitted'
         CHECK (status IN ('Submitted', 'In Progress', 'Completed')),
     employee_notes TEXT,
+    status_facing_user TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
