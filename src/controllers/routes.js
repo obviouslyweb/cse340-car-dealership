@@ -22,7 +22,6 @@ import { requireLogin } from '../middleware/auth.js';
 // Create a new router instance
 const router = Router();
 
-// ---------------------- TODO ----------------------
 /*
 Router Middleware
 */
