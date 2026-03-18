@@ -87,6 +87,20 @@
     }
 }
 
+.instock {
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--color-primary) 50%, rgba(255, 255, 255, 0));
+    color: var(--color-soft);
+}
+
+.nostock {
+    color: var(--color-focus);
+}
+
 /* Detail page */
 .vehicle-detail {
     padding-top: var(--spacing-md);
@@ -143,11 +157,20 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
+.vehicle-edit-form.is-hidden,
+.vehicle-edit-actions.is-hidden {
+    display: none;
+}
+
 /* Review styling */
 .reviews-section, .leave-review-section {
     margin-top: var(--spacing-sm);
     padding-top: var(--spacing-sm);
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.leave-review-section {
+    margin-bottom: var(--spacing-sm);
 }
 
 .reviews-section h2 {
@@ -202,11 +225,6 @@
         .review-author {
             margin: 0;
         }
-    }
-
-    .review-body {
-        margin: 0 0 0.5em 0;
-        line-height: 1.4;
     }
 }
 

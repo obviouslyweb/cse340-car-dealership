@@ -148,6 +148,22 @@ body {
         &.yellow {
             background: rgba(237, 255, 77, 0.5);
         }
+
+        &.button-card {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            
+            button {
+                cursor: pointer;
+                font-size: 1em;
+            }
+
+            &.red  {
+                color: black;
+                border-color: black;
+            }
+        }
     }
 }
 
@@ -349,15 +365,5 @@ footer {
                 }
             }
         }
-    }
-}
-
-/* Center images if needed */
-div.img-center {
-    display: flex;
-    justify-content: center;
-
-    img {
-        width: 200px;
     }
 }

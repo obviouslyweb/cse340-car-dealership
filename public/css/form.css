@@ -1,11 +1,18 @@
 /* Contact Form Styles */
 
 .form-style {
-    max-width: 600px;
-    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
     padding: 2rem;
     border-radius: 8px;
     background: color-mix(in srgb, var(--color-primary) 20%, rgba(0, 0, 0, 0));
+    margin-bottom: var(--spacing-md);
+
+    p {
+        margin: 0;
+    }
 
     h2 {
         color: #2c5aa0;
@@ -16,8 +23,6 @@
     }
 
     .form-group {
-        margin-bottom: 1.5rem;
-
         label {
             font-family: var(--font-heading);
             display: block;
@@ -54,7 +59,7 @@
         }
     }
 
-    button[type="submit"] {
+    .submit {
         font-family: var(--font-heading);
         width: 100%;
         padding: 1rem;
@@ -79,11 +84,40 @@
             background-color: var(--color-primary);
         }
     }
+
+    .cancel {
+        margin-top: var(--spacing-sm);
+        font-family: var(--font-heading);
+        width: 100%;
+        padding: 1rem;
+        background-color: var(--color-soft);
+        color: var(--color-secondary);
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover, &:focus {
+            box-shadow: rgba(0, 0, 0, 0.377) 0px 3px 2px;
+            transform: translateY(-5px);
+            background-color: var(--color-soft);
+            color: var(--color-primary);
+        }
+
+        &:active {
+            box-shadow: none;
+            transform: none;
+            background-color: var(--color-soft);
+            color: var(--color-primary);
+        }
+    }
 }
 
 /* Contact Responses Styles */
+/* TODO: MOVE THESE TO NEW DEDICATED FILE */
 .contact-responses {
-    max-width: 800px;
     margin: 2rem auto;
 
     .response-item {

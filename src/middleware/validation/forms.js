@@ -170,6 +170,54 @@ const serviceRequestModerationValidation = [
         .withMessage('User-facing status must be 2000 characters or less')
 ];
 
+/**
+ * Validation rules for employee/admin vehicle editing
+ */
+const vehicleEditValidation = [
+    body('category_id')
+        .toInt()
+        .isInt({ min: 1 })
+        .withMessage('Please select a valid category'),
+    body('make')
+        .trim()
+        .notEmpty()
+        .withMessage('Make is required')
+        .isLength({ min: 1, max: 100 })
+        .withMessage('Make must be between 1 and 100 characters'),
+    body('model')
+        .trim()
+        .notEmpty()
+        .withMessage('Model is required')
+        .isLength({ min: 1, max: 100 })
+        .withMessage('Model must be between 1 and 100 characters'),
+    body('year')
+        .toInt()
+        .isInt({ min: 1886, max: 2100 })
+        .withMessage('Year must be between 1886 and 2100'),
+    body('price')
+        .toFloat()
+        .isFloat({ min: 0 })
+        .withMessage('Price must be a valid non-negative amount'),
+    body('mileage')
+        .optional({ values: 'falsy' })
+        .toInt()
+        .isInt({ min: 0 })
+        .withMessage('Mileage must be a non-negative whole number'),
+    body('stock')
+        .toInt()
+        .isInt({ min: 0 })
+        .withMessage('Stock must be a non-negative whole number'),
+    body('is_featured')
+        .optional({ values: 'falsy' })
+        .isIn(['true'])
+        .withMessage('Featured flag is invalid'),
+    body('description')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('Description must be 2000 characters or less')
+];
+
 export { 
     contactValidation, 
     registrationValidation, 
@@ -177,5 +225,6 @@ export {
     updateAccountValidation,
     reviewValidation,
     serviceRequestValidation,
-    serviceRequestModerationValidation
+    serviceRequestModerationValidation,
+    vehicleEditValidation
 };

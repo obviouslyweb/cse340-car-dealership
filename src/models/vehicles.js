@@ -52,6 +52,7 @@ const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
 
     const query = `
         SELECT v.id, v.category_id, v.make, v.model, v.year, v.price, v.mileage,
+               v.is_featured,
                v.description, v.stock,
                vi.image_url,
                ROUND(AVG(r.rating)::numeric, 1) AS average_rating
@@ -73,7 +74,7 @@ const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
 const getVehicleById = async (id) => {
     const query = `
         SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description,
-               v.category_id, v.stock,
+               v.category_id, v.stock, v.is_featured,
                vi.image_url
         FROM vehicles v
         LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
@@ -197,6 +198,43 @@ const updateReview = async (id, rating, body) => {
 };
 
 /**
+ * Updates a vehicle's editable fields.
+ */
+const updateVehicle = async (id, vehicleData) => {
+    const query = `
+        UPDATE vehicles
+        SET category_id = $2,
+            make = $3,
+            model = $4,
+            year = $5,
+            price = $6,
+            mileage = $7,
+            stock = $8,
+            is_featured = $9,
+            description = $10,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1
+        RETURNING id, category_id, make, model, year, price, mileage, stock, is_featured, description, updated_at
+    `;
+
+    const params = [
+        id,
+        vehicleData.categoryId,
+        vehicleData.make.trim(),
+        vehicleData.model.trim(),
+        vehicleData.year,
+        vehicleData.price,
+        vehicleData.mileage,
+        vehicleData.stock,
+        vehicleData.isFeatured,
+        vehicleData.description && vehicleData.description.trim() ? vehicleData.description.trim() : null
+    ];
+
+    const result = await db.query(query, params);
+    return result.rows[0] || null;
+};
+
+/**
  * Creates a new review for a vehicle from form
  */
 const createReview = async (vehicleId, userId, rating, body) => {
@@ -222,4 +260,4 @@ const getAggregateReviewScoreByVehicleId = async (id) => {
     return result.rows[0] || null;
 };
 
-export { getFeaturedVehicles, getVehicles, getVehicleById, getVehicleImages, getCategories, getReviewById, getReviewsByUserId, getReviewsByVehicleId, getReviewsAwaitingApproval, getAggregateReviewScoreByVehicleId, createReview, approveReview, deleteReview, updateReview };
+export { getFeaturedVehicles, getVehicles, getVehicleById, getVehicleImages, getCategories, getReviewById, getReviewsByUserId, getReviewsByVehicleId, getReviewsAwaitingApproval, getAggregateReviewScoreByVehicleId, createReview, approveReview, deleteReview, updateReview, updateVehicle };

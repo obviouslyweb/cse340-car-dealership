@@ -6,7 +6,7 @@ import { Router } from 'express';
 
 // ---------------------- TODO ----------------------
 // Middleware import
-import { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation } from '../middleware/validation/forms.js';
+import { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation, vehicleEditValidation } from '../middleware/validation/forms.js';
 
 // ---------------------- TODO ----------------------
 // // Controllers (for page routing)
@@ -21,6 +21,7 @@ import { requireLogin, requireRole } from '../middleware/auth.js';
 import moderationReviewsRoutes from './moderation/reviews.js';
 import moderationContactRoutes from './moderation/contact.js';
 import moderationServiceRoutes from './moderation/service.js';
+import { handleVehicleEdit } from './moderation/edit_vehicle.js';
 import serviceRoutes from './forms/service.js';
 
 // Create a new router instance
@@ -100,6 +101,7 @@ router.get('/about', aboutPage);
 // Vehicle list and detail (exact /vehicles before :id)
 router.get('/vehicles', vehicleListPage);
 router.post('/vehicles/:id/review', requireLogin, reviewValidation, handleReviewSubmission);
+router.post('/vehicles/:id/edit', requireLogin, requireRole(['employee', 'admin']), vehicleEditValidation, handleVehicleEdit);
 router.get('/vehicles/:id', vehicleDetailPage);
 
 // Contact form routes

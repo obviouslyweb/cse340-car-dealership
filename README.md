@@ -15,7 +15,7 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [X] Submit service requests for their vehicle (oil change, inspection, etc.)
 * [X] View history of service requests and their status
 ### Employee Dashboard:
-* [ ] Edit vehicle details (price, description, availability)
+* [X] Edit vehicle details (price, description, availability)
 * [X] Moderate/delete inappropriate reviews
 * [X] View and manage service requests
 * [X] Update service request status (Submitted, In Progress, Completed)
@@ -67,7 +67,6 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Employees can edit vehicle details (price, description, availability)
 * [ ] Admin can add, edit, delete vehicle categories
 * [ ] Admin can add, edit, delete vehicles
 * [ ] Admin can manage employee accounts and view activity or user data (if required)

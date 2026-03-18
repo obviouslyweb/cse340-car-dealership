@@ -8,16 +8,21 @@
         <% if (isAdmin) { %>
         <div class="card button-card red">
             <h2>Admin Actions</h2>
-            <a href="/moderation/users/list" class="btn">Review Accounts</a>
+            <div class="action-list">
+                <a href="/moderation/users/list" class="btn">Review Accounts</a>
+            </div>
         </div>
         <% } %>
 
         <% if (isEmployee) { %>
         <div class="card button-card yellow">
             <h2>Employee Actions</h2>
-            <a href="/moderation/service" class="btn">View Service Requests</a>
-            <a href="/moderation/contact" class="btn">View Contact Submissions</a>
-            <a href="/moderation/reviews" class="btn">Moderate Submitted Reviews</a>
+            <div class="action-list">
+                <a href="/moderation/service" class="btn">View Service Requests</a>
+                <a href="/moderation/contact" class="btn">View Contact Submissions</a>
+                <a href="/moderation/reviews" class="btn">Moderate Submitted Reviews</a>
+                <a href="/vehicles/" class="btn">Review/Edit Vehicles</a>
+            </div>
         </div>
         <% } %>
 
@@ -79,7 +84,7 @@
                                 var li = document.getElementById('request-' + id);
                                 if (!li) return;
                                 li.querySelector('.request-display').style.display = 'none';
-                                li.querySelector('.request-edit-form').style.display = 'block';
+                                li.querySelector('.request-edit-form').style.display = 'flex';
                             });
                         });
                         document.querySelectorAll('.request-edit-cancel').forEach(function (btn) {

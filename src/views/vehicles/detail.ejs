@@ -3,10 +3,104 @@
     <div class="vehicle-detail">
         <div class="vehicle-detail-left">
             <h1><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h1>
-            <p class="vehicle-meta">$<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> miles<% } %></p>
+            <p class="vehicle-meta">$<%= Number(vehicle.price).toLocaleString() %><% if (vehicle.mileage) { %> - <%= vehicle.mileage.toLocaleString() %> miles<% } %> <% if (vehicle.stock > 0) { %>
+                <span class="instock"><%= vehicle.stock %> remaining</span>
+            <% } else { %>
+                <span class="nostock">Out of stock</span>
+            <% } %></p>
             <% if (vehicle.description) { %>
                 <p class="vehicle-description"><%= vehicle.description %></p>
             <% } %>
+
+            <% if (isAdmin) { %>
+                <div class="card button-card red">
+                    <h2>Admin Actions</h2>
+                    <div class="action-list">
+                        <a href="/moderation/users/list" class="btn">Review Accounts</a>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (isEmployee) { %>
+                <div class="card button-card yellow">
+                    <h2>Employee Actions</h2>
+                    <div class="vehicle-edit-actions">
+                        <button type="button" class="btn" data-vehicle-edit-toggle="<%= vehicle.id %>">Edit Vehicle Details</button>
+                    </div>
+                    <form id="vehicle-edit-form" class="vehicle-edit-form form-style is-hidden" method="POST" action="/vehicles/<%= vehicle.id %>/edit" data-vehicle-id="<%= vehicle.id %>">
+                        <div class="vehicle-edit-header">
+                            <select name="category_id" class="vehicle-edit-category" required>
+                                <% categories.forEach(function(category) { %>
+                                    <option value="<%= category.id %>" <%= vehicle.category_id === category.id ? 'selected' : '' %>><%= category.name %></option>
+                                <% }); %>
+                            </select>
+                            <label>
+                                <span>Featured</span>
+                                <input type="checkbox" name="is_featured" value="true" <%= vehicle.is_featured ? 'checked' : '' %>>
+                            </label>
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-make">Make</label>
+                            <input id="vehicle-make" type="text" name="make" maxlength="100" required value="<%= vehicle.make %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-model">Model</label>
+                            <input id="vehicle-model" type="text" name="model" maxlength="100" required value="<%= vehicle.model %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-year">Year</label>
+                            <input id="vehicle-year" type="number" name="year" min="1886" max="2100" required value="<%= vehicle.year %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-price">Price</label>
+                            <input id="vehicle-price" type="number" name="price" min="0" step="0.01" required value="<%= vehicle.price %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-mileage">Mileage</label>
+                            <input id="vehicle-mileage" type="number" name="mileage" min="0" value="<%= vehicle.mileage ?? '' %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-stock">Stock</label>
+                            <input id="vehicle-stock" type="number" name="stock" min="0" required value="<%= vehicle.stock %>">
+                        </div>
+        
+                        <div class="form-group">
+                            <label for="vehicle-description">Description</label>
+                            <textarea id="vehicle-description" name="description" class="vehicle-edit-body" rows="4" maxlength="2000" placeholder="Vehicle details, condition, notable features, and other sales notes..."><%= vehicle.description || '' %></textarea>
+                        </div>
+        
+                        <div class="vehicle-edit-actions">
+                            <button type="submit" class="btn submit">Save Changes</button>
+                            <button type="button" class="btn cancel" data-vehicle-edit-cancel="<%= vehicle.id %>">Cancel</button>
+                        </div>
+                    </form>
+                    <script>
+                        (function () {
+                            var toggle = document.querySelector('[data-vehicle-edit-toggle="<%= vehicle.id %>"]');
+                            var cancel = document.querySelector('[data-vehicle-edit-cancel="<%= vehicle.id %>"]');
+                            var form = document.getElementById('vehicle-edit-form');
+                            if (!toggle || !cancel || !form) return;
+        
+                            toggle.addEventListener('click', function () {
+                                form.classList.remove('is-hidden');
+                                toggle.parentElement.classList.add('is-hidden');
+                            });
+        
+                            cancel.addEventListener('click', function () {
+                                form.classList.add('is-hidden');
+                                toggle.parentElement.classList.remove('is-hidden');
+                            });
+                        })();
+                    </script>
+                </div>
+            <% } %>
+            
         </div>
         <div class="vehicle-detail-right vehicle-gallery" data-images="<%= vehicleImages && vehicleImages.length > 0 ? encodeURIComponent(JSON.stringify(vehicleImages.map(i => i.image_url))) : '' %>">
             <% const placeholder = 'https://placehold.co/400x300/eee/999?text=No+Image'; %>
@@ -14,9 +108,9 @@
             <img id="vehicle-gallery-img" src="<%= firstImage %>" alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>">
             <% if (vehicleImages && vehicleImages.length > 1) { %>
                 <div class="vehicle-gallery-controls">
-                    <button type="button" class="vehicle-gallery-prev" aria-label="Previous image">Previous</button>
+                    <button type="button" class="vehicle-gallery-prev btn" aria-label="Previous image">Previous</button>
                     <span class="vehicle-gallery-counter"><span id="vehicle-gallery-current">1</span> / <%= vehicleImages.length %></span>
-                    <button type="button" class="vehicle-gallery-next" aria-label="Next image">Next</button>
+                    <button type="button" class="vehicle-gallery-next btn" aria-label="Next image">Next</button>
                 </div>
                 <script>
                     (function () {
@@ -105,7 +199,7 @@
                     <label for="review-body">Your review</label>
                     <textarea id="review-body" name="body" rows="6" placeholder="Share your experience with this vehicle (at least 10 characters)..." minlength="10" maxlength="2000" required></textarea>
                 </div>
-                <button type="submit">Submit Review</button>
+                <button type="submit" class="btn submit">Submit Review</button>
             </form>
         <% } %>
     </section>
