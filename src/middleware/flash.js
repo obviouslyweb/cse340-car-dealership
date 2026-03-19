@@ -1,16 +1,4 @@
 /**
- * Flash Message Middleware
- * 
- * Provides temporary message storage that survives redirects but is consumed on render.
- * Messages are stored in the session and organized by type (success, error, warning, info).
- * 
- * Usage in controllers:
- *   req.flash('success', 'Message text')  // Store a message
- *   req.flash('error')                    // Get all error messages
- *   req.flash()                           // Get all messages (all types)
- */
-
-/**
  * Initialize flash message storage and provide access methods
  */
 const flashMiddleware = (req, res, next) => {

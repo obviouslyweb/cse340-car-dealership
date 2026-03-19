@@ -243,14 +243,4 @@ const moderationUserUpdateValidation = [
         .withMessage('Invalid permission level')
 ];
 
-export { 
-    contactValidation, 
-    registrationValidation, 
-    loginValidation,
-    updateAccountValidation,
-    reviewValidation,
-    serviceRequestValidation,
-    serviceRequestModerationValidation,
-    vehicleEditValidation,
-    moderationUserUpdateValidation
-};
+export { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation, serviceRequestModerationValidation, vehicleEditValidation, moderationUserUpdateValidation };

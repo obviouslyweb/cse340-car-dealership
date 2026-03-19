@@ -1,7 +1,7 @@
 /**
- * Middleware to require authentication for protected routes.
- * Redirects to login page if user is not authenticated.
- * Sets res.locals.isLoggedIn = true for authenticated requests.
+ * Middleware to require authentication for protected routes
+ * Redirects to login page if user is not authenticated
+ * Sets res.locals.isLoggedIn = true for authenticated requests
  */
 const requireLogin = (req, res, next) => {
     // Check if user is logged in via session; we can beef this up later with roles and permissions
@@ -17,11 +17,8 @@ const requireLogin = (req, res, next) => {
 };
 
 /**
- * Middleware factory to require specific role(s) for route access.
- * Returns middleware that checks if user has one of the required roles.
- *
- * @param {string|string[]} roleOrRoles - Single role name or array of role names (e.g. 'admin', 'employee', or ['employee', 'admin'])
- * @returns {Function} Express middleware function
+ * Middleware factory to require specific role(s) for route access
+ * Returns middleware that checks if user has one of the required roles
  */
 const requireRole = (roleOrRoles) => {
     const allowed = Array.isArray(roleOrRoles) ? roleOrRoles : [roleOrRoles];
@@ -43,9 +40,5 @@ const requireRole = (roleOrRoles) => {
         next();
     };
 };
-
-// Require employee: requireRole('employee')
-// Require admin: requireRole('admin')
-// Require employee or admin: requireRole(['employee', 'admin'])
 
 export { requireLogin, requireRole };
