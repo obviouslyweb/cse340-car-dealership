@@ -84,6 +84,7 @@ startSessionCleanup();
 /**
  * Configure Express
  */
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
@@ -99,9 +100,6 @@ app.use(flash);
 // Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// Serve static assets (after global middleware so error rendering always has locals)
-app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * Use routes
