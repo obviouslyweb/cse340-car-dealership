@@ -140,7 +140,6 @@ if (NODE_ENV.includes('dev')) {
  * Start server & listen for database connection
  */
 app.listen(PORT, async () => {
-    // ------------------------------------ TODO ------------------------------------
     await setupDatabase();
     await testConnection();
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
