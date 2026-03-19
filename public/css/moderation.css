@@ -1,7 +1,6 @@
-/* Moderation page styles – nested under .dashboard */
+/* Moderation page styles */
 
 .dashboard {
-
     .btn-danger {
         border-color: #dc3545;
         color: #dc3545;
@@ -116,10 +115,6 @@
             }
         }
 
-        .moderation-service-edit-form {
-            display: none;
-        }
-
         .service-form-actions {
             display: flex;
             gap: var(--spacing-sm);
@@ -136,5 +131,52 @@
             display: inline-flex;
             align-items: center;
         }
+    }
+
+
+    .moderation-users-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .moderation-user-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .moderation-user-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        align-items: center;
+    }
+
+    .moderation-user-username {
+        margin: 0;
+    }
+
+    .moderation-user-edit-form {
+        padding: 1rem;
+        margin: 0;
+        gap: var(--spacing-sm);
+
+        & input,
+        & select {
+            max-width: 420px;
+        }
+    }
+
+    .moderation-user-actions {
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .moderation-user-actions.hidden {
+        display: none;
     }
 }

@@ -2,7 +2,7 @@ import { validationResult } from 'express-validator';
 import { updateVehicle } from '../../models/vehicles.js';
 
 /**
- * Handle employee/admin vehicle edits from the vehicle detail page.
+ * Handle employee/admin vehicle edits from the vehicle detail page
  */
 const handleVehicleEdit = async (req, res, next) => {
     const vehicleId = parseInt(req.params.id, 10);

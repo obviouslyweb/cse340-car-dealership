@@ -5,7 +5,7 @@ import { createContactForm } from '../../models/forms/contact.js';
 const router = Router();
 
 /**
- * Display the contact form page.
+ * Display the contact form page
  */
 const showContactForm = (req, res) => {
     res.render('forms/contact/form', {
@@ -14,9 +14,9 @@ const showContactForm = (req, res) => {
 };
 
 /**
- * Handle contact form submission with validation.
- * If validation passes, save to database and redirect.
- * If validation fails, log errors and redirect back to form.
+ * Handle contact form submission with validation
+ * If validation passes, save to database and redirect
+ * If validation fails, log errors and redirect back to form
  */
 const handleContactSubmission = async (req, res) => {
     // Check for validation errors
@@ -48,12 +48,14 @@ const handleContactSubmission = async (req, res) => {
 };
 
 /**
- * GET /contact - Display the contact form
+ * Display the contact form
+ * GET /contact
  */
 router.get('/', showContactForm);
 
 /**
- * POST /contact - Handle contact form submission with validation
+ * Handle contact form submission with validation
+ * POST /contact
  */
 router.post('/', handleContactSubmission);
 

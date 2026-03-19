@@ -4,7 +4,8 @@ import { getReviewsAwaitingApproval, approveReview, deleteReview } from '../../m
 const router = Router();
 
 /**
- * GET /moderation/reviews - List all unapproved reviews for employees/admins.
+ * List all unapproved reviews for employees/admins
+ * GET /moderation/reviews
  */
 const showModerationPage = async (req, res) => {
     try {
@@ -21,7 +22,8 @@ const showModerationPage = async (req, res) => {
 };
 
 /**
- * POST /moderation/reviews/:id/approve - Mark review as visible.
+ * Mark review as visible
+ * POST /moderation/reviews/:id/approve
  */
 const handleApprove = async (req, res, next) => {
     const id = parseInt(req.params.id, 10);
@@ -43,7 +45,8 @@ const handleApprove = async (req, res, next) => {
 };
 
 /**
- * POST /moderation/reviews/:id/reject - Delete review after confirmation (confirmation is client-side).
+ * Delete review after confirmation
+ * POST /moderation/reviews/:id/reject
  */
 const handleReject = async (req, res, next) => {
     const id = parseInt(req.params.id, 10);

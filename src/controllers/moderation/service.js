@@ -10,8 +10,8 @@ import { serviceRequestModerationValidation } from '../../middleware/validation/
 const router = Router();
 
 /**
- * GET /moderation/service
  * List all service requests for employees/admins
+ * GET /moderation/service
  */
 const showModerationPage = async (req, res) => {
     try {
@@ -28,8 +28,8 @@ const showModerationPage = async (req, res) => {
 };
 
 /**
- * POST /moderation/service/:id
  * Update status, employee_notes, status_facing_user
+ * POST /moderation/service/:id
  */
 const handleUpdate = async (req, res, next) => {
     const id = parseInt(req.params.id, 10);
@@ -57,8 +57,8 @@ const handleUpdate = async (req, res, next) => {
 };
 
 /**
- * POST /moderation/service/:id/delete
  * Delete service request
+ * POST /moderation/service/:id/delete
  */
 const handleDelete = async (req, res, next) => {
     const id = parseInt(req.params.id, 10);

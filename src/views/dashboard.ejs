@@ -9,7 +9,7 @@
         <div class="card button-card red">
             <h2>Admin Actions</h2>
             <div class="action-list">
-                <a href="/moderation/users/list" class="btn">Review Accounts</a>
+                <a href="/moderation/users" class="btn">Review Accounts</a>
             </div>
         </div>
         <% } %>
@@ -57,7 +57,7 @@
                                     <button type="button" class="btn" data-request-edit="<%= sr.id %>">Edit</button>
                                 </div>
                             </div>
-                            <form class="request-edit-form" method="POST" action="/dashboard/service-requests/<%= sr.id %>/edit" data-request-id="<%= sr.id %>">
+                            <form class="request-edit-form form-style hidden" method="POST" action="/dashboard/service-requests/<%= sr.id %>/edit" data-request-id="<%= sr.id %>">
                                 <div class="request-edit-header">
                                     <select name="service_type" class="request-edit-service-type" required>
                                         <% ['Oil Change','Tire Rotation','Brake Service','Battery Replacement','Filter Replacement','Multi-Point Inspection','Fluid Flush','Alignment','Other'].forEach(function(type) { %>
@@ -83,8 +83,8 @@
                                 var id = this.getAttribute('data-request-edit');
                                 var li = document.getElementById('request-' + id);
                                 if (!li) return;
-                                li.querySelector('.request-display').style.display = 'none';
-                                li.querySelector('.request-edit-form').style.display = 'flex';
+                                li.querySelector('.request-display').classList.add('hidden');
+                                li.querySelector('.request-edit-form').classList.remove('hidden');
                             });
                         });
                         document.querySelectorAll('.request-edit-cancel').forEach(function (btn) {
@@ -92,8 +92,8 @@
                                 var id = this.getAttribute('data-request-id');
                                 var li = document.getElementById('request-' + id);
                                 if (!li) return;
-                                li.querySelector('.request-display').style.display = '';
-                                li.querySelector('.request-edit-form').style.display = 'none';
+                                li.querySelector('.request-display').classList.remove('hidden');
+                                li.querySelector('.request-edit-form').classList.add('hidden');
                             });
                         });
                     })();
@@ -129,7 +129,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <form class="review-edit-form" method="POST" action="/dashboard/reviews/<%= review.id %>/edit" data-review-id="<%= review.id %>">
+                            <form class="review-edit-form form-style hidden" method="POST" action="/dashboard/reviews/<%= review.id %>/edit" data-review-id="<%= review.id %>">
                                 <div class="review-edit-header">
                                     <a href="/vehicles/<%= review.vehicle_id %>"><%= review.vehicle_year %> <%= review.vehicle_make %> <%= review.vehicle_model %></a>
                                     <select id="edit-rating-<%= review.id %>" name="rating" class="review-edit-rating" required>
@@ -156,8 +156,8 @@
                                 var id = this.getAttribute('data-review-edit');
                                 var li = document.getElementById('review-' + id);
                                 if (!li) return;
-                                li.querySelector('.review-display').style.display = 'none';
-                                li.querySelector('.review-edit-form').style.display = 'block';
+                                li.querySelector('.review-display').classList.add('hidden');
+                                li.querySelector('.review-edit-form').classList.remove('hidden');
                             });
                         });
                         document.querySelectorAll('.review-edit-cancel').forEach(function(btn) {
@@ -165,8 +165,8 @@
                                 var id = this.getAttribute('data-review-id');
                                 var li = document.getElementById('review-' + id);
                                 if (!li) return;
-                                li.querySelector('.review-display').style.display = '';
-                                li.querySelector('.review-edit-form').style.display = 'none';
+                                li.querySelector('.review-display').classList.remove('hidden');
+                                li.querySelector('.review-edit-form').classList.add('hidden');
                             });
                         });
                     })();

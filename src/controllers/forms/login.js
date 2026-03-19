@@ -1,14 +1,13 @@
 import { validationResult } from 'express-validator';
-import { findUserByEmail, verifyPassword } from '../../models/forms/login.js';
-import { getReviewsByUserId, getReviewById, deleteReview, updateReview } from '../../models/vehicles.js';
+import { findUser, verifyPassword } from '../../models/forms/login.js';
+import { getReviewsByUserId } from '../../models/vehicles.js';
 import { getServiceRequestsByUserId, getServiceRequestById, updateServiceRequest } from '../../models/forms/service.js';
-import { serviceRequestValidation } from '../../middleware/validation/forms.js';
 import { Router } from 'express';
 
 const router = Router();
 
 /**
- * Display the login form.
+ * Display the login form
  */
 const showLoginForm = (req, res) => {
     return res.render('forms/login/form', {
@@ -17,7 +16,7 @@ const showLoginForm = (req, res) => {
 };
 
 /**
- * Process login form submission.
+ * Process login form submission
  */
 const processLogin = async (req, res) => {
     // Check for validation errors
@@ -33,14 +32,14 @@ const processLogin = async (req, res) => {
     }
 
     // No errors found; proceed with login process
-    // Extract email and password from req.body
+    // Extract identifier (username or email) and password from req.body
     const { email, password } = req.body;
 
     try {
-        let user = await findUserByEmail(email);
+        let user = await findUser(email);
         if (!user) {
             console.log(`User not found: ${user}`)
-            req.flash('error', 'Invalid email or password.');
+            req.flash('error', 'Invalid username/email or password.');
             return res.redirect('/login');
         }
 
@@ -48,7 +47,7 @@ const processLogin = async (req, res) => {
         let passwordVerified = await verifyPassword(password, user.password);
         if (!passwordVerified) {
             console.log("Invalid password");
-            req.flash('error', 'Invalid email or password.');
+            req.flash('error', 'Invalid username/email or password.');
             return res.redirect('/login');
         }
 
@@ -68,9 +67,8 @@ const processLogin = async (req, res) => {
 };
 
 /**
- * Handle user logout.
- * 
- * NOTE: connect.sid is the default session cookie name since we did not specify a custom name when creating the session in server.js.
+ * Handle user logout
+ * NOTE: connect.sid is the default session cookie name since we did not specify a custom name when creating the session in server.js
  */
 const processLogout = (req, res) => {
     // First, check if there is a session object on the request
@@ -111,7 +109,7 @@ const processLogout = (req, res) => {
 };
 
 /**
- * Display protected dashboard (requires login).
+ * Display protected dashboard (requires login)
  */
 const showDashboard = async (req, res) => {
     const user = req.session.user;
@@ -149,78 +147,6 @@ const showDashboard = async (req, res) => {
         myReviews,
         myServiceRequests
     });
-};
-
-/**
- * Delete the current user's own review (POST /dashboard/reviews/:id/delete).
- */
-const handleDeleteMyReview = async (req, res, next) => {
-    const reviewId = parseInt(req.params.id, 10);
-    if (Number.isNaN(reviewId)) {
-        return next();
-    }
-    const userId = req.session?.user?.id;
-    if (!userId) {
-        req.flash('error', 'You must be logged in to delete a review.');
-        return res.redirect('/login');
-    }
-    try {
-        const review = await getReviewById(reviewId);
-        if (!review) {
-            req.flash('error', 'Review not found or already deleted.');
-            return res.redirect('/dashboard');
-        }
-        if (review.user_id !== userId) {
-            req.flash('error', 'You can only delete your own reviews.');
-            return res.redirect('/dashboard');
-        }
-        await deleteReview(reviewId);
-        req.flash('success', 'Your review has been deleted.');
-    } catch (err) {
-        console.error('Error deleting review:', err);
-        req.flash('error', 'Unable to delete review. Please try again later.');
-    }
-    return res.redirect('/dashboard');
-};
-
-/**
- * Edit the current user's own review
- * POST /dashboard/reviews/:id/edit
- * Updates rating and body & sets is_visible to FALSE for re-moderation
- */
-const handleEditMyReview = async (req, res, next) => {
-    const reviewId = parseInt(req.params.id, 10);
-    if (Number.isNaN(reviewId)) {
-        return next();
-    }
-    const userId = req.session?.user?.id;
-    if (!userId) {
-        req.flash('error', 'You must be logged in to edit a review.');
-        return res.redirect('/login');
-    }
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        errors.array().forEach((err) => req.flash('error', err.msg));
-        return res.redirect('/dashboard');
-    }
-    try {
-        const review = await getReviewById(reviewId);
-        if (!review) {
-            req.flash('error', 'Review not found or already deleted.');
-            return res.redirect('/dashboard');
-        }
-        if (review.user_id !== userId) {
-            req.flash('error', 'You can only edit your own reviews.');
-            return res.redirect('/dashboard');
-        }
-        const { rating, body } = req.body;
-        await updateReview(reviewId, parseInt(rating, 10), body);
-        req.flash('success', 'Your edits have been submitted! Please wait for an employee to review them before they appear.');
-    } catch (err) {
-        console.error('Error updating review:', err);
-        req.flash('error', 'Unable to update review. Please try again later.');
-    }
-    return res.redirect('/dashboard');
 };
 
 /**
@@ -272,4 +198,4 @@ router.post('/', processLogin);
 
 // Export router as default, and specific functions for root-level routes
 export default router;
-export { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview, handleEditMyServiceRequest };
+export { processLogout, showDashboard, handleEditMyServiceRequest };

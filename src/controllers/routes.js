@@ -1,26 +1,26 @@
 /*
 Add import statements for controllers and middleware
 */
+
 // Router core
 import { Router } from 'express';
 
-// ---------------------- TODO ----------------------
 // Middleware import
 import { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation, vehicleEditValidation } from '../middleware/validation/forms.js';
 
-// ---------------------- TODO ----------------------
 // // Controllers (for page routing)
-// import { catalogPage, courseDetailPage } from './catalog/catalog.js';
-import { homePage, aboutPage, vehicleListPage, vehicleDetailPage, handleReviewSubmission } from './index.js';
-// import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
+import { homePage, aboutPage } from './index.js';
+import { vehicleListPage, vehicleDetailPage, handleReviewSubmission } from './vehicles.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-import { processLogout, showDashboard, handleDeleteMyReview, handleEditMyReview, handleEditMyServiceRequest } from './forms/login.js';
+import { processLogout, showDashboard, handleEditMyServiceRequest } from './forms/login.js';
+import { handleDeleteMyReview, handleEditMyReview } from './forms/dashboard_reviews.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 import moderationReviewsRoutes from './moderation/reviews.js';
 import moderationContactRoutes from './moderation/contact.js';
 import moderationServiceRoutes from './moderation/service.js';
+import moderationUsersRoutes from './moderation/users.js';
 import { handleVehicleEdit } from './moderation/edit_vehicle.js';
 import serviceRoutes from './forms/service.js';
 
@@ -127,6 +127,8 @@ router.post('/dashboard/service-requests/:id/edit', requireLogin, serviceRequest
 router.use('/moderation/contact', requireLogin, requireRole(['employee', 'admin']), moderationContactRoutes);
 router.use('/moderation/reviews', requireLogin, requireRole(['employee', 'admin']), moderationReviewsRoutes);
 router.use('/moderation/service', requireLogin, requireRole(['employee', 'admin']), moderationServiceRoutes);
+// Admin only routes
+router.use('/moderation/users', requireLogin, requireRole('admin'), moderationUsersRoutes);
 
 /*
 Export router for usage in server.js

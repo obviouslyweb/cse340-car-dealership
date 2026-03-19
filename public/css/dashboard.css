@@ -167,10 +167,6 @@
         box-sizing: border-box;
     }
 
-    .review-edit-form {
-        display: none;
-    }
-
     .review-edit-actions {
         display: flex;
         gap: 0.5rem;
@@ -257,7 +253,6 @@
     }
 
     .request-edit-form {
-        display: none;
         margin-top: 0.5rem;
     }
 

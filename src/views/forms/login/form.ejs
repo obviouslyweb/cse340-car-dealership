@@ -1,13 +1,13 @@
 <%- include('../../partials/header') %>
 <main>
     <h1>Sign In</h1>
-    <p>Enter your email and password to access your account.</p>
+    <p>Enter your login credentials to access your dashboard.</p>
 
     <form method="POST" action="/login" class="login-form form-style">
-        <!-- Email field -->
+        <!-- Username/email field -->
         <div class="form-group">
-            <label name="email">Email</label>
-            <input type="email" name="email" id="email" required placeholder="Enter your email here">
+            <label name="email">Username / Email</label>
+            <input type="text" name="email" id="email" required placeholder="Enter username or email here">
         </div>
 
         <!-- Password field -->

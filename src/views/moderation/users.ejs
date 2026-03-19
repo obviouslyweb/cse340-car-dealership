@@ -1,0 +1,115 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Review Accounts</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
+
+        <% if (users && users.length > 0) { %>
+            <div class="moderation-users-list">
+                <% users.forEach((u) => { %>
+                    <div class="card moderation-user-card" id="moderation-user-<%= u.id %>">
+                        <h2 class="moderation-user-username"><%= u.name %></h2>
+
+                        <div class="moderation-user-meta">
+                            <span class="moderation-user-id">ID: <%= u.id %></span>
+                            <span class="moderation-user-role">Permission: <%= u.roleName %></span>
+                            <span class="moderation-user-date">
+                                Registered: <%= new Date(u.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %>
+                            </span>
+                            <span class="moderation-user-email">
+                                Email: <%= u.email %>
+                            </span>
+                        </div>
+
+                        <div class="moderation-user-actions" data-moderation-user-display-actions="<%= u.id %>">
+                            <button
+                                type="button"
+                                class="btn"
+                                data-moderation-user-edit="<%= u.id %>"
+                            >Edit</button>
+
+                            <form method="POST" action="/moderation/users/<%= u.id %>/delete" onsubmit="return confirm('Are you sure you want to delete this user? This cannot be undone.');">
+                                <button type="submit" class="btn lowlight btn-danger">Delete user</button>
+                            </form>
+                        </div>
+
+                        <form method="POST" action="/moderation/users/<%= u.id %>/update" class="form-style hidden moderation-user-edit-form" data-moderation-user-edit-form="<%= u.id %>">
+                            <div class="form-group">
+                                <label for="name-<%= u.id %>">Name</label>
+                                <input id="name-<%= u.id %>" type="text" name="name" maxlength="100" value="<%= u.name %>" required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="roleName-<%= u.id %>">Permission Level</label>
+                                <select id="roleName-<%= u.id %>" name="roleName" required>
+                                    <% if (roles && roles.length > 0) { %>
+                                        <% roles.forEach((r) => { %>
+                                            <option value="<%= r.roleName %>" <%= u.roleName === r.roleName ? 'selected' : '' %>><%= r.roleName %></option>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <option value="user" <%= u.roleName === 'user' ? 'selected' : '' %>>user</option>
+                                        <option value="employee" <%= u.roleName === 'employee' ? 'selected' : '' %>>employee</option>
+                                        <option value="admin" <%= u.roleName === 'admin' ? 'selected' : '' %>>admin</option>
+                                    <% } %>
+                                </select>
+                            </div>
+
+                            <div class="moderation-user-actions">
+                                <button type="submit" class="btn">Save changes</button>
+                                <button
+                                    type="button"
+                                    class="btn lowlight moderation-user-edit-cancel"
+                                    data-moderation-user-edit-cancel="<%= u.id %>"
+                                >Cancel</button>
+                            </div>
+
+                        </form>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <p class="no-users">No users registered yet.</p>
+        <% } %>
+    </div>
+</main>
+<script>
+    (function () {
+        document.querySelectorAll('[data-moderation-user-edit]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-moderation-user-edit');
+                var li = document.getElementById('moderation-user-' + id);
+                if (!li) return;
+
+                var displayActions = li.querySelector('[data-moderation-user-display-actions="' + id + '"]');
+                var form = li.querySelector('[data-moderation-user-edit-form="' + id + '"]');
+                if (!displayActions || !form) return;
+
+                displayActions.classList.add('hidden');
+                form.classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('[data-moderation-user-edit-cancel]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-moderation-user-edit-cancel');
+                var li = document.getElementById('moderation-user-' + id);
+                if (!li) return;
+
+                var displayActions = li.querySelector('[data-moderation-user-display-actions="' + id + '"]');
+                var form = li.querySelector('[data-moderation-user-edit-form="' + id + '"]');
+                if (!displayActions || !form) return;
+
+                displayActions.classList.remove('hidden');
+                form.classList.add('hidden');
+            });
+        });
+    })();
+</script>
+<%- include('../partials/footer') %>
+

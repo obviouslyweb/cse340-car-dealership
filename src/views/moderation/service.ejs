@@ -37,7 +37,7 @@
                                 <button type="submit" class="btn lowlight btn-danger">Delete request</button>
                             </form>
                         </div>
-                        <form method="POST" action="/moderation/service/<%= sr.id %>" class="form-style service-request-form moderation-service-edit-form" data-moderation-service-id="<%= sr.id %>">
+                        <form method="POST" action="/moderation/service/<%= sr.id %>" class="form-style hidden service-request-form moderation-service-edit-form" data-moderation-service-id="<%= sr.id %>">
                             <div class="form-group">
                                 <label for="status-<%= sr.id %>">Status</label>
                                 <select id="status-<%= sr.id %>" name="status" required>
@@ -69,8 +69,8 @@
                             var id = this.getAttribute('data-moderation-service-edit');
                             var li = document.getElementById('moderation-service-' + id);
                             if (!li) return;
-                            li.querySelector('.moderation-service-actions').style.display = 'none';
-                            li.querySelector('.moderation-service-edit-form').style.display = 'flex';
+                            li.querySelector('.moderation-service-actions').classList.add('hidden');
+                            li.querySelector('.moderation-service-edit-form').classList.remove('hidden');
                         });
                     });
                     document.querySelectorAll('.moderation-service-edit-cancel').forEach(function (btn) {
@@ -78,8 +78,8 @@
                             var id = this.getAttribute('data-moderation-service-id');
                             var li = document.getElementById('moderation-service-' + id);
                             if (!li) return;
-                            li.querySelector('.moderation-service-actions').style.display = '';
-                            li.querySelector('.moderation-service-edit-form').style.display = 'none';
+                            li.querySelector('.moderation-service-actions').classList.remove('hidden');
+                            li.querySelector('.moderation-service-edit-form').classList.add('hidden');
                         });
                     });
                 })();

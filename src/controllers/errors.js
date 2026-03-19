@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
-// REMEMBER: Errors come after routing
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 
 // 404 handler

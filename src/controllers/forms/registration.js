@@ -2,19 +2,12 @@ import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { requireLogin } from '../../middleware/auth.js';
-import { 
-    emailExists, 
-    saveUser, 
-    getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser
-} from '../../models/forms/registration.js';
+import { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser } from '../../models/forms/registration.js';
 
 const router = Router();
 
 /**
- * Display the registration form page.
+ * Display the registration form page
  */
 const showRegistrationForm = (req, res) => {
     res.render('forms/registration/form', {
@@ -23,7 +16,7 @@ const showRegistrationForm = (req, res) => {
 };
 
 /**
- * Handle user registration with validation and password hashing.
+ * Handle user registration with validation and password hashing
  */
 const processRegistration = async (req, res) => {
     // Check for validation errors
@@ -67,7 +60,7 @@ const processRegistration = async (req, res) => {
 };
 
 /**
- * Display all registered users.
+ * Display all registered users
  */
 const showAllUsers = async (req, res) => {
     let users = [];

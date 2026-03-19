@@ -16,7 +16,7 @@
                 <div class="card button-card red">
                     <h2>Admin Actions</h2>
                     <div class="action-list">
-                        <a href="/moderation/users/list" class="btn">Review Accounts</a>
+                        <a href="/moderation/users" class="btn">Review Accounts</a>
                     </div>
                 </div>
             <% } %>
@@ -27,7 +27,7 @@
                     <div class="vehicle-edit-actions">
                         <button type="button" class="btn" data-vehicle-edit-toggle="<%= vehicle.id %>">Edit Vehicle Details</button>
                     </div>
-                    <form id="vehicle-edit-form" class="vehicle-edit-form form-style is-hidden" method="POST" action="/vehicles/<%= vehicle.id %>/edit" data-vehicle-id="<%= vehicle.id %>">
+                    <form id="vehicle-edit-form" class="vehicle-edit-form form-style hidden" method="POST" action="/vehicles/<%= vehicle.id %>/edit" data-vehicle-id="<%= vehicle.id %>">
                         <div class="vehicle-edit-header">
                             <select name="category_id" class="vehicle-edit-category" required>
                                 <% categories.forEach(function(category) { %>
@@ -88,13 +88,13 @@
                             if (!toggle || !cancel || !form) return;
         
                             toggle.addEventListener('click', function () {
-                                form.classList.remove('is-hidden');
-                                toggle.parentElement.classList.add('is-hidden');
+                                form.classList.remove('hidden');
+                                toggle.parentElement.classList.add('hidden');
                             });
         
                             cancel.addEventListener('click', function () {
-                                form.classList.add('is-hidden');
-                                toggle.parentElement.classList.remove('is-hidden');
+                                form.classList.add('hidden');
+                                toggle.parentElement.classList.remove('hidden');
                             });
                         })();
                     </script>

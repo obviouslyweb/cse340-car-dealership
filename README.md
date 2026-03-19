@@ -25,7 +25,7 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [X] Everything employees can do, plus:
 * [ ] Add, edit, and delete vehicle categories
 * [ ] Add, edit, and delete vehicles from inventory
-* [ ] Manage employee accounts (optional, can be hardcoded)
+* [X] Manage employee accounts (optional, can be hardcoded)
 * [ ] View all system activity and user data
 ### Database Requirements:
 Database Requirements:
@@ -69,10 +69,10 @@ Here's a list of everything that I have left to do until completion in order.
 
 * [ ] Admin can add, edit, delete vehicle categories
 * [ ] Admin can add, edit, delete vehicles
-* [ ] Admin can manage employee accounts and view activity or user data (if required)
+* [ ] Admin can view activity or user data
 * [ ] Mobile view handling for all pages
 * [ ] User Roles section filled in README
-* [ ] Test account credentials in README (email only, no password)
+* [ ] Test account credentials in README (email only)
 * [ ] ERD image in README (pgAdmin export)
 * [ ] Known Limitations section filled in README
 * [ ] Review & polish core

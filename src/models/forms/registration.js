@@ -81,6 +81,60 @@ const updateUser = async (id, name, email) => {
 };
 
 /**
+ * Retrieve all users with their associated permission level (role).
+ * Used by the admin "Review Accounts" page.
+ */
+const getAllUsersWithRoles = async () => {
+    const query = `
+        SELECT
+            users.id,
+            users.name,
+            users.email,
+            users.created_at,
+            COALESCE(roles.role_name, 'user') AS "roleName"
+        FROM users
+        LEFT JOIN roles ON users.role_id = roles.id
+        ORDER BY users.created_at DESC
+    `;
+    const result = await db.query(query);
+    return result.rows;
+};
+
+/**
+ * Retrieve all roles in the system.
+ */
+const getAllRoles = async () => {
+    const query = `
+        SELECT
+            id,
+            role_name AS "roleName"
+        FROM roles
+        ORDER BY id
+    `;
+    const result = await db.query(query);
+    return result.rows;
+};
+
+/**
+ * Update a user's name and role.
+ * - roleName is mapped to roles.role_id via a subquery.
+ */
+const updateUserModeration = async (id, name, roleName) => {
+    const query = `
+        UPDATE users
+        SET
+            name = $2,
+            role_id = (SELECT id FROM roles WHERE role_name = $3),
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1
+          AND EXISTS (SELECT 1 FROM roles WHERE role_name = $3)
+        RETURNING id, name, email, $3 AS "roleName"
+    `;
+    const result = await db.query(query, [id, name, roleName]);
+    return result.rows[0] || null;
+};
+
+/**
  * Delete a user account
  */
 const deleteUser = async (id) => {
@@ -93,6 +147,9 @@ export {
     emailExists, 
     saveUser, 
     getAllUsers, 
+    getAllUsersWithRoles,
+    getAllRoles,
+    updateUserModeration,
     getUserById, 
     updateUser, 
     deleteUser 

@@ -103,11 +103,17 @@ const reviewValidation = [
 const loginValidation = [
     body('email')
         .trim()
-        .isEmail()
-        .withMessage('Please provide a valid email address')
-        .normalizeEmail()
-        .isLength({ max: 255 })
-        .withMessage('Email address is too long; please use a shorter email address.'),
+        .notEmpty()
+        .isLength({ min: 2, max: 255 })
+        .withMessage('Please enter your username or email')
+        .custom((value) => {
+            // check if this is likely an email
+            const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            if (validEmail) return true;
+            // check if username is valid
+            return /^[a-zA-Z0-9\s'-]+$/.test(value);
+        })
+        .withMessage('Please enter a valid username or email address'),
     body('password')
         .notEmpty()
         .withMessage('Password must not be empty')
@@ -218,6 +224,25 @@ const vehicleEditValidation = [
         .withMessage('Description must be 2000 characters or less')
 ];
 
+/**
+ * Validation for admin moderation updates:
+ * - rename a user
+ * - change permission level (role)
+ */
+const moderationUserUpdateValidation = [
+    body('name')
+        .trim()
+        .isLength({ min: 2, max: 100 })
+        .withMessage('Name must be between 2 and 100 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
+    body('roleName')
+        .trim()
+        .customSanitizer((value) => (typeof value === 'string' ? value.toLowerCase() : value))
+        .isIn(['user', 'employee', 'admin'])
+        .withMessage('Invalid permission level')
+];
+
 export { 
     contactValidation, 
     registrationValidation, 
@@ -226,5 +251,6 @@ export {
     reviewValidation,
     serviceRequestValidation,
     serviceRequestModerationValidation,
-    vehicleEditValidation
+    vehicleEditValidation,
+    moderationUserUpdateValidation
 };
