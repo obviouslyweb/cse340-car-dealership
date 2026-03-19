@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Roles table (RBAC)
+-- Roles table
 CREATE TABLE IF NOT EXISTS roles (
     id SERIAL PRIMARY KEY,
     role_name VARCHAR(50) UNIQUE NOT NULL,
@@ -56,14 +56,14 @@ BEGIN
         ADD COLUMN role_id INTEGER REFERENCES roles(id);
     END IF;
 END $$;
--- Seed roles (idempotent - safe to run multiple times)
+-- Seed roles
 INSERT INTO roles (id, role_name, role_description) 
 VALUES 
     (1, 'user', 'Standard user with basic access'),
     (2, 'employee', 'Employee user with additional control'),
     (3, 'admin', 'Administrator with full system access')
 ON CONFLICT (role_name) DO NOTHING;
--- Set the default value of role_id to the 'user' role so new inserts without role_id are handled automatically
+-- Set the default value of role_id to deafult 'user'
 DO $$
 DECLARE
     user_role_id INTEGER;
@@ -76,7 +76,7 @@ BEGIN
         );
     END IF;
 END $$;
--- Update existing users without a role to default 'user' role
+-- Update existing users without a role to default 'user'
 DO $$
 DECLARE
     user_role_id INTEGER;

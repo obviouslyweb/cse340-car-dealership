@@ -143,14 +143,4 @@ const deleteUser = async (id) => {
     return result.rowCount > 0;
 };
 
-export { 
-    emailExists, 
-    saveUser, 
-    getAllUsers, 
-    getAllUsersWithRoles,
-    getAllRoles,
-    updateUserModeration,
-    getUserById, 
-    updateUser, 
-    deleteUser 
-};
+export { emailExists, saveUser, getAllUsers, getAllUsersWithRoles, getAllRoles, updateUserModeration, getUserById, updateUser, deleteUser };

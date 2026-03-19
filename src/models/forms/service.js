@@ -127,12 +127,4 @@ const deleteServiceRequest = async (id) => {
     return result.rows[0] || null;
 };
 
-export {
-    createServiceRequest,
-    getServiceRequestById,
-    getServiceRequestsByUserId,
-    updateServiceRequest,
-    getAllServiceRequestsForModeration,
-    updateServiceRequestByStaff,
-    deleteServiceRequest
-};
+export { createServiceRequest, getServiceRequestById, getServiceRequestsByUserId, updateServiceRequest, getAllServiceRequestsForModeration, updateServiceRequestByStaff, deleteServiceRequest };

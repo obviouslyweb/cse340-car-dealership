@@ -32,9 +32,6 @@ const getCategories = async () => {
 
 /**
  * Fetches vehicles with their primary image URL
- * Filters:
- * - categoryId: Optional category ID to filter by
- * - includeUnavailable: If true, include vehicles with no remaining stock
  */
 const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
     const conditions = [];
@@ -51,11 +48,7 @@ const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
     const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
     const query = `
-        SELECT v.id, v.category_id, v.make, v.model, v.year, v.price, v.mileage,
-               v.is_featured,
-               v.description, v.stock,
-               vi.image_url,
-               ROUND(AVG(r.rating)::numeric, 1) AS average_rating
+        SELECT v.id, v.category_id, v.make, v.model, v.year, v.price, v.mileage, v.is_featured, v.description, v.stock, vi.image_url, ROUND(AVG(r.rating)::numeric, 1) AS average_rating
         FROM vehicles v
         LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
         LEFT JOIN reviews r ON r.vehicle_id = v.id AND r.is_visible = TRUE
@@ -73,9 +66,7 @@ const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
  */
 const getVehicleById = async (id) => {
     const query = `
-        SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description,
-               v.category_id, v.stock, v.is_featured,
-               vi.image_url
+        SELECT v.id, v.make, v.model, v.year, v.price, v.mileage, v.description, v.category_id, v.stock, v.is_featured, vi.image_url
         FROM vehicles v
         LEFT JOIN vehicle_images vi ON v.id = vi.vehicle_id AND vi.is_primary = TRUE
         WHERE v.id = $1
@@ -99,7 +90,7 @@ const getVehicleImages = async (vehicleId) => {
 };
 
 /**
- * Gets a single review by id (for ownership checks).
+ * Gets a single review by id
  */
 const getReviewById = async (id) => {
     const query = `
@@ -116,8 +107,7 @@ const getReviewById = async (id) => {
  */
 const getReviewsByUserId = async (userId) => {
     const query = `
-        SELECT r.id, r.vehicle_id, r.rating, r.body, r.is_visible, r.created_at,
-               v.year AS vehicle_year, v.make AS vehicle_make, v.model AS vehicle_model
+        SELECT r.id, r.vehicle_id, r.rating, r.body, r.is_visible, r.created_at, v.year AS vehicle_year, v.make AS vehicle_make, v.model AS vehicle_model
         FROM reviews r
         INNER JOIN vehicles v ON r.vehicle_id = v.id
         WHERE r.user_id = $1
@@ -143,7 +133,7 @@ const getReviewsByVehicleId = async (id) => {
 };
 
 /**
- * Gets all reviews that need to be moderated (is_visible = FALSE), with user and vehicle info.
+ * Gets all reviews that need to be moderated (is_visible = FALSE)
  */
 const getReviewsAwaitingApproval = async () => {
     const query = `
@@ -161,7 +151,7 @@ const getReviewsAwaitingApproval = async () => {
 };
 
 /**
- * Marks a review as visible (approved)
+ * Marks a review as visible
  */
 const approveReview = async (id) => {
     const query = `
@@ -174,7 +164,7 @@ const approveReview = async (id) => {
 };
 
 /**
- * Deletes a review from the database (rejected)
+ * Deletes a review from the database
  */
 const deleteReview = async (id) => {
     const query = `DELETE FROM reviews WHERE id = $1 RETURNING id`;
@@ -184,7 +174,7 @@ const deleteReview = async (id) => {
 
 /**
  * Updates a review's rating and body
- * sets is_visible to False so it can be moderated again
+ * sets is_visible to false so it can be reviewed
  */
 const updateReview = async (id, rating, body) => {
     const query = `
@@ -198,7 +188,7 @@ const updateReview = async (id, rating, body) => {
 };
 
 /**
- * Updates a vehicle's editable fields.
+ * Updates a vehicle's editable fields
  */
 const updateVehicle = async (id, vehicleData) => {
     const query = `

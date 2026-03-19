@@ -1,8 +1,8 @@
 import db from '../models/db.js';
 
 /**
- * Removes expired sessions from the database.
- * In production, this would typically be handled by a cron job.
+ * Removes expired sessions from the database
+ * In production, this would typically be handled by a cron job
  */
 const cleanupExpiredSessions = async () => {
     try {
@@ -26,8 +26,8 @@ const cleanupExpiredSessions = async () => {
 };
 
 /**
- * Starts automatic session cleanup that runs every 12 hours.
- * Runs immediately on startup to handle any sessions that expired while server was offline.
+ * Starts automatic session cleanup that runs every 12 hours
+ * Runs immediately on startup to handle any sessions that expired while server was offline
  */
 const startSessionCleanup = () => {
     cleanupExpiredSessions();
