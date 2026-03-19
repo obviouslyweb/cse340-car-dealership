@@ -26,6 +26,25 @@ function errorHandler(err, req, res, next) {
     if (!res.locals) {
         res.locals = {};
     }
+
+    // Ensure base UI locals exist so shared header partial doesn't crash
+    // even if `addLocalVariables` didn't run for this request.
+    if (typeof res.locals.bodyClass === 'undefined') {
+        const themes = ['blue-theme', 'green-theme', 'red-theme'];
+        res.locals.bodyClass = themes[Math.floor(Math.random() * themes.length)];
+    }
+    if (typeof res.locals.isLoggedIn === 'undefined') res.locals.isLoggedIn = false;
+    if (typeof res.locals.isEmployee === 'undefined') res.locals.isEmployee = false;
+    if (typeof res.locals.isAdmin === 'undefined') res.locals.isAdmin = false;
+    if (typeof res.locals.NODE_ENV === 'undefined') res.locals.NODE_ENV = NODE_ENV;
+
+    if (req.session && req.session.user) {
+        const roleName = (req.session.user.roleName || '').toLowerCase();
+        res.locals.isLoggedIn = true;
+        res.locals.isEmployee = roleName === 'employee' || roleName === 'admin';
+        res.locals.isAdmin = roleName === 'admin';
+    }
+
     if (typeof res.locals.renderStyles !== 'function') {
         res.locals.styles = [];
         res.locals.scripts = [];
