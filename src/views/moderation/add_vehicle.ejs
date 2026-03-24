@@ -1,0 +1,76 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Add Vehicle</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
+
+        <% if (!categories || categories.length === 0) { %>
+            <p class="moderation-empty-notice">You need at least one vehicle category before adding a vehicle. <a href="/moderation/categories">Create a category</a> first.</p>
+        <% } else { %>
+            <form method="POST" action="/moderation/add_vehicle" class="form-style moderation-add-vehicle-form">
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select id="category_id" name="category_id" required>
+                        <option value="">Select a category</option>
+                        <% categories.forEach(function (cat) { %>
+                            <option value="<%= cat.id %>"><%= cat.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="make">Make</label>
+                    <input id="make" type="text" name="make" maxlength="100" required placeholder="e.g. Toyota">
+                </div>
+
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input id="model" type="text" name="model" maxlength="100" required placeholder="e.g. Camry">
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input id="year" type="number" name="year" min="1886" max="2100" required placeholder="e.g. 2022">
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input id="price" type="number" name="price" min="0" step="0.01" required placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="mileage">Mileage <span class="label-optional">(optional)</span></label>
+                    <input id="mileage" type="number" name="mileage" min="0" placeholder="Leave blank if new">
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input id="stock" type="number" name="stock" min="0" required value="1">
+                </div>
+
+                <div class="form-group form-group-inline">
+                    <label for="is_featured">
+                        <input id="is_featured" type="checkbox" name="is_featured" value="true">
+                        Featured listing
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description <span class="label-optional">(optional)</span></label>
+                    <textarea id="description" name="description" rows="5" maxlength="2000" placeholder="Condition, features, notes for buyers..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn">Add vehicle</button>
+                </div>
+            </form>
+        <% } %>
+    </div>
+</main>
+<%- include('../partials/footer') %>

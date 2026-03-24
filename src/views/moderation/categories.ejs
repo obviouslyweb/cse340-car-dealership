@@ -1,0 +1,113 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Vehicle Categories</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
+
+        <section class="moderation-categories-section">
+            <h2>Existing categories</h2>
+            <% if (categories && categories.length > 0) { %>
+                <ul class="moderation-categories-list">
+                    <% categories.forEach(function (cat) { %>
+                        <li class="moderation-category-item card" id="moderation-category-<%= cat.id %>">
+                            <div class="moderation-category-display" data-category-display="<%= cat.id %>">
+                                <div class="moderation-category-summary">
+                                    <h3 class="moderation-category-name"><%= cat.name %></h3>
+                                    <p class="moderation-category-count">
+                                        <strong><%= cat.vehicle_count %></strong> vehicle<%= cat.vehicle_count === 1 ? '' : 's' %> in this category
+                                    </p>
+                                </div>
+                                <div class="moderation-category-actions">
+                                    <button type="button" class="btn" data-category-edit="<%= cat.id %>">Edit</button>
+                                    <form
+                                        method="POST"
+                                        action="/moderation/categories/<%= cat.id %>/delete"
+                                        class="moderation-category-delete-form"
+                                        onsubmit="return confirm('Delete this category? This cannot be undone. Categories that still have vehicles assigned to them cannot be deleted.');"
+                                    >
+                                        <button type="submit" class="btn lowlight">Delete category</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <form
+                                method="POST"
+                                action="/moderation/categories/<%= cat.id %>/update"
+                                class="form-style hidden moderation-category-edit-form"
+                                data-category-edit-form="<%= cat.id %>"
+                            >
+                                <div class="form-group">
+                                    <label for="name-<%= cat.id %>">Name</label>
+                                    <input id="name-<%= cat.id %>" type="text" name="name" value="<%= cat.name %>" maxlength="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description-<%= cat.id %>">Description <span class="label-optional">(optional)</span></label>
+                                    <textarea id="description-<%= cat.id %>" name="description" rows="3" maxlength="2000" placeholder="Short description for this category"><%= cat.description || '' %></textarea>
+                                </div>
+                                <div class="moderation-category-row-actions">
+                                    <button type="submit" class="btn">Save changes</button>
+                                    <button type="button" class="btn" data-category-edit-cancel="<%= cat.id %>">Cancel</button>
+                                </div>
+                            </form>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p class="moderation-empty-notice">No categories yet. Add one below.</p>
+            <% } %>
+        </section>
+
+        <section class="moderation-categories-add">
+            <h2>Add new category</h2>
+            <p class="help-text">Category names must be unique. Description is optional.</p>
+            <form method="POST" action="/moderation/categories/create" class="form-style">
+                <div class="form-group">
+                    <label for="new-category-name">Name</label>
+                    <input id="new-category-name" type="text" name="name" maxlength="100" required placeholder="e.g. Electric">
+                </div>
+                <div class="form-group">
+                    <label for="new-category-description">Description <span class="label-optional">(optional)</span></label>
+                    <textarea id="new-category-description" name="description" rows="3" maxlength="2000" placeholder="What vehicles belong in this category?"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Add category</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+<script>
+    (function () {
+        document.querySelectorAll('[data-category-edit]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-category-edit');
+                var li = document.getElementById('moderation-category-' + id);
+                if (!li) return;
+                var display = li.querySelector('[data-category-display="' + id + '"]');
+                var form = li.querySelector('[data-category-edit-form="' + id + '"]');
+                if (!display || !form) return;
+                display.classList.add('hidden');
+                form.classList.remove('hidden');
+            });
+        });
+        document.querySelectorAll('[data-category-edit-cancel]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-category-edit-cancel');
+                var li = document.getElementById('moderation-category-' + id);
+                if (!li) return;
+                var display = li.querySelector('[data-category-display="' + id + '"]');
+                var form = li.querySelector('[data-category-edit-form="' + id + '"]');
+                if (!display || !form) return;
+                display.classList.remove('hidden');
+                form.classList.add('hidden');
+            });
+        });
+    })();
+</script>
+<%- include('../partials/footer') %>

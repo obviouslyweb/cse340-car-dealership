@@ -1,6 +1,8 @@
 // Route handlers for vehicle-related pages
 import { validationResult } from 'express-validator';
-import { getVehicles, getVehicleById, getVehicleImages, getCategories, getReviewsByVehicleId, getAggregateReviewScoreByVehicleId, createReview} from '../models/vehicles.js';
+import { getVehicles, getVehicleById, getVehicleImages, deleteVehicle } from '../models/vehicles.js';
+import { getCategories } from '../models/category.js';
+import { getReviewsByVehicleId, getAggregateReviewScoreByVehicleId, createReview } from '../models/reviews.js';
 
 // GET /vehicles
 const vehicleListPage = async (req, res) => {
@@ -100,5 +102,27 @@ const handleReviewSubmission = async (req, res, next) => {
     }
 };
 
-export { vehicleListPage, vehicleDetailPage, handleReviewSubmission };
+// POST /vehicles/:id/delete (admin only)
+const handleVehicleDelete = async (req, res, next) => {
+    const vehicleId = parseInt(req.params.id, 10);
+    if (Number.isNaN(vehicleId)) {
+        return next();
+    }
+
+    try {
+        const deleted = await deleteVehicle(vehicleId);
+        if (!deleted) {
+            req.flash('error', 'Vehicle not found or already removed.');
+            return res.redirect('/vehicles');
+        }
+        req.flash('success', 'The vehicle has been successfully deleted.');
+        return res.redirect('/vehicles');
+    } catch (err) {
+        console.error('Error deleting vehicle:', err);
+        req.flash('error', 'Unable to delete the vehicle. Please try again later.');
+        return res.redirect(`/vehicles/${vehicleId}`);
+    }
+};
+
+export { vehicleListPage, vehicleDetailPage, handleReviewSubmission, handleVehicleDelete };
 

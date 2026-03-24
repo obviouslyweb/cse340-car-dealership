@@ -179,4 +179,74 @@
     .moderation-user-actions.hidden {
         display: none;
     }
+
+    .moderation-empty-notice {
+        color: rgba(0, 0, 0, 0.75);
+        margin: var(--spacing-sm) 0;
+    }
+
+    .moderation-categories-section,
+    .moderation-categories-add {
+        margin-top: var(--spacing-md);
+    }
+
+    .moderation-categories-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .moderation-category-item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .moderation-category-display {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .moderation-category-count {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    .moderation-category-delete-form {
+        margin-top: 0;
+    }
+
+    .moderation-category-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        align-items: center;
+    }
+
+    .moderation-category-actions .moderation-category-delete-form {
+        margin-top: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .label-optional {
+        font-weight: normal;
+        color: rgba(0, 0, 0, 0.55);
+    }
+
+    .form-group-inline label {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+        align-items: center;
+    }
 }

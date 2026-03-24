@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getReviewsAwaitingApproval, approveReview, deleteReview } from '../../models/vehicles.js';
+import { getReviewsAwaitingApproval, approveReview, deleteReview } from '../../models/reviews.js';
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator';
 import { findUser, verifyPassword } from '../../models/forms/login.js';
-import { getReviewsByUserId } from '../../models/vehicles.js';
+import { getReviewsByUserId } from '../../models/reviews.js';
 import { getServiceRequestsByUserId, getServiceRequestById, updateServiceRequest } from '../../models/forms/service.js';
 import { Router } from 'express';
 

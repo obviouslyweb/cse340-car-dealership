@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import { getReviewById, deleteReview, updateReview } from '../../models/vehicles.js';
+import { getReviewById, deleteReview, updateReview } from '../../models/reviews.js';
 
 /**
  * Delete the current user's own review

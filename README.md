@@ -23,8 +23,8 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [X] View contact form submissions
 ### Owner Dashboard (Full Admin):
 * [X] Everything employees can do, plus:
-* [ ] Add, edit, and delete vehicle categories
-* [ ] Add, edit, and delete vehicles from inventory
+* [X] Add, edit, and delete vehicle categories
+* [X] Add, edit, and delete vehicles from inventory
 * [X] Manage employee accounts (optional, can be hardcoded)
 * [ ] View all system activity and user data
 ### Database Requirements:
@@ -67,8 +67,6 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Admin can add, edit, delete vehicle categories
-* [ ] Admin can add, edit, delete vehicles
 * [ ] Admin can view activity or user data
 * [ ] Mobile view handling for all pages
 * [ ] User Roles section filled in README

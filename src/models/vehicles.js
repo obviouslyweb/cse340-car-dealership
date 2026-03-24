@@ -18,19 +18,6 @@ const getFeaturedVehicles = async () => {
 };
 
 /**
- * Fetches all vehicle categories
- */
-const getCategories = async () => {
-    const query = `
-        SELECT id, name, description
-        FROM categories
-        ORDER BY id
-    `;
-    const result = await db.query(query);
-    return result.rows;
-};
-
-/**
  * Fetches vehicles with their primary image URL
  */
 const getVehicles = async ({ categoryId, includeUnavailable = false } = {}) => {
@@ -90,104 +77,6 @@ const getVehicleImages = async (vehicleId) => {
 };
 
 /**
- * Gets a single review by id
- */
-const getReviewById = async (id) => {
-    const query = `
-        SELECT id, vehicle_id, user_id, rating, body, is_visible, created_at
-        FROM reviews
-        WHERE id = $1
-    `;
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
-};
-
-/**
- * Gets all reviews submitted by a user
- */
-const getReviewsByUserId = async (userId) => {
-    const query = `
-        SELECT r.id, r.vehicle_id, r.rating, r.body, r.is_visible, r.created_at, v.year AS vehicle_year, v.make AS vehicle_make, v.model AS vehicle_model
-        FROM reviews r
-        INNER JOIN vehicles v ON r.vehicle_id = v.id
-        WHERE r.user_id = $1
-        ORDER BY r.created_at DESC
-    `;
-    const result = await db.query(query, [userId]);
-    return result.rows;
-};
-
-/**
- * Gets all reviews for a vehicle from vehicle ID
- */
-const getReviewsByVehicleId = async (id) => {
-    const query = `
-        SELECT r.id, r.vehicle_id, r.user_id, r.rating, r.body, r.is_visible, r.created_at, r.updated_at, u.name AS user_name
-        FROM reviews r
-        INNER JOIN users u ON r.user_id = u.id
-        WHERE r.vehicle_id = $1 AND r.is_visible = TRUE
-        ORDER BY r.created_at DESC
-    `;
-    const result = await db.query(query, [id]);
-    return result.rows;
-};
-
-/**
- * Gets all reviews that need to be moderated (is_visible = FALSE)
- */
-const getReviewsAwaitingApproval = async () => {
-    const query = `
-        SELECT r.id, r.vehicle_id, r.user_id, r.rating, r.body, r.created_at,
-               u.name AS user_name,
-               v.year AS vehicle_year, v.make AS vehicle_make, v.model AS vehicle_model
-        FROM reviews r
-        INNER JOIN users u ON r.user_id = u.id
-        INNER JOIN vehicles v ON r.vehicle_id = v.id
-        WHERE r.is_visible = FALSE
-        ORDER BY r.created_at DESC
-    `;
-    const result = await db.query(query);
-    return result.rows;
-};
-
-/**
- * Marks a review as visible
- */
-const approveReview = async (id) => {
-    const query = `
-        UPDATE reviews SET is_visible = TRUE, updated_at = CURRENT_TIMESTAMP
-        WHERE id = $1
-        RETURNING id, vehicle_id, is_visible
-    `;
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
-};
-
-/**
- * Deletes a review from the database
- */
-const deleteReview = async (id) => {
-    const query = `DELETE FROM reviews WHERE id = $1 RETURNING id`;
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
-};
-
-/**
- * Updates a review's rating and body
- * sets is_visible to false so it can be reviewed
- */
-const updateReview = async (id, rating, body) => {
-    const query = `
-        UPDATE reviews
-        SET rating = $2, body = $3, is_visible = FALSE, updated_at = CURRENT_TIMESTAMP
-        WHERE id = $1
-        RETURNING id, vehicle_id, user_id, rating, body, is_visible, updated_at
-    `;
-    const result = await db.query(query, [id, rating, body.trim()]);
-    return result.rows[0] || null;
-};
-
-/**
  * Updates a vehicle's editable fields
  */
 const updateVehicle = async (id, vehicleData) => {
@@ -225,29 +114,39 @@ const updateVehicle = async (id, vehicleData) => {
 };
 
 /**
- * Creates a new review for a vehicle from form
+ * Deletes a vehicle by id
+ * Related rows in vehicle_images and reviews cascade
  */
-const createReview = async (vehicleId, userId, rating, body) => {
-    const query = `
-        INSERT INTO reviews (vehicle_id, user_id, rating, body, is_visible)
-        VALUES ($1, $2, $3, $4, FALSE)
-        RETURNING id, vehicle_id, user_id, rating, body, is_visible, created_at
-    `;
-    const result = await db.query(query, [vehicleId, userId, rating, body]);
-    return result.rows[0];
+const deleteVehicle = async (id) => {
+    const query = 'DELETE FROM vehicles WHERE id = $1 RETURNING id';
+    const result = await db.query(query, [id]);
+    return result.rowCount > 0;
 };
 
 /**
- * Gets number of stars for aggregate review data
+ * Insert a new vehicle (id, created_at, updated_at are database-generated)
  */
-const getAggregateReviewScoreByVehicleId = async (id) => {
+const createVehicle = async (vehicleData) => {
     const query = `
-        SELECT AVG(r.rating) AS average_rating, COUNT(*) AS review_count
-        FROM reviews r
-        WHERE r.vehicle_id = $1 AND r.is_visible = TRUE
+        INSERT INTO vehicles (
+            category_id, make, model, year, price, mileage, stock, is_featured, description
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        RETURNING id
     `;
-    const result = await db.query(query, [id]);
-    return result.rows[0] || null;
+    const params = [
+        vehicleData.categoryId,
+        vehicleData.make.trim(),
+        vehicleData.model.trim(),
+        vehicleData.year,
+        vehicleData.price,
+        vehicleData.mileage,
+        vehicleData.stock,
+        vehicleData.isFeatured,
+        vehicleData.description && vehicleData.description.trim() ? vehicleData.description.trim() : null
+    ];
+    const result = await db.query(query, params);
+    return result.rows[0]?.id ?? null;
 };
 
-export { getFeaturedVehicles, getVehicles, getVehicleById, getVehicleImages, getCategories, getReviewById, getReviewsByUserId, getReviewsByVehicleId, getReviewsAwaitingApproval, getAggregateReviewScoreByVehicleId, createReview, approveReview, deleteReview, updateReview, updateVehicle };
+export { getFeaturedVehicles, getVehicles, getVehicleById, getVehicleImages, updateVehicle, deleteVehicle, createVehicle };

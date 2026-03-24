@@ -10,7 +10,7 @@ import { contactValidation, registrationValidation, loginValidation, updateAccou
 
 // // Controllers (for page routing)
 import { homePage, aboutPage } from './index.js';
-import { vehicleListPage, vehicleDetailPage, handleReviewSubmission } from './vehicles.js';
+import { vehicleListPage, vehicleDetailPage, handleReviewSubmission, handleVehicleDelete } from './vehicles.js';
 import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
@@ -21,6 +21,8 @@ import moderationReviewsRoutes from './moderation/reviews.js';
 import moderationContactRoutes from './moderation/contact.js';
 import moderationServiceRoutes from './moderation/service.js';
 import moderationUsersRoutes from './moderation/users.js';
+import addVehicleRoutes from './moderation/add_vehicle.js';
+import moderationCategoriesRoutes from './moderation/categories.js';
 import { handleVehicleEdit } from './moderation/edit_vehicle.js';
 import serviceRoutes from './forms/service.js';
 
@@ -102,6 +104,7 @@ router.get('/about', aboutPage);
 router.get('/vehicles', vehicleListPage);
 router.post('/vehicles/:id/review', requireLogin, reviewValidation, handleReviewSubmission);
 router.post('/vehicles/:id/edit', requireLogin, requireRole(['employee', 'admin']), vehicleEditValidation, handleVehicleEdit);
+router.post('/vehicles/:id/delete', requireLogin, requireRole('admin'), handleVehicleDelete);
 router.get('/vehicles/:id', vehicleDetailPage);
 
 // Contact form routes
@@ -129,6 +132,8 @@ router.use('/moderation/reviews', requireLogin, requireRole(['employee', 'admin'
 router.use('/moderation/service', requireLogin, requireRole(['employee', 'admin']), moderationServiceRoutes);
 // Admin only routes
 router.use('/moderation/users', requireLogin, requireRole('admin'), moderationUsersRoutes);
+router.use('/moderation/add_vehicle', requireLogin, requireRole('admin'), addVehicleRoutes);
+router.use('/moderation/categories', requireLogin, requireRole('admin'), moderationCategoriesRoutes);
 
 /*
 Export router for usage in server.js

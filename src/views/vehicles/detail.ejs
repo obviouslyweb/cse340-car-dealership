@@ -16,7 +16,9 @@
                 <div class="card button-card red">
                     <h2>Admin Actions</h2>
                     <div class="action-list">
-                        <a href="/moderation/users" class="btn">Review Accounts</a>
+                        <form method="POST" action="/vehicles/<%= vehicle.id %>/delete" class="vehicle-delete-form" onsubmit="return confirm('Are you sure you want to delete this vehicle? This action is irreversible and cannot be undone.');">
+                            <button type="submit" class="btn">Delete Vehicle</button>
+                        </form>
                     </div>
                 </div>
             <% } %>

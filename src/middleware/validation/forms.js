@@ -225,9 +225,7 @@ const vehicleEditValidation = [
 ];
 
 /**
- * Validation for admin moderation updates:
- * - rename a user
- * - change permission level (role)
+ * Validation for admin moderation updates
  */
 const moderationUserUpdateValidation = [
     body('name')
@@ -243,4 +241,38 @@ const moderationUserUpdateValidation = [
         .withMessage('Invalid permission level')
 ];
 
-export { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation, serviceRequestModerationValidation, vehicleEditValidation, moderationUserUpdateValidation };
+/**
+ * Admin: create vehicle category
+ */
+const categoryCreateValidation = [
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('Category name is required')
+        .isLength({ min: 1, max: 100 })
+        .withMessage('Category name must be 100 characters or less'),
+    body('description')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('Description must be 2000 characters or less')
+];
+
+/**
+ * Admin: update vehicle category
+ */
+const categoryUpdateValidation = [
+    body('name')
+        .trim()
+        .notEmpty()
+        .withMessage('Category name is required')
+        .isLength({ min: 1, max: 100 })
+        .withMessage('Category name must be 100 characters or less'),
+    body('description')
+        .optional({ values: 'falsy' })
+        .trim()
+        .isLength({ max: 2000 })
+        .withMessage('Description must be 2000 characters or less')
+];
+
+export { contactValidation, registrationValidation, loginValidation, updateAccountValidation, reviewValidation, serviceRequestValidation, serviceRequestModerationValidation, vehicleEditValidation, moderationUserUpdateValidation, categoryCreateValidation, categoryUpdateValidation };

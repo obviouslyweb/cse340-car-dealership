@@ -183,6 +183,9 @@ INSERT INTO categories (id, name, description) VALUES
     (5, 'Motorcycle', 'A fast two-wheeled bike; separate license required')
 ON CONFLICT (name) DO NOTHING;
 
+-- fix so the next INSERT gets a new id
+SELECT setval(pg_get_serial_sequence('categories', 'id'), COALESCE((SELECT MAX(id) FROM categories), 1));
+
 INSERT INTO vehicles (id, category_id, make, model, year, price, mileage, stock, is_featured, description) VALUES
     (1, 1, 'Mazda', 'B4000', 1998, 11050.00, 124000, 2, TRUE, 'A compact pickup truck featuring a 4.0L V6 engine (160 hp, 225 lb-ft torque). With 5-speed manual or 4-speed automatic transmission and a towing capacity up to 5,640 lbs, this truck will take you where you need to go.'),
     (2, 1, 'Ford', 'F-150', 2015, 24500.00, 87000, 3, FALSE, 'A full-size pickup with a 3.5L EcoBoost V6 engine (365 hp). Features a towing capacity of up to 12,200 lbs, integrated trailer brake controller, and a spacious crew cab with modern infotainment.'),
@@ -194,6 +197,8 @@ INSERT INTO vehicles (id, category_id, make, model, year, price, mileage, stock,
     (8, 4, 'Jeep', 'Grand Cherokee', 2021, 34900.00, 29000, 3, FALSE, 'A premium midsize SUV powered by a 3.6L Pentastar V6 (293 hp). Features Jeep''s Quadra-Trac II 4WD system, Uconnect 5 infotainment, and available Quadra-Lift air suspension for serious off-road capability.'),
     (9, 5, 'Harley-Davidson', 'Iron 883', 2019, 8900.00, 11000, 0, FALSE, 'A Sportster-series cruiser motorcycle with an 883cc air-cooled Evolution V-Twin engine. Features a blacked-out minimalist style, drag-style handlebar, and low seat height of 25.7 inches — ideal for new and experienced riders alike.'),
     (10, 5, 'Honda', 'CB500F', 2020, 6200.00, 8400, 2, FALSE, 'A lightweight naked bike with a 471cc parallel-twin engine (47 hp). Smooth, approachable power delivery and an upright riding position make this an excellent choice for newer riders or daily commuters.');
+
+SELECT setval(pg_get_serial_sequence('vehicles', 'id'), COALESCE((SELECT MAX(id) FROM vehicles), 1));
 
 INSERT INTO vehicle_images (vehicle_id, image_url, is_primary) VALUES
     -- Mazda B4000
