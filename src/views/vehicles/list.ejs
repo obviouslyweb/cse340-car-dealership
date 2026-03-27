@@ -1,10 +1,10 @@
 <%- include('../partials/header') %>
-<main>
-    <div class="side-view">
+<main class="vehicle-list-page">
+    <div class="side-view vehicle-list-header">
         <div class="side-view-left">
             <h2>All Vehicles</h2>
         </div>
-        <div class="side-view-right">
+        <div class="side-view-right vehicle-list-toolbar">
             <p>Filter by type</p>
             <a href="/vehicles<%= showUnavailable ? '?showUnavailable=1' : '' %>" class="btn sort-btn <%= !currentCategoryId ? 'active' : '' %>">All</a>
 

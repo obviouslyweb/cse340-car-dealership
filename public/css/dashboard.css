@@ -8,6 +8,10 @@
     padding-left: 2rem;
     padding-right: 2rem;
 
+    > h2 {
+        margin: 0;
+    }
+
     p {
         padding: 0;
         margin: 0;
