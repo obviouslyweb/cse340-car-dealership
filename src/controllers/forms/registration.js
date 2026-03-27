@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { requireLogin } from '../../middleware/auth.js';
 import { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser } from '../../models/forms/registration.js';
+import { logActivity } from '../../models/log.js';
 
 const router = Router();
 
@@ -48,7 +49,16 @@ const processRegistration = async (req, res) => {
         // Hash the password before saving to database
         const hashedPassword = await bcrypt.hash(password, 10);
         // Save user to database with hashed password
-        await saveUser(name, email, hashedPassword);
+        const newUser = await saveUser(name, email, hashedPassword);
+        if (newUser) {
+            await logActivity({
+                actorUserId: newUser.id,
+                action: 'account.register',
+                targetType: 'user',
+                targetId: newUser.id,
+                details: newUser.name
+            });
+        }
 
         req.flash('success', "Account successfully registered! You can now login with your new account.");
         return res.redirect('/login');
@@ -148,7 +158,16 @@ const processEditAccount = async (req, res) => {
         }
 
         // Update the user
-        await updateUser(targetUserId, name, email);
+        const updated = await updateUser(targetUserId, name, email);
+        if (updated) {
+            await logActivity({
+                actorUserId: currentUser.id,
+                action: 'account.update',
+                targetType: 'user',
+                targetId: targetUserId,
+                details: `Name: ${updated.name}, email: ${updated.email}`
+            });
+        }
 
         // If user edited their own account, update session
         if (currentUser.id === targetUserId) {
@@ -189,6 +208,13 @@ const processDeleteAccount = async (req, res) => {
         const deleted = await deleteUser(targetUserId);
 
         if (deleted) {
+            await logActivity({
+                actorUserId: currentUser.id,
+                action: 'user.delete',
+                targetType: 'user',
+                targetId: targetUserId,
+                details: 'via user list'
+            });
             req.flash('success', 'User account deleted successfully.');
         } else {
             req.flash('error', 'User not found or already deleted.');

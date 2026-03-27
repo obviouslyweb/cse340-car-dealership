@@ -1,0 +1,68 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="dashboard">
+        <div class="side-view">
+            <div class="side-view-left">
+                <h1>Database Log</h1>
+            </div>
+            <div class="side-view-right">
+                <p><a href="/dashboard" class="btn lowlight">Back to Dashboard</a></p>
+            </div>
+        </div>
+
+        <% if (typeof total !== 'undefined' && total > 0) { %>
+            <p class="activity-log-meta">
+                Showing page <%= page %> of <%= totalPages %> (<%= total %> total <%= total === 1 ? 'entry' : 'entries' %>)
+            </p>
+        <% } %>
+
+        <% if (entries && entries.length > 0) { %>
+            <div class="card activity-log-card">
+                <table class="activity-log-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">When</th>
+                            <th scope="col">Actor</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">Target</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% entries.forEach(function (row) { %>
+                            <tr>
+                                <td class="activity-log-when">
+                                    <%= new Date(row.created_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) %>
+                                </td>
+                                <td><%= row.actor_name %></td>
+                                <td><code class="activity-log-action"><%= row.action %></code></td>
+                                <td class="activity-log-target">
+                                    <% if (row.target_type) { %>
+                                        <%= row.target_type %><% if (row.target_id != null) { %> #<%= row.target_id %><% } %>
+                                    <% } else { %>
+                                        —
+                                    <% } %>
+                                </td>
+                                <td class="activity-log-details"><%= row.details || '—' %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <% if (totalPages > 1) { %>
+                <nav class="activity-log-pagination" aria-label="Activity log pages">
+                    <% if (page > 1) { %>
+                        <a href="/moderation/activity-log?page=<%= page - 1 %>" class="btn lowlight">Previous</a>
+                    <% } %>
+                    <% if (page < totalPages) { %>
+                        <a href="/moderation/activity-log?page=<%= page + 1 %>" class="btn lowlight">Next</a>
+                    <% } %>
+                </nav>
+            <% } %>
+        <% } else { %>
+            <p class="moderation-empty-notice">No activity has been recorded yet. Actions you take from moderation and admin tools will appear here.</p>
+        <% } %>
+    </div>
+</main>
+<%- include('../partials/footer') %>

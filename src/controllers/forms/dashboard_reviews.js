@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { getReviewById, deleteReview, updateReview } from '../../models/reviews.js';
+import { logActivity } from '../../models/log.js';
 
 /**
  * Delete the current user's own review
@@ -29,6 +30,13 @@ const handleDeleteMyReview = async (req, res, next) => {
         }
 
         await deleteReview(reviewId);
+        await logActivity({
+            actorUserId: userId,
+            action: 'review.delete_self',
+            targetType: 'review',
+            targetId: reviewId,
+            details: review.vehicle_id != null ? `Vehicle #${review.vehicle_id}` : null
+        });
         req.flash('success', 'Your review has been deleted.');
     } catch (err) {
         console.error('Error deleting review:', err);
@@ -73,7 +81,16 @@ const handleEditMyReview = async (req, res, next) => {
         }
 
         const { rating, body } = req.body;
-        await updateReview(reviewId, parseInt(rating, 10), body);
+        const updated = await updateReview(reviewId, parseInt(rating, 10), body);
+        if (updated) {
+            await logActivity({
+                actorUserId: userId,
+                action: 'review.update_self',
+                targetType: 'review',
+                targetId: reviewId,
+                details: updated.vehicle_id != null ? `Vehicle #${updated.vehicle_id}, rating ${updated.rating}` : `Rating ${updated.rating}`
+            });
+        }
         req.flash('success', 'Your edits have been submitted! Please wait for an employee to review them before they appear.');
     } catch (err) {
         console.error('Error updating review:', err);

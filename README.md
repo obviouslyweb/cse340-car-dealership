@@ -26,7 +26,7 @@ As per the requirements for option 2 of the final project, this site will be a u
 * [X] Add, edit, and delete vehicle categories
 * [X] Add, edit, and delete vehicles from inventory
 * [X] Manage employee accounts (optional, can be hardcoded)
-* [ ] View all system activity and user data
+* [X] View all system activity and user data
 ### Database Requirements:
 Database Requirements:
 * [X] Users table (with role field)
@@ -67,7 +67,6 @@ Required Technologies:
 
 Here's a list of everything that I have left to do until completion in order.
 
-* [ ] Admin can view activity or user data
 * [ ] Mobile view handling for all pages
 * [ ] User Roles section filled in README
 * [ ] Test account credentials in README (email only)

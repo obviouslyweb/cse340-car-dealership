@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { getCategories } from '../../models/category.js';
 import { createVehicle } from '../../models/vehicles.js';
+import { logActivity } from '../../models/log.js';
 import { vehicleEditValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
@@ -52,6 +53,14 @@ const handleAddVehicle = async (req, res) => {
             req.flash('error', 'Could not create the vehicle.');
             return res.redirect('/moderation/add_vehicle');
         }
+
+        await logActivity({
+            actorUserId: req.session?.user?.id,
+            action: 'vehicle.create',
+            targetType: 'vehicle',
+            targetId: newId,
+            details: `${year} ${make} ${model}`
+        });
 
         req.flash('success', 'Vehicle added successfully.');
         return res.redirect(`/vehicles/${newId}`);

@@ -23,6 +23,7 @@ import moderationServiceRoutes from './moderation/service.js';
 import moderationUsersRoutes from './moderation/users.js';
 import addVehicleRoutes from './moderation/add_vehicle.js';
 import moderationCategoriesRoutes from './moderation/categories.js';
+import moderationActivityLogRoutes from './moderation/activity_log.js';
 import { handleVehicleEdit } from './moderation/edit_vehicle.js';
 import serviceRoutes from './forms/service.js';
 
@@ -134,6 +135,7 @@ router.use('/moderation/service', requireLogin, requireRole(['employee', 'admin'
 router.use('/moderation/users', requireLogin, requireRole('admin'), moderationUsersRoutes);
 router.use('/moderation/add_vehicle', requireLogin, requireRole('admin'), addVehicleRoutes);
 router.use('/moderation/categories', requireLogin, requireRole('admin'), moderationCategoriesRoutes);
+router.use('/moderation/activity-log', requireLogin, requireRole('admin'), moderationActivityLogRoutes);
 
 /*
 Export router for usage in server.js

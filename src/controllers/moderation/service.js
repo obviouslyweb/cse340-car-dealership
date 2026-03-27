@@ -5,6 +5,7 @@ import {
     updateServiceRequestByStaff,
     deleteServiceRequest
 } from '../../models/forms/service.js';
+import { logActivity } from '../../models/log.js';
 import { serviceRequestModerationValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
@@ -45,6 +46,13 @@ const handleUpdate = async (req, res, next) => {
         const { status, employee_notes, status_facing_user } = req.body;
         const row = await updateServiceRequestByStaff(id, status, employee_notes, status_facing_user);
         if (row) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'service_request.update',
+                targetType: 'service_request',
+                targetId: id,
+                details: `Status: ${status}`
+            });
             req.flash('success', 'Service request updated.');
         } else {
             req.flash('error', 'Service request not found.');
@@ -68,6 +76,13 @@ const handleDelete = async (req, res, next) => {
     try {
         const row = await deleteServiceRequest(id);
         if (row) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'service_request.delete',
+                targetType: 'service_request',
+                targetId: id,
+                details: null
+            });
             req.flash('success', 'Service request deleted.');
         } else {
             req.flash('error', 'Service request not found or already deleted.');

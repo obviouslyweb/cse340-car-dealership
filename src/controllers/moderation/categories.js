@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { getCategoriesWithVehicleCounts, createCategory, updateCategory, deleteCategory } from '../../models/category.js';
+import { logActivity } from '../../models/log.js';
 import { categoryCreateValidation, categoryUpdateValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
@@ -45,7 +46,16 @@ const handleCreateCategory = async (req, res) => {
 
     const { name, description } = req.body;
     try {
-        await createCategory(name, description || null);
+        const created = await createCategory(name, description || null);
+        if (created) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'category.create',
+                targetType: 'category',
+                targetId: created.id,
+                details: `Name: ${created.name}`
+            });
+        }
         req.flash('success', 'Category added successfully.');
     } catch (err) {
         console.error('Error creating category:', err);
@@ -79,6 +89,13 @@ const handleUpdateCategory = async (req, res) => {
         if (!updated) {
             req.flash('error', 'Category not found.');
         } else {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'category.update',
+                targetType: 'category',
+                targetId: id,
+                details: `Name: ${updated.name}`
+            });
             req.flash('success', 'Category updated successfully.');
         }
     } catch (err) {
@@ -104,6 +121,13 @@ const handleDeleteCategory = async (req, res) => {
     try {
         const result = await deleteCategory(id);
         if (result.deleted) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'category.delete',
+                targetType: 'category',
+                targetId: id,
+                details: null
+            });
             req.flash('success', 'Category deleted successfully.');
         } else if (result.reason === 'in_use') {
             req.flash(

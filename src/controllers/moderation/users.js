@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { moderationUserUpdateValidation } from '../../middleware/validation/forms.js';
 import { getAllRoles, getAllUsersWithRoles, updateUserModeration, deleteUser } from '../../models/forms/registration.js';
+import { logActivity } from '../../models/log.js';
 
 const router = Router();
 
@@ -61,6 +62,14 @@ const handleUpdateUser = async (req, res) => {
             req.session.user.roleName = updatedUser.roleName;
         }
 
+        await logActivity({
+            actorUserId: currentUser?.id,
+            action: 'user.update',
+            targetType: 'user',
+            targetId: targetUserId,
+            details: `Name: ${updatedUser.name}, role: ${updatedUser.roleName}`
+        });
+
         req.flash('success', 'Account updated successfully.');
         return res.redirect('/moderation/users');
     } catch (err) {
@@ -95,6 +104,13 @@ const handleDeleteUser = async (req, res) => {
     try {
         const deleted = await deleteUser(targetUserId);
         if (deleted) {
+            await logActivity({
+                actorUserId: currentUser.id,
+                action: 'user.delete',
+                targetType: 'user',
+                targetId: targetUserId,
+                details: null
+            });
             req.flash('success', 'User deleted successfully.');
         } else {
             req.flash('error', 'User not found or already deleted.');

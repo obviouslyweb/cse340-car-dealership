@@ -7,6 +7,7 @@ BEGIN;
 -- ////////////////////////////////////////
 
 -- Drop existing tables (in reverse dependency order)
+DROP TABLE IF EXISTS activity_log CASCADE;
 DROP TABLE IF EXISTS reseed CASCADE;
 DROP TABLE IF EXISTS vehicle_images CASCADE;
 DROP TABLE IF EXISTS reviews CASCADE;
@@ -159,6 +160,17 @@ CREATE TABLE IF NOT EXISTS service_requests (
     status_facing_user TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Audit trail for admin / staff actions
+CREATE TABLE IF NOT EXISTS activity_log (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actor_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    action VARCHAR(120) NOT NULL,
+    target_type VARCHAR(50),
+    target_id INTEGER,
+    details TEXT
 );
 
 

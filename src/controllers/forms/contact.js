@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { createContactForm } from '../../models/forms/contact.js';
+import { logActivity } from '../../models/log.js';
 
 const router = Router();
 
@@ -37,7 +38,16 @@ const handleContactSubmission = async (req, res) => {
     const { subject, message } = req.body;
     try {
         // Save to database
-        await createContactForm(subject, message);
+        const created = await createContactForm(subject, message);
+        if (created) {
+            await logActivity({
+                actorUserId: req.session?.user?.id ?? null,
+                action: 'contact.create',
+                targetType: 'contact',
+                targetId: created.id,
+                details: subject?.slice(0, 120) || null
+            });
+        }
         req.flash('success', 'Thank you for contacting us! We will respond soon.');
         res.redirect('/contact');
     } catch (error) {

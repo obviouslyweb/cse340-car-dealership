@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getAllContactForms, deleteContactForm } from '../../models/forms/contact.js';
+import { logActivity } from '../../models/log.js';
 
 const router = Router();
 
@@ -33,6 +34,13 @@ const handleDelete = async (req, res, next) => {
     try {
         const row = await deleteContactForm(id);
         if (row) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'contact.delete',
+                targetType: 'contact',
+                targetId: id,
+                details: null
+            });
             req.flash('success', 'Contact submission deleted.');
         } else {
             req.flash('error', 'Submission not found or already deleted.');

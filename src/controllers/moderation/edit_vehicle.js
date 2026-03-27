@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { updateVehicle } from '../../models/vehicles.js';
+import { logActivity } from '../../models/log.js';
 
 /**
  * Handle employee/admin vehicle edits from the vehicle detail page
@@ -35,6 +36,14 @@ const handleVehicleEdit = async (req, res, next) => {
             req.flash('error', 'Vehicle not found.');
             return res.redirect('/vehicles');
         }
+
+        await logActivity({
+            actorUserId: req.session?.user?.id,
+            action: 'vehicle.update',
+            targetType: 'vehicle',
+            targetId: vehicleId,
+            details: `${updatedVehicle.year} ${updatedVehicle.make} ${updatedVehicle.model}`
+        });
 
         req.flash('success', 'Vehicle details updated successfully.');
         return res.redirect(`/vehicles/${vehicleId}`);

@@ -2,6 +2,7 @@ import { validationResult } from 'express-validator';
 import { findUser, verifyPassword } from '../../models/forms/login.js';
 import { getReviewsByUserId } from '../../models/reviews.js';
 import { getServiceRequestsByUserId, getServiceRequestById, updateServiceRequest } from '../../models/forms/service.js';
+import { logActivity } from '../../models/log.js';
 import { Router } from 'express';
 
 const router = Router();
@@ -182,7 +183,16 @@ const handleEditMyServiceRequest = async (req, res, next) => {
         }
 
         const { service_type, vehicle_name, description } = req.body;
-        await updateServiceRequest(requestId, service_type, vehicle_name, description || null);
+        const updated = await updateServiceRequest(requestId, service_type, vehicle_name, description || null);
+        if (updated) {
+            await logActivity({
+                actorUserId: userId,
+                action: 'service_request.update_self',
+                targetType: 'service_request',
+                targetId: requestId,
+                details: `${updated.service_type} — ${updated.vehicle_name}`
+            });
+        }
         req.flash('success', 'Your service request has been updated.');
     } catch (err) {
         console.error('Error updating service request:', err);

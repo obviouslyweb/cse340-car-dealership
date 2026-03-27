@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getReviewsAwaitingApproval, approveReview, deleteReview } from '../../models/reviews.js';
+import { logActivity } from '../../models/log.js';
 
 const router = Router();
 
@@ -33,6 +34,13 @@ const handleApprove = async (req, res, next) => {
     try {
         const row = await approveReview(id);
         if (row) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'review.approve',
+                targetType: 'review',
+                targetId: id,
+                details: row.vehicle_id != null ? `Vehicle #${row.vehicle_id}` : null
+            });
             req.flash('success', 'Review approved. It is now visible on the vehicle page.');
         } else {
             req.flash('error', 'Review not found or already approved.');
@@ -56,6 +64,13 @@ const handleReject = async (req, res, next) => {
     try {
         const row = await deleteReview(id);
         if (row) {
+            await logActivity({
+                actorUserId: req.session?.user?.id,
+                action: 'review.reject',
+                targetType: 'review',
+                targetId: id,
+                details: null
+            });
             req.flash('success', 'Review rejected and removed.');
         } else {
             req.flash('error', 'Review not found or already removed.');

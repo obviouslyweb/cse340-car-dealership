@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import { createServiceRequest, SERVICE_TYPES } from '../../models/forms/service.js';
+import { logActivity } from '../../models/log.js';
 import { serviceRequestValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
@@ -33,7 +34,16 @@ const handleServiceRequestSubmission = async (req, res) => {
 
     const { service_type, vehicle_name, description } = req.body;
     try {
-        await createServiceRequest(userId, service_type, vehicle_name, description || null);
+        const created = await createServiceRequest(userId, service_type, vehicle_name, description || null);
+        if (created) {
+            await logActivity({
+                actorUserId: userId,
+                action: 'service_request.create',
+                targetType: 'service_request',
+                targetId: created.id,
+                details: `${created.service_type} — ${created.vehicle_name}`
+            });
+        }
         req.flash('success', 'Your service request has been submitted. We will be in touch soon.');
         return res.redirect('/service-request');
     } catch (err) {

@@ -1,6 +1,7 @@
 // Route handlers for vehicle-related pages
 import { validationResult } from 'express-validator';
 import { getVehicles, getVehicleById, getVehicleImages, deleteVehicle } from '../models/vehicles.js';
+import { logActivity } from '../models/log.js';
 import { getCategories } from '../models/category.js';
 import { getReviewsByVehicleId, getAggregateReviewScoreByVehicleId, createReview } from '../models/reviews.js';
 
@@ -92,7 +93,16 @@ const handleReviewSubmission = async (req, res, next) => {
 
     const { rating, body } = req.body;
     try {
-        await createReview(vehicleId, userId, parseInt(rating, 10), body.trim());
+        const created = await createReview(vehicleId, userId, parseInt(rating, 10), body.trim());
+        if (created) {
+            await logActivity({
+                actorUserId: userId,
+                action: 'review.create',
+                targetType: 'review',
+                targetId: created.id,
+                details: `Vehicle #${vehicleId}, ${rating}★`
+            });
+        }
         req.flash('success', 'Thank you! Your review has been submitted and will be visible after moderation.');
         return res.redirect(`/vehicles/${vehicleId}`);
     } catch (err) {
@@ -115,6 +125,13 @@ const handleVehicleDelete = async (req, res, next) => {
             req.flash('error', 'Vehicle not found or already removed.');
             return res.redirect('/vehicles');
         }
+        await logActivity({
+            actorUserId: req.session?.user?.id,
+            action: 'vehicle.delete',
+            targetType: 'vehicle',
+            targetId: vehicleId,
+            details: null
+        });
         req.flash('success', 'The vehicle has been successfully deleted.');
         return res.redirect('/vehicles');
     } catch (err) {

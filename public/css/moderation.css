@@ -249,4 +249,57 @@
         flex-wrap: wrap;
         align-items: center;
     }
+
+    .activity-log-intro {
+        margin: 0.25rem 0 0;
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 0.95rem;
+    }
+
+    .activity-log-meta {
+        margin: 0 0 var(--spacing-sm);
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    .activity-log-card {
+        overflow-x: auto;
+    }
+
+    .activity-log-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    .activity-log-table th,
+    .activity-log-table td {
+        padding: 0.5rem 0.65rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        vertical-align: top;
+    }
+
+    .activity-log-table th {
+        font-weight: 600;
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .activity-log-action {
+        font-size: 0.85em;
+        background: rgba(0, 0, 0, 0.06);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+    }
+
+    .activity-log-details {
+        max-width: 22rem;
+        word-break: break-word;
+    }
+
+    .activity-log-pagination {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+    }
 }
