@@ -1,33 +1,81 @@
-# cse340-car-dealership / Fuse Automobiles
+# Fuse Automobiles / cse340-car-dealership
+
 Project repository for the CSE 340 final project, a car dealership site made with Express and node.js.
 https://fuse-automobile.onrender.com/
 
+## Database Schema
+
+![Database ERD exported from pgAdmin](public/images/ERD.png)
+
+## User Roles
+
+| Role | Description |
+| --- | --- |
+| **user** | Default registered customer. Can use the dashboard, submit and track service requests, and create reviews on vehicles. Can edit or delete their own reviews.|
+| **employee** | Staff role. Includes everything a default user can do, plus moderation to review and edit service requests, review contact submissions, approve or reject reviews, and edit vehicle inventory data. |
+| **admin** | Full access. Includes all employee capabilities plus account and permission management, the ability to add, delete, and edit vehicle categories as well as entire vehicles, and permission to view the database log.|
+
+Role names come from the `roles` table (`user`, `employee`, `admin`) and are stored on each row in `users.role_id`.
+
+## Test Account Credentials
+
+| Role | Email |
+| --- | --- |
+| user | `idonteven@gmail.com` |
+| employee | `funemployee@example.com` |
+| admin | `admin@example.com` |
+
+## Known Limitations
+
+* Vehicle photos use external URLs located inside the database. if a third-party host drops an image, the UI will show a placeholder or broken image until URLs are updated.
+* New reviews require staff approval (`is_visible`) before they appear publicly, depending on moderation workflow.
+* Mobile view could use improvements with layout and styling. While the entire site should be functional on mobile, it may not be as clean looking as desktop.
+
+### Technology Stack
+
+* Node.js with Express.js as the backend framework
+* EJS or Liquid.js for rendering views
+* ESM (ECMAScript Modules), no CommonJS (require is not allowed)
+* PostgreSQL for the database
+* Deployed on Render with a connected PostgreSQL database
+
 ## Project Description
+
 As per the requirements for option 2 of the final project, this site will be a used car dealership website with these features:
+
 ### Public Pages
+
 * [X] Home page with featured vehicles
 * [X] Browse vehicles by category (Trucks, Vans, Cars, SUVs)
 * [X] Individual vehicle detail pages with images, specs, and price
 * [X] Contact form (saves to database)
+
 ### User Features (must be logged in)
+
 * [X] Leave reviews on vehicles
 * [X] Edit/delete own reviews
 * [X] Submit service requests for their vehicle (oil change, inspection, etc.)
 * [X] View history of service requests and their status
+
 ### Employee Dashboard:
+
 * [X] Edit vehicle details (price, description, availability)
 * [X] Moderate/delete inappropriate reviews
 * [X] View and manage service requests
 * [X] Update service request status (Submitted, In Progress, Completed)
 * [X] Add notes to service requests
 * [X] View contact form submissions
+
 ### Owner Dashboard (Full Admin):
+
 * [X] Everything employees can do, plus:
 * [X] Add, edit, and delete vehicle categories
 * [X] Add, edit, and delete vehicles from inventory
 * [X] Manage employee accounts (optional, can be hardcoded)
 * [X] View all system activity and user data
+
 ### Database Requirements:
+
 Database Requirements:
 * [X] Users table (with role field)
 * [X] Vehicles table
@@ -36,41 +84,3 @@ Database Requirements:
 * [X] Service requests table (linked to users, with status tracking)
 * [X] Contact messages table
 * [X] Vehicle images table (one-to-many with vehicles)
-
-## Database Schema:
-- [ ] An image of your entity relation diagram (ERD) exported from pgAdmin showing your tables and relationships
-
-## User Roles
-- [ ] Explanation of each role and what they can do
-
-## Test Account Credentials
-- [ ] Username or email for one account of each role type; do not include the password in the README! See Final Project Requirements document for details about what the password should be
-
-## Known Limitations
-- [ ] Description of any features you did not complete or bugs you are aware of.
-
-## Final Details (delete once verified)
-Additionally, your GitHub repository must show:
-- [X] Minimum 15 substantial commits (not simple one-line fixes)
-- [X] Organized folder structure
-- [X] Clean, readable code with consistent formatting
-
-### Technology Stack
-Required Technologies:
-* [X] Node.js with Express.js as the backend framework
-* [X] EJS or Liquid.js for rendering views
-* [X] ESM (ECMAScript Modules), no CommonJS (require is not allowed)
-* [X] PostgreSQL for the database
-* [X] Deployed on Render with a connected PostgreSQL database
-
-## Implementation Steps
-
-Here's a list of everything that I have left to do until completion in order.
-
-* [ ] Mobile view handling for all pages
-* [ ] User Roles section filled in README
-* [ ] Test account credentials in README (email only)
-* [ ] ERD image in README (pgAdmin export)
-* [ ] Known Limitations section filled in README
-* [ ] Review & polish core
-* [ ] Review & polish README
