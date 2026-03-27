@@ -39,9 +39,7 @@ Role names come from the `roles` table (`user`, `employee`, `admin`) and are sto
 * PostgreSQL for the database
 * Deployed on Render with a connected PostgreSQL database
 
-## Project Description
-
-As per the requirements for option 2 of the final project, this site will be a used car dealership website with these features:
+## Project Checklist
 
 ### Public Pages
 
