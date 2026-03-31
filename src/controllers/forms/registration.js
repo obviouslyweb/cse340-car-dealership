@@ -190,8 +190,9 @@ const processEditAccount = async (req, res) => {
  * Only admins can delete accounts, and they cannot delete themselves
  */
 const processDeleteAccount = async (req, res) => {
-    const targetUserId = parseInt(req.params.id);
+    const targetUserId = parseInt(req.params.id, 10);
     const currentUser = req.session.user;
+    const currentUserId = parseInt(currentUser.id, 10);
 
     // Only admins can delete accounts
     if (currentUser.roleName !== 'admin') {
@@ -200,7 +201,7 @@ const processDeleteAccount = async (req, res) => {
     }
 
     // Prevent admins from deleting their own account
-    if (currentUser.id === targetUserId) {
+    if (!Number.isNaN(currentUserId) && currentUserId === targetUserId) {
         req.flash('error', 'You cannot delete your own account.');
         return res.redirect('/register/list');
     }

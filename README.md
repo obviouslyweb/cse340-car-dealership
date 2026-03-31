@@ -33,6 +33,7 @@ For the passwords to these accounts, please refer to the Final Project Requireme
 * Vehicle photos use external URLs located inside the database. There is currently no way for an employee or admin to add a new photo to this database through the site itself. If a third-party host drops an image, the UI will show a placeholder or broken image until URLs are updated.
 * New reviews require staff approval (`is_visible`) before they appear publicly, depending on moderation workflow.
 * Mobile view could use improvements with layout and styling. While the entire site should be functional on mobile, it may not be as clean looking as desktop.
+* Despite showing the "Delete user" button for each user on the Review Accounts page, it is impossible to delete your own account on the page. While this is intended functionality, the button ideally should be hidden on accounts that cannot be deleted in that manner.
 
 ### Technology Stack
 
