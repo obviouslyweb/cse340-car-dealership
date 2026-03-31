@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS service_requests (
 CREATE TABLE IF NOT EXISTS activity_log (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    actor_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    actor_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
     action VARCHAR(120) NOT NULL,
     target_type VARCHAR(50),
     target_id INTEGER,
@@ -243,17 +243,5 @@ INSERT INTO vehicle_images (vehicle_id, image_url, is_primary) VALUES
     -- Honda CB500F
     (10, 'https://www.motofichas.com/images/phocagallery/Honda/cb500f-2022/01-honda-cb500f-2022-estudio-rojo.jpg', TRUE),
     (10, 'https://placehold.co/600x400/94a3b8/475569?text=Honda+CB500F+View+2', FALSE);
-
--- TEST REVIEWS
-INSERT INTO reviews (vehicle_id, user_id, rating, body, is_visible) VALUES
-    (1, 1, 5, 'Test review', TRUE),
-    (2, 1, 4, 'Test review', TRUE),
-    (5, 1, 5, 'Test review', TRUE),
-    (1, 2, 4, 'Test review', TRUE),
-    (3, 2, 5, 'Test review', TRUE),
-    (6, 2, 4, 'Test review', FALSE),
-    (2, 3, 5, 'Test review', TRUE),
-    (8, 3, 4, 'Test review', TRUE),
-    (10, 3, 5, 'Test review', FALSE);
 
 COMMIT;

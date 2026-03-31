@@ -4,6 +4,7 @@ import { getReviewsByUserId } from '../../models/reviews.js';
 import { getServiceRequestsByUserId, getServiceRequestById, updateServiceRequest } from '../../models/forms/service.js';
 import { logActivity } from '../../models/log.js';
 import { Router } from 'express';
+import { loginValidation } from '../../middleware/validation/forms.js';
 
 const router = Router();
 
@@ -203,8 +204,7 @@ const handleEditMyServiceRequest = async (req, res, next) => {
 
 // Routes
 router.get('/', showLoginForm);
-router.post('/', processLogin);
-// router.post('/', loginValidation, processLogin);
+router.post('/', loginValidation, processLogin);
 
 // Export router as default, and specific functions for root-level routes
 export default router;

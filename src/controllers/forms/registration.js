@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { requireLogin } from '../../middleware/auth.js';
+import { registrationValidation, updateAccountValidation } from '../../middleware/validation/forms.js';
 import { emailExists, saveUser, getAllUsers, getUserById, updateUser, deleteUser } from '../../models/forms/registration.js';
 import { logActivity } from '../../models/log.js';
 
@@ -235,8 +236,7 @@ router.get('/', showRegistrationForm);
 /**
  * POST /register - Handle registration form submission with validation
  */
-router.post('/', processRegistration);
-// router.post('/', registrationValidation, processRegistration);
+router.post('/', registrationValidation, processRegistration);
 
 /**
  * GET /register/list - Display all registered users
@@ -251,8 +251,7 @@ router.get('/:id/edit', requireLogin, showEditAccountForm);
 /**
  * POST /register/:id/edit - Process account edit
  */
-router.post('/:id/edit', requireLogin, processEditAccount);
-// router.post('/:id/edit', requireLogin, updateAccountValidation, processEditAccount);
+router.post('/:id/edit', requireLogin, updateAccountValidation, processEditAccount);
 
 /**
  * POST /register/:id/delete - Delete user account
