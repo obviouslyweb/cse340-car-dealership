@@ -185,17 +185,18 @@
         margin: var(--spacing-sm) 0;
     }
 
-    .moderation-categories-section,
-    .moderation-categories-add {
-        margin-top: var(--spacing-md);
-    }
-
     .moderation-categories-list {
         list-style: none;
         padding: 0;
         display: flex;
         flex-direction: column;
         gap: var(--spacing-sm);
+    }
+
+    .moderation-categories-add {
+        .help-text {
+            margin-bottom: var(--spacing-sm);
+        }
     }
 
     .moderation-category-item {
@@ -237,10 +238,18 @@
         color: rgba(0, 0, 0, 0.55);
     }
 
-    .form-group-inline label {
-        display: flex;
-        align-items: center;
-        gap: 0.5em;
+    .form-group-inline {
+        label {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 0.5em;
+        }
+
+        .is-featured {
+            width: auto;
+            text-align: left;
+        }
     }
 
     .form-actions {

@@ -20,11 +20,13 @@ Role names come from the `roles` table (`user`, `employee`, `admin`) and are sto
 
 ## Test Account Credentials
 
-| Role | Email |
-| --- | --- |
-| user | `idonteven@gmail.com` |
-| employee | `funemployee@example.com` |
-| admin | `admin@example.com` |
+| Role | Email | Username |
+| --- | --- | --- |
+| user | `user@example.com` | CarFanatic |
+| employee | `employee@example.com` | WhatATeam |
+| admin | `admin@example.com` | admin |
+
+For the passwords to these accounts, please refer to the Final Project Requirements.pdf located inside the course materials.
 
 ## Known Limitations
 
