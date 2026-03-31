@@ -105,43 +105,50 @@
     }
 
     .dashboard-review-item {
-        background-color: color-mix(in srgb, var(--color-soft) 80%, white);
+        background-color: var(--color-soft);
         border-radius: 6px;
         padding: 0.75rem 1rem;
         margin-bottom: 0.5rem;
     }
 
-    .review-display-header {
+    .review-display {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem 1rem;
-        align-items: center;
+        flex-direction: column;
+        gap: var(--spacing-sm);
 
-        .review-meta-date {
-            color: #666;
-            font-size: 0.9rem;
+        .review-display-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            align-items: center;
+
+            .review-meta-date {
+                color: #666;
+                font-size: 0.9rem;
+            }
+
+            .review-pending {
+                color: #a98722;
+                font-weight: bold;
+                font-size: 0.85rem;
+            }
         }
 
-        .review-pending {
-            color: #a98722;
-            font-weight: bold;
-            font-size: 0.85rem;
+        .review-body {
+            white-space: pre-wrap;
+        }
+
+        .review-actions-display {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+
+            form {
+                display: inline;
+            }
         }
     }
-
-    .review-body {
-        white-space: pre-wrap;
-    }
-
-    .review-actions-display {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-
-        form {
-            display: inline;
-        }
-    }
+    
 
     .review-edit-header {
         display: flex;
