@@ -45,7 +45,7 @@ const handleServiceRequestSubmission = async (req, res) => {
             });
         }
         req.flash('success', 'Your service request has been submitted. We will be in touch soon.');
-        return res.redirect('/service-request');
+        return res.redirect('/dashboard');
     } catch (err) {
         console.error('Error saving service request:', err);
         req.flash('error', 'Unable to submit your request. Please try again later.');
