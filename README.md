@@ -3,8 +3,6 @@
 Project repository for the CSE 340 final project, a car dealership site made with Express and node.js.
 
 Visit the Render site for the project [here](https://fuse-automobile.onrender.com/).
-> [!IMPORTANT]
-> The Render page no longer works as the database was taken down by the original host (it was a free service only for active students at my university). Until I find a new host, the website will be down but you can still explore the code in the meantime. My apologies for the inconvenience.
 
 ## Database Schema
 
