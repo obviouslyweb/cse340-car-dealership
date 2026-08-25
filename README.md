@@ -12,11 +12,11 @@ Visit the Render site for the project [here](https://fuse-automobile.onrender.co
 
 ## User Roles
 
-| Role | Description |
-| --- | --- |
-| **user** | Default registered customer. Can use the dashboard, submit and track service requests, and create reviews on vehicles. Can edit or delete their own reviews.|
-| **employee** | Staff role. Includes everything a default user can do, plus moderation to review and edit service requests, review contact submissions, approve or reject reviews, and edit vehicle inventory data. |
-| **admin** | Full access. Includes all employee capabilities plus account and permission management, the ability to add, delete, and edit vehicle categories as well as entire vehicles, and permission to view the database log.|
+| Role | Number | Description |
+| --- | --- | --- |
+| **user** | 1 | Default registered customer. Can use the dashboard, submit and track service requests, and create reviews on vehicles. Can edit or delete their own reviews.|
+| **employee** | 2 | Staff role. Includes everything a default user can do, plus moderation to review and edit service requests, review contact submissions, approve or reject reviews, and edit vehicle inventory data. |
+| **admin** | 3 | Full access. Includes all employee capabilities plus account and permission management, the ability to add, delete, and edit vehicle categories as well as entire vehicles, and permission to view the database log.|
 
 Role names come from the `roles` table (`user`, `employee`, `admin`) and are stored on each row in `users.role_id`.
 
